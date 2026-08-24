@@ -1,0 +1,28 @@
+schema_version: 1
+stage: "filter_03_ground_truth_structure_quality_v2"
+run_id: "20260814_full_01"
+status: "FROZEN"
+frozen: true
+data_relative_path: "filter_03_ground_truth_structure_quality_v2/runs/20260814_full_01"
+input: "744,580 Processing 3 candidate pairs"
+counts:
+  input_pairs: 744580
+  high: 120297
+  good: 216115
+  retained: 336412
+  reject: 217872
+  non_xray_pending: 92766
+  validation_unavailable: 97530
+validation: "PASS"
+anchors:
+  -
+    relative_path: "filter_03_ground_truth_structure_quality_v2/CURRENT_RUN.json"
+    exists: true
+    size_bytes: 250
+    sha256: "af03e61dc1c6eb05d8a2a49dede3a2e9da9f603289f47089e4df17114e13b3bd"
+  -
+    relative_path: "filter_03_ground_truth_structure_quality_v2/runs/20260814_full_01/_FROZEN.json"
+    exists: true
+    size_bytes: 387
+    sha256: "226dca76152b8a37c668d5b0d109d809445395747d4760c0f8e1b66b8003ea4a"
+notes: "The later PoseBusters fail-direct-reject policy is approved for a future versioned rerun but is not implemented by this frozen run."

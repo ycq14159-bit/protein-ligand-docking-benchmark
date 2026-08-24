@@ -1,0 +1,172 @@
+{
+  "authoritative_conclusion": {
+    "authoritative_processing4_input_count": 158226,
+    "latest_frozen_filter3_policy_has_any_posebusters_fail_reject": false,
+    "latest_frozen_filter3_run": "/home/linx/data/youcq/autodl-tmp/benchmark_1.0/filter_03_ground_truth_structure_quality_v2/runs/20260814_full_01",
+    "latest_frozen_filter5_retained_count": 158226,
+    "latest_frozen_filter5_run": "/home/linx/data/youcq/autodl-tmp/benchmark_1.0/filter_05_equivalent_redocking_case/step_05_strict_equivalent_grouping_and_representative_selection/runs/step05_full_v1",
+    "p4_rebase_authorized": false,
+    "reason": "No frozen Filter3 or Filter5 run implements/propagates the revised PoseBusters rule."
+  },
+  "authoritative_p4_vs_f5_diff": {
+    "common_count": 158226,
+    "duplicates_new": 0,
+    "duplicates_old": 0,
+    "missing_key_new": 0,
+    "missing_key_old": 0,
+    "new_count": 158226,
+    "new_only_count": 0,
+    "old_count": 158226,
+    "old_only_count": 0
+  },
+  "counterfactual_full_propagation": {
+    "diff_vs_old_p4": {
+      "common_count": 156602,
+      "duplicates_new": 0,
+      "duplicates_old": 0,
+      "missing_key_new": 0,
+      "missing_key_old": 0,
+      "new_count": 156621,
+      "new_only_count": 19,
+      "old_count": 158226,
+      "old_only_count": 1624
+    },
+    "filter4_pass_after_input_restriction": 239397,
+    "filter4_removed": 2148,
+    "filter5_input": 239397,
+    "filter5_retained": 156621,
+    "filter5_status_counts": {
+      "F5_REDUNDANT_EQUIVALENT_CASE": 82776,
+      "F5_RETAIN_REPRESENTATIVE": 31874,
+      "F5_RETAIN_UNIQUE": 91668,
+      "F5_REVIEW_RETAIN": 33079
+    },
+    "not_authoritative_reason": "No frozen run, manifest, validation report, or _FROZEN.json exists for this derived universe."
+  },
+  "filter3_frozen": {
+    "duplicates": 0,
+    "eligible": 336412,
+    "input": 744580,
+    "primary_key": "pair_id",
+    "status_counts": {
+      "FILTER3_GOOD_QUALITY": 216115,
+      "FILTER3_HIGH_QUALITY": 120297,
+      "FILTER3_NON_XRAY_PROTOCOL_PENDING": 92766,
+      "FILTER3_REJECT": 217872,
+      "FILTER3_VALIDATION_DATA_UNAVAILABLE": 97530
+    },
+    "validation_status": true
+  },
+  "filter4_frozen_evidence": {
+    "direct_pass_membership_path": "/home/linx/data/youcq/autodl-tmp/benchmark_1.0/filter_04_crystal_packing_influence/step_05_final_crystal_packing_decision/runs/step05_full_v1/output/02_filter4_pass_pairs.tsv.gz",
+    "direct_pass_membership_sha256": "e2e6db2012c4766c719c5fc5f9028b76604a0c98dc319941e20a90b7f243d3a0",
+    "direct_pass_set_equals_filter5_step1_input": true,
+    "direct_server_step5_run_present": true,
+    "direct_step5_run": "/home/linx/data/youcq/autodl-tmp/benchmark_1.0/filter_04_crystal_packing_influence/step_05_final_crystal_packing_decision/runs/step05_full_v1",
+    "direct_validation_pass": true,
+    "formal_membership_path_recorded_by_f5": "/root/autodl-tmp/benchmark_1.0/filter_04_crystal_packing_influence/step_05_final_crystal_packing_decision/runs/step05_full_v1/output/02_filter4_pass_pairs.tsv.gz",
+    "formal_membership_sha256_recorded_by_f5": "e2e6db2012c4766c719c5fc5f9028b76604a0c98dc319941e20a90b7f243d3a0",
+    "input": 336412,
+    "pass": 241545,
+    "pass_proxy": "/home/linx/data/youcq/autodl-tmp/benchmark_1.0/filter_05_equivalent_redocking_case/step_01_exact_identity_and_candidate_blocking/runs/step01_full_v1/output/03_filter5_step1_pair_inventory.tsv.gz",
+    "reject": 94865,
+    "review": 2
+  },
+  "filter5_frozen": {
+    "duplicates": 0,
+    "input": 241545,
+    "primary_key": "pair_id",
+    "retained": 158226,
+    "status_counts": {
+      "F5_REDUNDANT_EQUIVALENT_CASE": 83319,
+      "F5_RETAIN_REPRESENTATIVE": 32188,
+      "F5_RETAIN_UNIQUE": 92580,
+      "F5_REVIEW_RETAIN": 33458
+    },
+    "validation_status": "PASS"
+  },
+  "generated_at": "2026-08-22T10:48:16.572971+00:00",
+  "p4_candidate_projection": {
+    "candidate_common_reusable": 156602,
+    "candidate_new_cases_requiring_p4_generation": 19,
+    "legacy_rescued_ready_still_in_candidate": 7833,
+    "legacy_rescued_ready_total": 8496
+  },
+  "processing4_frozen": {
+    "duplicate_case_id": 0,
+    "duplicate_pair_id": 0,
+    "input": 158226,
+    "primary_keys": [
+      "case_id",
+      "pair_id"
+    ],
+    "status_counts": {
+      "P4_DOCKING_READY": 158017,
+      "P4_LIGAND_START_GENERATION_FAILED": 37,
+      "P4_PREPARATION_REVIEW": 172
+    },
+    "validation_status": "PASS"
+  },
+  "representative_audit": {
+    "groups_lost_completely": 289,
+    "groups_requiring_reselection": 19,
+    "new_filter3_rejects_among_old_f5_representatives": 308,
+    "new_only_cases": 19,
+    "old_only_cases": 1624,
+    "replacement_representatives_or_singleton_retains": 19
+  },
+  "revised_filter3_counterfactual": {
+    "eligible": 333443,
+    "good": 213146,
+    "high": 120297,
+    "new_posebusters_rejects": 2969
+  },
+  "transfer_and_final_validation": {
+    "checks": {
+      "filter4_authoritative_sha256_failed_lines_zero": true,
+      "filter4_frozen_marker_present": true,
+      "filter4_inventory_pair_id_unique": true,
+      "filter4_inventory_rows_336412": true,
+      "filter4_pass_pair_id_unique": true,
+      "filter4_pass_rows_241545": true,
+      "filter4_pass_set_equals_filter5_step1_input": true,
+      "filter4_pass_sha_matches_filter5_provenance": true,
+      "filter4_transfer_rsync_dry_run_empty": true,
+      "filter4_validation_pass": true,
+      "filter5_retained_set_equals_processing4_input": true,
+      "filter5_step1_input_pair_id_unique": true
+    },
+    "filter4": {
+      "inventory_rows": 336412,
+      "pass_rows": 241545,
+      "pass_sha256": "e2e6db2012c4766c719c5fc5f9028b76604a0c98dc319941e20a90b7f243d3a0",
+      "run": "/home/linx/data/youcq/autodl-tmp/benchmark_1.0/filter_04_crystal_packing_influence/step_05_final_crystal_packing_decision/runs/step05_full_v1",
+      "validation_decision_counts": {
+        "PASS": 241545,
+        "REJECT": 94865,
+        "REVIEW": 2
+      }
+    },
+    "generated_at": "2026-08-22T11:10:10.472886+00:00",
+    "lineage_set_differences": {
+      "filter4_pass_vs_filter5_input": {
+        "common": 241545,
+        "filter4_only": 0,
+        "filter5_only": 0
+      },
+      "filter5_retained_vs_processing4_input": {
+        "common": 158226,
+        "filter5_only": 0,
+        "processing4_only": 0
+      }
+    },
+    "overall_pass": true,
+    "transfer": {
+      "destination": "/home/linx/data/youcq/autodl-tmp/benchmark_1.0/filter_04_crystal_packing_influence",
+      "post_transfer_rsync_differences": 0,
+      "source": "sbdx:/root/autodl-tmp/benchmark_1.0/filter_04_crystal_packing_influence/",
+      "transferred_bytes": 7069712815,
+      "transferred_files": 18752
+    }
+  }
+}

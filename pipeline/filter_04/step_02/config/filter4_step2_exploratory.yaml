@@ -1,0 +1,29 @@
+stage:
+  name: filter_04_crystal_packing_influence
+  step: step_02_biological_assembly_equivalence
+  version: exploratory_pilot_v1
+
+input:
+  step1_run: /root/autodl-tmp/benchmark_1.0/filter_04_crystal_packing_influence/step_01_lattice_neighbor_search/runs/step01_full_v3
+  processing2_run: /root/autodl-tmp/benchmark_1.0/processing_2_assembly_ready_structure_preparation/runs/20260810_full_01
+  assembly_context: /root/autodl-tmp/benchmark_1.0/auxiliary_entry_work_packages/builds/20260805_full_01/output/entry_assembly_context
+  mmcif_root: /root/autodl-tmp/pdb_archive_v2/mmCIF
+
+equivalence:
+  exploratory_only: true
+  rotation_max_abs_tolerance: 1.0e-5
+  translation_max_abs_tolerance_angstrom: 1.0e-5
+  near_threshold_factor: 10.0
+  coordinate_rmsd_tolerance_angstrom: 1.0e-4
+  max_atom_deviation_tolerance_angstrom: 1.0e-3
+
+validation:
+  expected_full_instances: 1155117
+  expected_full_pairs: 336412
+
+policy:
+  recompute_step1: false
+  recompute_6A: false
+  physical_contact: false
+  packing_severity: false
+  pair_rejection: false

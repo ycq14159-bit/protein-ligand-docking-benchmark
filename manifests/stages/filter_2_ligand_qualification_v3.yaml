@@ -1,0 +1,30 @@
+schema_version: 1
+stage: "filter_2_ligand_qualification_v3"
+run_id: "20260804_full_01"
+status: "FROZEN"
+frozen: true
+data_relative_path: "filter_2_ligand_qualification_v3/runs/20260804_full_01"
+input: "Filter 1 qualified structures"
+counts:
+  source_instances: 852968
+  mapped_sources: 851966
+  no_mapping: 1002
+  assembly_placements: 1151324
+validation: "PASS"
+anchors:
+  -
+    relative_path: "filter_2_ligand_qualification_v3/CURRENT_RUN.json"
+    exists: true
+    size_bytes: 250
+    sha256: "bf652f9fb252d77ce05b9c198d194deac2d40877481605a113d09c1865f2ac49"
+  -
+    relative_path: "filter_2_ligand_qualification_v3/runs/20260804_full_01/_FROZEN.json"
+    exists: true
+    size_bytes: 336
+    sha256: "5ab5324c16b4aa026da88af7423c3cb7818bc74713f9ef04d2116ee075e828d3"
+  -
+    relative_path: "filter_2_ligand_qualification_v3/runs/20260804_full_01/release/release_summary.json"
+    exists: true
+    size_bytes: 1481
+    sha256: "55d8c979f8a61b0f7a9380a8d6612a802b9d539357cc655e41119e699100db99"
+notes: "The formal mapped-source denominator is 851,966; 1,002 no-map sources do not enter Processing 2."

@@ -1,0 +1,25 @@
+schema_version: 1
+stage: "processing_04_docking_ready_case_construction"
+run_id: "p4_full_v1_0_1"
+status: "FROZEN"
+frozen: true
+data_relative_path: "processing_04_docking_ready_case_construction/runs/p4_full_v1_0_1"
+input: "158,226 Filter 5 retained pairs"
+counts:
+  input_cases: 158226
+  docking_ready: 158017
+  preparation_review: 172
+  ligand_start_generation_failed: 37
+validation: "PASS"
+anchors:
+  -
+    relative_path: "processing_04_docking_ready_case_construction/runs/p4_full_v1_0_1/_FROZEN.json"
+    exists: true
+    size_bytes: 470
+    sha256: "dec3318659e48598372712b19d8a495168e98960fdd6274947b27113b054976a"
+  -
+    relative_path: "processing_04_docking_ready_case_construction/runs/p4_full_v1_0_1/validation/validation.json"
+    exists: true
+    size_bytes: 517
+    sha256: "fecdada8aa6f9eefaabd535d332f83fda35dbd28c60e3d66052244afcc6a60e4"
+notes: "No method-specific docking predictions are included. Frozen run is v1.0.1 rescue over the v1 baseline."

@@ -1,0 +1,22 @@
+schema_version: 1
+path_policy:
+  data_root_environment_variable: "BENCHMARK_DATA_ROOT"
+  repository_root_environment_variable: "BENCHMARK_CODE_ROOT"
+  default_data_root: null
+  rule: "Resolve all managed data paths as ${BENCHMARK_DATA_ROOT}/<relative_path>."
+  legacy_note: "Pre-Git scripts may retain historical absolute paths and are preserved without scientific edits."
+managed_data_classes:
+  - "raw_structures"
+  - "derived_structures"
+  - "intermediate_results"
+  - "frozen_run_outputs"
+  - "docking_ready_cases"
+git_managed_classes:
+  - "source_code"
+  - "configuration"
+  - "rules"
+  - "validation_scripts"
+  - "audit_scripts"
+  - "analysis_scripts"
+  - "small_manifests"
+  - "documentation"

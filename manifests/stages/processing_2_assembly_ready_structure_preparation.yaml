@@ -1,0 +1,34 @@
+schema_version: 1
+stage: "processing_2_assembly_ready_structure_preparation"
+run_id: "20260810_full_01"
+status: "FROZEN"
+frozen: true
+data_relative_path: "processing_2_assembly_ready_structure_preparation/runs/20260810_full_01"
+input: "Filter 2 v3 mapped sources and active assembly scope"
+counts:
+  manifest_rows: 2837838
+  source_complete: 746509
+  source_atom_incomplete: 100354
+  source_mapping_review: 5103
+  receptor_ready: 834222
+  receptor_operator_review: 326
+  placement_assembly_ready: 996192
+  processing3_ready_placements: 995804
+validation: "PASS"
+anchors:
+  -
+    relative_path: "processing_2_assembly_ready_structure_preparation/CURRENT_RUN.json"
+    exists: true
+    size_bytes: 250
+    sha256: "49d6e45c52c6040b02945618e74ad02588b2e80bc3a59c26a126a16e14f345ec"
+  -
+    relative_path: "processing_2_assembly_ready_structure_preparation/runs/20260810_full_01/_FROZEN.json"
+    exists: true
+    size_bytes: 431
+    sha256: "472aba7d39cb6ce8b94494f9a70453d4bc2db54aa30e94822f05550c26fb4cfa"
+  -
+    relative_path: "processing_2_assembly_ready_structure_preparation/runs/20260810_full_01/output/release_summary.json"
+    exists: true
+    size_bytes: 1546
+    sha256: "8388fe3339d9004595ddd96191837d61a04c5a07d5d3eea1b90a85f461066b16"
+notes: "996,192 frozen ASSEMBLY_READY placements and 995,804 strict Processing 3-ready placements are different denominators."

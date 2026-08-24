@@ -1,0 +1,28 @@
+stage:
+  name: filter_04_crystal_packing_influence
+  step: crystal_metadata_audit_v1
+  version: 1.0.0
+
+input:
+  filter3_dataset: /root/autodl-tmp/benchmark_1.0/filter_03_ground_truth_structure_quality_v2/runs/20260814_full_01/output/filter3_pair_quality_v2
+  filter3_release_manifest: /root/autodl-tmp/benchmark_1.0/filter_03_ground_truth_structure_quality_v2/runs/20260814_full_01/release/output_manifest.tsv
+  retained_statuses: [FILTER3_HIGH_QUALITY, FILTER3_GOOD_QUALITY]
+  expected_pair_count: 336412
+  mmcif_root: /root/autodl-tmp/pdb_archive_v2/mmCIF
+  legacy_pdb_root: /root/autodl-tmp/pdb_archive_v2/pdb
+  pdb_bundle_root: /root/autodl-tmp/pdb_archive_v2/pdb_bundle
+
+output:
+  audit_dir: /root/autodl-tmp/benchmark_1.0/filter_04_crystal_packing_influence/audit/crystal_metadata_audit_v1
+
+runtime:
+  workers: 12
+  progress_every_pdb: 1000
+
+policy:
+  read_only_upstream: true
+  download_enabled: false
+  recovery_enabled: false
+  symmetry_mates_enabled: false
+  neighbour_search_enabled: false
+  pair_rejection_enabled: false

@@ -1,0 +1,21 @@
+stage:
+  name: filter_2_ligand_qualification_v3
+  version: 3.0.0
+rule_version: filter_2_v3.0.0_policy_revision
+schema_version: 3.0.0
+accepted_ccd_statuses:
+- ccd_exact
+- ccd_obsolete_resolved
+atomic_rule: standard_total_atom_count == 1
+metal_policy: config/metal_elements_v1.yaml
+biolip:
+  same_pdb_component_source_instance_threshold: 15
+  operator: '>='
+runtime:
+  workers: 24
+  batch_size: 200
+  resume: true
+format:
+  large_tables: tsv.gz
+  parquet_unavailable_in_frozen_environment: true
+  preview_rows: 1000

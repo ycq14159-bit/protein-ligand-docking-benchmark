@@ -1,0 +1,46 @@
+sources:
+  mmcif:
+    role: primary_authoritative_structure_source
+    base_url: https://files.rcsb.org/pub/pdb/data/structures/divided/mmCIF/
+    directory_layout: divided_by_pdb_id_characters_2_3
+    file_pattern: "{subdir}/{pdb_id}.cif.gz"
+    expected_suffix: ".cif.gz"
+    compression: gzip
+    preferred_for_benchmark: true
+    rsync_candidates:
+      - rsync.rcsb.org::ftp_data/structures/divided/mmCIF/
+      - rsync.wwpdb.org::ftp_data/structures/divided/mmCIF/
+  pdb:
+    role: legacy_pdb_format_fallback
+    base_url: https://files.rcsb.org/pub/pdb/data/structures/divided/pdb/
+    directory_layout: divided_by_pdb_id_characters_2_3
+    file_pattern: "{subdir}/pdb{pdb_id}.ent.gz"
+    expected_suffix: ".ent.gz"
+    compression: gzip
+    preferred_for_benchmark: false
+    rsync_candidates:
+      - rsync.rcsb.org::ftp_data/structures/divided/pdb/
+      - rsync.wwpdb.org::ftp_data/structures/divided/pdb/
+  pdb_bundle:
+    role: compatible_bundle_subset_for_large_or_legacy_entries
+    base_url: https://files.wwpdb.org/pub/pdb/compatible/pdb_bundle/
+    directory_layout: divided_subdir_then_entry_directory
+    file_pattern: "{subdir}/{pdb_id}/{pdb_id}-pdb-bundle.tar.gz"
+    expected_suffix: "-pdb-bundle.tar.gz"
+    compression: gzip_tar
+    preferred_for_benchmark: false
+    rsync_candidates:
+      - rsync.wwpdb.org::ftp_data/compatible/pdb_bundle/
+download_policy:
+  default_output_dir: /root/autodl-tmp/pdb_archive_v2
+  smoke_output_dir: /root/autodl-tmp/pdb_archive_download_smoke_v1
+  min_free_space_gb: 200
+  refuse_if_estimated_download_exceeds_free_fraction: 0.8
+  default_workers: 2
+  default_retries: 3
+  default_timeout_seconds: 60
+  keep_compressed_files: true
+  use_part_files: true
+  atomic_rename: true
+  verify_gzip: true
+  never_delete_existing_files: true

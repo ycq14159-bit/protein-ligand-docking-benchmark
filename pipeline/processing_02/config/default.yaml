@@ -1,0 +1,55 @@
+stage:
+  name: processing_2_assembly_ready_structure_preparation
+  version: processing_2_v1.0.0
+  schema_version: processing_2_schema_v1.0.0
+
+inputs:
+  auxiliary_build: /root/autodl-tmp/benchmark_1.0/auxiliary_entry_work_packages/builds/20260805_full_01/output
+  filter_2_v3_run: /root/autodl-tmp/benchmark_1.0/filter_2_ligand_qualification_v3/runs/20260804_full_01
+  ccd_snapshot: /root/autodl-tmp/benchmark_1.0/filter_2_ligand_qualification/references/components.cif.gz
+
+runtime:
+  workers: 8
+  max_tasks_per_worker: 4
+  resume: true
+  task_granularity: upstream_20_pdb_part
+  bounded_submissions_per_worker: 2
+
+conformer_selection:
+  method: CROWN_exact_as_frozen
+  blank_altloc_retained: true
+  nonblank_score_order:
+    - atom_count_desc
+    - mean_occupancy_desc
+    - source_atom_order_asc
+  clear_surviving_altloc_in_prepared_copy: true
+  source_rows_unchanged: true
+
+microheterogeneity:
+  method: CROWN_exact_as_frozen
+  score_order:
+    - heavy_atom_count_desc
+    - mean_heavy_atom_occupancy_desc
+    - source_atom_order_asc
+
+ligand_completeness:
+  expected_atoms: CCD_chem_comp_atom
+  strict_heavy_atom_complete: missing_CCD_heavy_atom_count_equals_zero
+  crown_missing_O_exception_enabled: false
+  reconstruct_missing_atoms: false
+
+coordinates:
+  convention: x_prime_equals_R_times_x_plus_t
+  transform_numeric_tolerance: 1.0e-6
+  operator_orthogonality_review_threshold: 1.0e-3
+  operator_matrix_correction: false
+  generate_hydrogens: false
+  protonate: false
+  minimize: false
+  optimize: false
+
+output:
+  format: parquet
+  compression: zstd
+  compression_level: 6
+  preview_max_rows: 1000

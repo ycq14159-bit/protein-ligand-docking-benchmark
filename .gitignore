@@ -1,0 +1,86 @@
+
+# Raw and derived structural data
+*.cif
+*.mmcif
+*.pdb
+*.ent
+*.sdf
+*.mol
+*.mol2
+*.smi
+*.smiles
+*.parquet
+*.arrow
+*.feather
+*.sqlite
+*.sqlite3
+*.db
+*.jar
+
+# Compressed archives and bulk tables
+*.gz
+*.bz2
+*.xz
+*.zip
+*.7z
+*.tar
+*.tgz
+*.zst
+
+# Generated run/data trees
+**/runs/**/input/
+**/runs/**/output/
+**/runs/**/work/
+**/runs/**/logs/
+**/runs/**/tmp/
+**/cases/
+**/case_files/
+**/coordinates/
+**/checkpoints/
+**/cache/
+**/.cache/
+*.log
+*.pid
+
+# Python/R/Jupyter environments and caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+envs/
+renv/
+.Rhistory
+.RData
+
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+credentials*
+secrets*
+*token*
+
+# IDE/OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*~
+*.swp
+
+# Generated figures/reports
+*.png
+*.svg
+*.pdf
+*.html

@@ -1,0 +1,195 @@
+{
+  "generated_at": "2026-08-24T01:59:54.715591+00:00",
+  "public_repository_audit": true,
+  "validation_pass": true,
+  "file_count_before_git_metadata": 190,
+  "total_size_bytes_before_git_metadata": 2480573,
+  "threshold_counts": {
+    "over_20mb": 0,
+    "over_50mb": 0,
+    "over_100mb": 0
+  },
+  "blocked_data_or_credential_files": [],
+  "high_confidence_secret_hits": [],
+  "nonplaceholder_credential_assignment_hits": [],
+  "binary_files": [],
+  "legacy_absolute_path_file_count": 94,
+  "legacy_absolute_path_files": [
+    "configs/entry_work_packages/build_v1.yaml",
+    "legacy/filter_05/step_01/step01_full_v1/executed_runner.py",
+    "legacy/filter_05/step_02/step02_full_v2/executed_runner.py",
+    "legacy/filter_05/step_03/step03_full_v6/executed_runner.py",
+    "legacy/filter_05/step_04/step04_full_v1/executed_runner.py",
+    "legacy/filter_05/step_05/step05_full_v1/executed_runner.py",
+    "legacy/processing_04/processing4_pipeline.py.pre-portable-path-20260821T095107Z",
+    "pipeline/filter_01/configs/filter_1.yaml",
+    "pipeline/filter_01/scripts/audit_filter_1_input.py",
+    "pipeline/filter_01/scripts/build_filter_1_release.py",
+    "pipeline/filter_01/scripts/filter1_pipeline.py",
+    "pipeline/filter_01/scripts/merge_filter_1_outputs.py",
+    "pipeline/filter_01/scripts/run_filter_1_full.py",
+    "pipeline/filter_01/scripts/semantic_spotcheck_filter_1.py",
+    "pipeline/filter_01/scripts/validate_filter_1_release.py",
+    "pipeline/filter_02/legacy_v1/scripts/audit_filter_2_inputs.py",
+    "pipeline/filter_02/legacy_v1/scripts/build_filter_2_release.py",
+    "pipeline/filter_02/legacy_v1/scripts/filter2_finalize_streaming.py",
+    "pipeline/filter_02/legacy_v1/scripts/filter2_pipeline.py",
+    "pipeline/filter_02/legacy_v1/scripts/prepare_filter_2_references.py",
+    "pipeline/filter_02/legacy_v1/scripts/run_filter_2_full.py",
+    "pipeline/filter_02/legacy_v1/scripts/run_filter_2_preflight.py",
+    "pipeline/filter_02/legacy_v1/scripts/validate_filter_2_release.py",
+    "pipeline/filter_02/legacy_v2/scripts/audit_filter_2_v2_inputs.py",
+    "pipeline/filter_02/legacy_v2/scripts/check_filter2_full_batches.py",
+    "pipeline/filter_02/legacy_v2/scripts/filter2_v2_pipeline.py",
+    "pipeline/filter_02/legacy_v2/scripts/finalize_filter_2_v2.py",
+    "pipeline/filter_02/legacy_v2/scripts/launch_filter2_v2_full.sh",
+    "pipeline/filter_02/legacy_v2/scripts/prepare_filter_2_v2_references.py",
+    "pipeline/filter_02/legacy_v2/scripts/run_filter_2_v2_full.py",
+    "pipeline/filter_02/legacy_v2/scripts/run_filter_2_v2_smoke.py",
+    "pipeline/filter_02/legacy_v2/scripts/test_filter_2_v2.py",
+    "pipeline/filter_02/legacy_v2/scripts/validate_filter_2_v2.py",
+    "pipeline/filter_02/v3/scripts/correct_v3_premature_freeze.py",
+    "pipeline/filter_02/v3/scripts/filter2_v3_pipeline.py",
+    "pipeline/filter_02/v3/scripts/launch_filter2_v3_finalize.sh",
+    "pipeline/filter_02/v3/scripts/launch_filter2_v3_full.sh",
+    "pipeline/filter_03/legacy_v1/scripts/filter3_finalize.py",
+    "pipeline/filter_03/legacy_v1/scripts/filter3_parse_validation.py",
+    "pipeline/filter_03/legacy_v1/scripts/filter3_partition_validation.py",
+    "pipeline/filter_03/legacy_v1/scripts/filter3_pipeline.py",
+    "pipeline/filter_03/legacy_v1/scripts/filter3_posebusters.py",
+    "pipeline/filter_03/legacy_v1/scripts/filter3_quality_pipeline.py",
+    "pipeline/filter_03/legacy_v1/scripts/launch_filter3_bucket0.sh",
+    "pipeline/filter_03/legacy_v1/scripts/launch_filter3_download.sh",
+    "pipeline/filter_03/legacy_v1/scripts/launch_filter3_finalize_after_posebusters.sh",
+    "pipeline/filter_03/legacy_v1/scripts/launch_filter3_parse.sh",
+    "pipeline/filter_03/legacy_v1/scripts/launch_filter3_partition.sh",
+    "pipeline/filter_03/legacy_v1/scripts/launch_filter3_posebusters_after_quality.sh",
+    "pipeline/filter_03/legacy_v1/scripts/launch_filter3_quality_full.sh",
+    "pipeline/filter_03/legacy_v1/scripts/setup_filter3_posebusters.sh",
+    "pipeline/filter_03/legacy_v1/scripts/validate_filter3_release.py",
+    "pipeline/filter_03/v2/config/filter3_v2.yaml",
+    "pipeline/filter_03/v2/scripts/filter3_v2_finalize.py",
+    "pipeline/filter_03/v2/scripts/filter3_v2_posebusters.py",
+    "pipeline/filter_03/v2/scripts/run_filter3_v2_full.sh",
+    "pipeline/filter_03/v2/scripts/validate_filter3_v2_release.py",
+    "pipeline/filter_04/config/filter4_step0b.yaml",
+    "pipeline/filter_04/scripts/finalize_filter4_step0b_audit.py",
+    "pipeline/filter_04/step_01/config/filter4_step1.yaml",
+    "pipeline/filter_04/step_01/config/filter4_step1_smoke.yaml",
+    "pipeline/filter_04/step_01/scripts/run_filter4_step1_full.sh",
+    "pipeline/filter_04/step_01/scripts/run_filter4_step1_pilot.sh",
+    "pipeline/filter_04/step_02/config/filter4_step2_exploratory.yaml",
+    "pipeline/filter_04/step_02/config/filter4_step2_v1.yaml",
+    "pipeline/filter_04/step_02/scripts/run_filter4_step2_full.sh",
+    "pipeline/filter_04/step_03/config/filter4_step3_v1.yaml",
+    "pipeline/filter_04/step_03/scripts/run_filter4_step3_full.sh",
+    "pipeline/filter_04/step_04/config/filter4_step4_v1.yaml",
+    "pipeline/filter_04/step_05/config/filter4_step5_v1.yaml",
+    "pipeline/processing_01/configs/pdb_archive_sources_v2.yaml",
+    "pipeline/processing_01/scripts/build_processing_1.py",
+    "pipeline/processing_01/scripts/fix_archive_validation_bundle_summary.py",
+    "pipeline/processing_01/scripts/fix_archive_validation_error_counts.py",
+    "pipeline/processing_01/scripts/start_full_downloads.sh",
+    "pipeline/processing_01/scripts/start_mmcif_pdb_shards_v2.sh",
+    "pipeline/processing_01/scripts/start_url_inventory_v3.sh",
+    "pipeline/processing_01/scripts/start_url_inventory_v3_restart_20260711_112900.sh",
+    "pipeline/processing_02/config/default.yaml",
+    "pipeline/processing_02/scripts/processing2_pipeline.py",
+    "pipeline/processing_03/config/default.yaml",
+    "pipeline/processing_03/plip_validation/scripts/finalize_processing3_plip.py",
+    "pipeline/processing_03/plip_validation/scripts/monitor_finalize_processing3_plip.sh",
+    "pipeline/processing_03/plip_validation/scripts/processing3_plip_runner.py",
+    "scripts/audit/filter3_filter4_filter5_p4_reconciliation/finalize_lineage_reconciliation.py",
+    "scripts/audit/filter3_filter4_filter5_p4_reconciliation/lineage_reconciliation_audit.py",
+    "scripts/audit/filter3_filter4_filter5_p4_reconciliation/lineage_summary.json",
+    "scripts/audit/filter3_filter4_filter5_p4_reconciliation/reconciliation_validation.json",
+    "scripts/audit/ligand_minimum_pose_complexity_census/ligand_minimum_pose_complexity_census.py",
+    "scripts/data_engineering/entry_work_packages/build_entry_work_packages.py",
+    "scripts/data_engineering/entry_work_packages/load_entry_work_package.py",
+    "scripts/figures/benchmark_figure_scout/build_benchmark_figure_scout.py",
+    "scripts/figures/benchmark_figure_scout/finalize_figure_scout.py",
+    "scripts/figures/benchmark_figure_scout/repair_figure_scout_layouts.py"
+  ],
+  "largest_files": [
+    {
+      "relative_path": "pipeline/filter_02/legacy_v2/scripts/filter2_v2_pipeline.py",
+      "size_bytes": 73231
+    },
+    {
+      "relative_path": "scripts/figures/benchmark_figure_scout/build_benchmark_figure_scout.py",
+      "size_bytes": 71414
+    },
+    {
+      "relative_path": "pipeline/filter_02/legacy_v1/scripts/filter2_pipeline.py",
+      "size_bytes": 56461
+    },
+    {
+      "relative_path": "pipeline/filter_04/step_04/scripts/filter4_step4_pipeline.py",
+      "size_bytes": 55204
+    },
+    {
+      "relative_path": "legacy/filter_04/step_04/step04_pilot_v2/executed_runner.py",
+      "size_bytes": 55204
+    },
+    {
+      "relative_path": "legacy/filter_04/step_04/step04_full_v2/executed_runner.py",
+      "size_bytes": 55204
+    },
+    {
+      "relative_path": "legacy/filter_04/step_04/step04_pilot_v1/executed_runner.py",
+      "size_bytes": 52552
+    },
+    {
+      "relative_path": "legacy/filter_04/step_04/step04_full_v1/executed_runner.py",
+      "size_bytes": 52552
+    },
+    {
+      "relative_path": "legacy/filter_04/step_04/step04_smoke_v1/executed_runner.py",
+      "size_bytes": 51703
+    },
+    {
+      "relative_path": "scripts/data_engineering/entry_work_packages/build_entry_work_packages.py",
+      "size_bytes": 51219
+    },
+    {
+      "relative_path": "pipeline/processing_02/scripts/processing2_pipeline.py",
+      "size_bytes": 50602
+    },
+    {
+      "relative_path": "pipeline/filter_02/v3/scripts/filter2_v3_pipeline.py",
+      "size_bytes": 48987
+    },
+    {
+      "relative_path": "pipeline/filter_01/scripts/filter1_pipeline.py",
+      "size_bytes": 48756
+    },
+    {
+      "relative_path": "pipeline/filter_04/step_02/scripts/filter4_step2_pipeline.py",
+      "size_bytes": 40874
+    },
+    {
+      "relative_path": "legacy/filter_04/step_02/step02_pilot_v3/executed_runner.py",
+      "size_bytes": 40874
+    },
+    {
+      "relative_path": "legacy/filter_04/step_02/step02_full_v3/executed_runner.py",
+      "size_bytes": 40874
+    },
+    {
+      "relative_path": "pipeline/filter_04/step_03/scripts/filter4_step3_pipeline.py",
+      "size_bytes": 40761
+    },
+    {
+      "relative_path": "legacy/filter_04/step_03/step03_pilot_v2/executed_runner.py",
+      "size_bytes": 40761
+    },
+    {
+      "relative_path": "legacy/filter_04/step_03/step03_full_v2/executed_runner.py",
+      "size_bytes": 40761
+    },
+    {
+      "relative_path": "pipeline/processing_03/scripts/processing3_pipeline.py",
+      "size_bytes": 40539
+    }
+  ]
+}

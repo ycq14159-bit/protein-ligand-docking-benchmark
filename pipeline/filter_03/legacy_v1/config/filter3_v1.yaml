@@ -1,0 +1,77 @@
+stage:
+  name: filter_03_ground_truth_structure_quality
+  version: 1.0.0
+  run_id: 20260812_full_01
+
+input:
+  source_stage: processing_03_direct_contact_qualification
+  source_run_id: 20260811_full_01
+  expected_pair_count: 744580
+  expected_unique_pdb_count: 138892
+  terminal_status: FINAL_ORDINARY_NONCOVALENT_PAIR
+
+validation_sources:
+  base_url: https://files.wwpdb.org/pub/pdb/validation_reports
+  required_types: [xml, cif]
+  xml_role: primary_parser_source
+  cif_role: archive_and_fallback
+  download_workers: 24
+  retries: 2
+  missing_is_quality_reject: false
+
+method_routes:
+  xray: formal_quality_gate
+  cryo_em: FILTER3_NON_XRAY_PROTOCOL_PENDING
+  nmr: FILTER3_NON_XRAY_PROTOCOL_PENDING
+  other: FILTER3_NON_XRAY_PROTOCOL_PENDING
+
+entry_thresholds:
+  resolution_max_angstrom: 3.0
+  r_work_max: 0.40
+  r_free_max: 0.45
+  r_free_minus_r_work_abs_max: 0.05
+
+ligand_thresholds:
+  rscc_min: 0.80
+  rsr_max: 0.30
+  mean_occupancy_min: 0.80
+  unresolved_heavy_atoms_max: 0
+
+pocket_thresholds:
+  mean_rscc_min: 0.80
+  mean_rsr_max: 0.30
+  mean_occupancy_min: 0.80
+  unresolved_heavy_atoms_max: 0
+
+binding_support:
+  quality_pass_residues_per_chain_min: 2
+  quality_supported_chains_per_pair_min: 1
+
+high_quality:
+  resolution_max_angstrom: 2.5
+  direct_binding_soft_outliers_max: 0
+  important_pocket_warnings_max: 0
+  significant_ligand_geometry_warnings_max: 0
+
+structural_gap_audit:
+  critical_interface_gap_rule: missing_residue_flanked_by_direct_binding_residues_on_same_source_chain
+  adjacent_pocket_gap_warning_rule: missing_residue_within_one_sequence_position_of_6A_pocket_residue
+  distant_gap_action: ignore_for_pair_terminal_status
+
+posebusters:
+  version: 0.6.5
+  config_base: mol
+  run_only_after_entry_ligand_pocket_and_chain_hard_gates_pass: true
+  reuse_by_source_ligand_instance: true
+  fatal_checks: [sanitization, all_atoms_connected, no_radicals, internal_steric_clash]
+  warning_only_checks: [inchi_convertible, bond_lengths, bond_angles, aromatic_ring_flatness, non-aromatic_ring_non-flatness, double_bond_flatness]
+  energy_ratio_executed: false
+
+scope_exclusions:
+  plip: true
+  arpeggio: true
+  prolif: true
+  docking: true
+  crystal_packing: true
+  sasa: true
+  four_angstrom_descriptors: true

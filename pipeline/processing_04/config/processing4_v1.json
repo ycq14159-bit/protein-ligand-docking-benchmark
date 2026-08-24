@@ -1,0 +1,20 @@
+{
+  "schema_version": "processing4_schema_v1.0.0",
+  "policy_version": "processing4_policy_v1.0.0-pilot",
+  "case_id_version": "sha256_pair_id_v1",
+  "receptor_format_version": "gemmi_protein_only_v1",
+  "ligand_format_version": "rdkit_frozen_ccd_graph_v1",
+  "site_definition_version": "native_ligand_bbox_margin_v1-pilot",
+  "site_center": "native_ligand_heavy_atom_bounding_box_center",
+  "site_margin_angstrom_per_side": 5.0,
+  "site_minimum_dimension_angstrom": 20.0,
+  "etkdg_version": "ETKDGv3",
+  "etkdg_random_seed": 24301,
+  "etkdg_enforce_chirality": true,
+  "etkdg_num_conformers": 1,
+  "uff_max_iterations": 500,
+  "coordinate_tolerance_cif_angstrom": 0.00001,
+  "coordinate_tolerance_pdb_angstrom": 0.0011,
+  "bucket_count": 256,
+  "ready_status": "P4_DOCKING_READY"
+}

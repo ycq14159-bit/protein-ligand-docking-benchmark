@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Processing 4 case file contract",
+  "type": "object",
+  "required": [
+    "case_id", "pair_id", "pdb_id", "assembly_id", "model_id",
+    "receptor_chain_instances", "ligand", "site_definition_version",
+    "upstream_filter5_status", "processing4_status"
+  ],
+  "properties": {
+    "case_id": {"type": "string"},
+    "pair_id": {"type": "string"},
+    "pdb_id": {"type": "string"},
+    "assembly_id": {"type": "string"},
+    "model_id": {"type": "string"},
+    "receptor_chain_instances": {"type": "array", "items": {"type": "string"}},
+    "upstream_filter5_status": {"type": "string"},
+    "processing4_status": {
+      "enum": [
+        "P4_DOCKING_READY", "P4_RECONSTRUCTION_REVIEW",
+        "P4_LIGAND_START_GENERATION_FAILED", "P4_PREPARATION_REVIEW"
+      ]
+    }
+  }
+}

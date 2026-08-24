@@ -1,0 +1,48 @@
+{
+  "checks": {
+    "filter4_authoritative_sha256_failed_lines_zero": true,
+    "filter4_frozen_marker_present": true,
+    "filter4_inventory_pair_id_unique": true,
+    "filter4_inventory_rows_336412": true,
+    "filter4_pass_pair_id_unique": true,
+    "filter4_pass_rows_241545": true,
+    "filter4_pass_set_equals_filter5_step1_input": true,
+    "filter4_pass_sha_matches_filter5_provenance": true,
+    "filter4_transfer_rsync_dry_run_empty": true,
+    "filter4_validation_pass": true,
+    "filter5_retained_set_equals_processing4_input": true,
+    "filter5_step1_input_pair_id_unique": true
+  },
+  "filter4": {
+    "inventory_rows": 336412,
+    "pass_rows": 241545,
+    "pass_sha256": "e2e6db2012c4766c719c5fc5f9028b76604a0c98dc319941e20a90b7f243d3a0",
+    "run": "/home/linx/data/youcq/autodl-tmp/benchmark_1.0/filter_04_crystal_packing_influence/step_05_final_crystal_packing_decision/runs/step05_full_v1",
+    "validation_decision_counts": {
+      "PASS": 241545,
+      "REJECT": 94865,
+      "REVIEW": 2
+    }
+  },
+  "generated_at": "2026-08-22T11:10:10.472886+00:00",
+  "lineage_set_differences": {
+    "filter4_pass_vs_filter5_input": {
+      "common": 241545,
+      "filter4_only": 0,
+      "filter5_only": 0
+    },
+    "filter5_retained_vs_processing4_input": {
+      "common": 158226,
+      "filter5_only": 0,
+      "processing4_only": 0
+    }
+  },
+  "overall_pass": true,
+  "transfer": {
+    "destination": "/home/linx/data/youcq/autodl-tmp/benchmark_1.0/filter_04_crystal_packing_influence",
+    "post_transfer_rsync_differences": 0,
+    "source": "sbdx:/root/autodl-tmp/benchmark_1.0/filter_04_crystal_packing_influence/",
+    "transferred_bytes": 7069712815,
+    "transferred_files": 18752
+  }
+}

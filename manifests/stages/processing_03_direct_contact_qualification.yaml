@@ -1,0 +1,31 @@
+schema_version: 1
+stage: "processing_03_direct_contact_qualification"
+run_id: "20260811_full_01"
+status: "FROZEN"
+frozen: true
+data_relative_path: "processing_03_direct_contact_qualification/runs/20260811_full_01"
+input: "995,804 Processing 3-ready ligand placements"
+counts:
+  terminal_placements: 995804
+  ordinary_noncovalent_pairs: 744580
+  binding_residue_rows: 5060388
+  pocket_residue_rows: 12253890
+  qualifying_atomic_contacts: 24776920
+validation: "PASS"
+anchors:
+  -
+    relative_path: "processing_03_direct_contact_qualification/CURRENT_RUN.json"
+    exists: true
+    size_bytes: 250
+    sha256: "e35690c90f444ebb9ad82edff746169829e10cb219ce24e6b6dadb2219530818"
+  -
+    relative_path: "processing_03_direct_contact_qualification/runs/20260811_full_01/_FROZEN.json"
+    exists: true
+    size_bytes: 700
+    sha256: "ef83573cf10a10f10c5059808a3dedc26210a4b4ea745a7e5973f9905ec33896"
+  -
+    relative_path: "processing_03_direct_contact_qualification/runs/20260811_full_01/output/release_summary.json"
+    exists: true
+    size_bytes: 832
+    sha256: "3bedcfb64ba361426ae96c53600c1ac4dcd59fe93b55c6c6a0f4221664dc24ea"
+notes: "PLIP is validation-only and not an exclusion criterion in this frozen run."

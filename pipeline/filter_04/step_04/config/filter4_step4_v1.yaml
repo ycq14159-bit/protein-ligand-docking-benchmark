@@ -1,0 +1,36 @@
+stage:
+  name: filter_04_crystal_packing_influence
+  step: step_04_binding_residue_mediated_crystal_contact
+  version: 1.0.1
+
+input:
+  step3_run: /root/autodl-tmp/benchmark_1.0/filter_04_crystal_packing_influence/step_03_direct_ligand_crystal_contact/runs/step03_full_v2
+  step2_run: /root/autodl-tmp/benchmark_1.0/filter_04_crystal_packing_influence/step_02_biological_assembly_equivalence/runs/step02_full_v3
+  step1_work: /root/autodl-tmp/benchmark_1.0/filter_04_crystal_packing_influence/step_01_lattice_neighbor_search/runs/step01_full_v3/work
+  processing2_output: /root/autodl-tmp/benchmark_1.0/processing_2_assembly_ready_structure_preparation/runs/20260810_full_01/output
+  processing3_output: /root/autodl-tmp/benchmark_1.0/processing_03_direct_contact_qualification/runs/20260811_full_01/output
+  mmcif_root: /root/autodl-tmp/pdb_archive_v2/mmCIF
+
+contact:
+  cutoff_angstrom: 4.0
+  numerical_epsilon: 1.0e-12
+  min_distinct_external_heavy_atoms_per_unit: 2
+  heavy_atom_exclusions: [H, D, T]
+
+runtime:
+  workers: 7
+
+validation:
+  pairs: 336412
+  step4_pairs: 139403
+  direct_pairs: 57580
+  upstream_no_neighbor: 7663
+  upstream_no_external: 131764
+  ba_review: 2
+
+policy:
+  use_pocket6_pruning_if_subset_pass: true
+  recompute_binding_residues: false
+  recompute_pocket: false
+  multi_hop_propagation: false
+  severity_or_rejection: false

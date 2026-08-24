@@ -1,0 +1,63 @@
+stage:
+  name: filter_03_ground_truth_structure_quality_v2
+  version: 2.0.0
+  run_id: 20260814_full_01
+
+input:
+  processing3_output: /root/autodl-tmp/benchmark_1.0/processing_03_direct_contact_qualification/runs/20260811_full_01/output
+  processing3_run_id: 20260811_full_01
+  required_pair_status: FINAL_ORDINARY_NONCOVALENT_PAIR
+  expected_pair_count: 744580
+  processing2_output: /root/autodl-tmp/benchmark_1.0/processing_2_assembly_ready_structure_preparation/runs/20260810_full_01/output
+  processing2_run_id: 20260810_full_01
+  reusable_evidence_output: /root/autodl-tmp/benchmark_1.0/filter_03_ground_truth_structure_quality/runs/20260813_release_correction_02/output
+  reusable_evidence_run_id: 20260813_release_correction_02
+  mmcif_root: /root/autodl-tmp/pdb_archive_v2/mmCIF
+
+entry_thresholds:
+  resolution_max_angstrom: 3.0
+  r_work_max: 0.40
+  r_free_max: 0.45
+  r_free_minus_r_work_abs_max: 0.05
+
+density_thresholds:
+  ligand_rscc_min: 0.80
+  ligand_rsr_max: 0.30
+  pocket_mean_rscc_min: 0.80
+  pocket_mean_rsr_max: 0.30
+
+high_quality:
+  resolution_max_angstrom: 2.5
+  ligand_mean_occupancy_min: 0.80
+  pocket_mean_occupancy_min: 0.80
+
+pocket_completeness:
+  backbone_atoms: [N, CA, C, O]
+  nonbinding_total_missing_sidechain_reject_min: 3
+  nonbinding_per_residue_missing_sidechain_reject_min: 2
+
+binding_support:
+  residue_rscc_min: 0.80
+  residue_rsr_max: 0.30
+  supported_residues_per_chain_min: 2
+  supported_chains_per_pair_min: 1
+
+posebusters:
+  version: 0.6.5
+  fatal_checks: [sanitization, all_atoms_connected, no_radicals, internal_steric_clash]
+  warning_checks: [inchi_convertible, bond_lengths, bond_angles, aromatic_ring_flatness, non-aromatic_ring_non-flatness, double_bond_flatness]
+  energy_ratio_executed: false
+
+policy:
+  occupancy_is_hard_gate: false
+  ligand_completeness_rechecked: false
+  rsrz_affects_membership: false
+  non_xray_destination: FILTER3_NON_XRAY_PROTOCOL_PENDING
+  retained_statuses: [FILTER3_HIGH_QUALITY, FILTER3_GOOD_QUALITY]
+
+runtime:
+  workers: 8
+  bucket_start: 0
+  bucket_end: 255
+  resume: true
+

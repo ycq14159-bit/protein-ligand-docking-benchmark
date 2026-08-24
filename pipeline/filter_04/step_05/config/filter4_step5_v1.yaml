@@ -1,0 +1,18 @@
+stage:
+  name: filter_04_crystal_packing_influence
+  step: step_05_final_crystal_packing_decision
+  version: 1.0.0
+
+input:
+  step1_run: /root/autodl-tmp/benchmark_1.0/filter_04_crystal_packing_influence/step_01_lattice_neighbor_search/runs/step01_full_v3
+  step2_run: /root/autodl-tmp/benchmark_1.0/filter_04_crystal_packing_influence/step_02_biological_assembly_equivalence/runs/step02_full_v3
+  step3_run: /root/autodl-tmp/benchmark_1.0/filter_04_crystal_packing_influence/step_03_direct_ligand_crystal_contact/runs/step03_full_v2
+  step4_run: /root/autodl-tmp/benchmark_1.0/filter_04_crystal_packing_influence/step_04_binding_residue_mediated_crystal_contact/runs/step04_full_v2
+
+policy:
+  version: filter4_strict_benchmark_policy_v1.0.0
+  deterministic_mapping_only: true
+  new_contact_analysis: false
+  severity_thresholds: false
+  multi_hop_propagation: false
+  whole_pocket_propagation: false

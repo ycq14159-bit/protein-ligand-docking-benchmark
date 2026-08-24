@@ -1,0 +1,34 @@
+{
+  "decision_id": "filter3_posebusters_any_fail_reject_20260822",
+  "decision_status": "APPROVED_FOR_FORMAL_VERSIONED_RERUN",
+  "effective_rule": "Any failed PoseBusters check evaluated by the frozen Filter 3 PoseBusters check set causes FILTER3_REJECT.",
+  "approved_counts_from_exact_membership_audit": {
+    "filter3_high": 120297,
+    "filter3_good": 213146,
+    "filter3_eligible_total": 333443,
+    "filter4_pass_after_unchanged_pair_decision_restriction": 239397,
+    "filter5_retained_high": 48383,
+    "filter5_retained_good": 108238,
+    "filter5_retained_total": 156621,
+    "processing4_formal_target_input": 156621
+  },
+  "superseded_membership_for_new_work": {
+    "filter5_retained_total": 158226,
+    "processing4_input_total": 158226,
+    "disposition": "Retain as immutable historical frozen baseline; do not use as the current scientific-rule target."
+  },
+  "required_provenance": {
+    "preserve_old_frozen_runs": true,
+    "require_new_filter3_freeze": true,
+    "require_new_filter4_freeze": true,
+    "require_new_filter5_freeze": true,
+    "require_processing4_rebase_and_validation": true,
+    "prohibit_in_place_manifest_edits": true
+  },
+  "membership_transition": {
+    "common_with_old_processing4": 156602,
+    "old_only": 1624,
+    "new_only_replacement_representatives": 19,
+    "net_reduction": 1605
+  }
+}

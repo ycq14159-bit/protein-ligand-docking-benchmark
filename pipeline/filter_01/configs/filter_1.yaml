@@ -1,0 +1,19 @@
+project_root: /root/autodl-tmp/benchmark_1.0
+processing_1_manifest: /root/autodl-tmp/benchmark_1.0/processing_1_pdb_source_audit/release/processing_1_mmcif_index.tsv.gz
+raw_mmcif_root: /root/autodl-tmp/pdb_archive_v2/mmCIF
+output_root: /root/autodl-tmp/benchmark_1.0/filter_1_protein_receptor_qualification
+min_receptor_aa_length: 30
+polypeptide_types:
+- polypeptide(L)
+- polypeptide(D)
+sequence_length_source_priority:
+- entity_poly_seq
+- canonical_sequence_fallback
+assembly_policy:
+  use_deposited_biological_assemblies: true
+  silent_asu_fallback: false
+full_run:
+  workers: 16
+  batch_size: 250
+  checkpoint_interval: 250
+  resume: true

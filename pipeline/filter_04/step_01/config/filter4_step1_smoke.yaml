@@ -1,0 +1,39 @@
+stage:
+  name: filter_04_crystal_packing_influence
+  step: step_01_lattice_neighbor_search
+  version: 1.0.0
+input:
+  filter3_dataset: /root/autodl-tmp/benchmark_1.0/filter_03_ground_truth_structure_quality_v2/runs/20260814_full_01/output/filter3_pair_quality_v2
+  filter3_release_manifest: /root/autodl-tmp/benchmark_1.0/filter_03_ground_truth_structure_quality_v2/runs/20260814_full_01/release/output_manifest.tsv
+  processing2_output: /root/autodl-tmp/benchmark_1.0/processing_2_assembly_ready_structure_preparation/runs/20260810_full_01/output
+  processing3_output: /root/autodl-tmp/benchmark_1.0/processing_03_direct_contact_qualification/runs/20260811_full_01/output
+  step0b_audit: /root/autodl-tmp/benchmark_1.0/filter_04_crystal_packing_influence/audit/crystal_metadata_audit_v1
+  mmcif_root: /root/autodl-tmp/pdb_archive_v2/mmCIF
+  retained_statuses: [FILTER3_HIGH_QUALITY, FILTER3_GOOD_QUALITY]
+biojava:
+  version: 7.2.5
+  tag: biojava-7.2.5
+  commit: 5d047ab428b176a437131d31171c7f779caa239e
+  crystal_builder_sha256: 95c734ae867cd3df3f09fb818180801215564f8802e441b9db3f6d3cd096659b
+  java_executable: /root/miniconda3/envs/filter4-biojava-725/bin/java
+  jar: /root/autodl-tmp/benchmark_1.0/filter_04_crystal_packing_influence/step_01_lattice_neighbor_search/software/filter4-step1-lattice-search-1.0.0.jar
+search:
+  cutoff_angstrom: 6.0
+  exhaustive_num_cells: 20
+  production_cell_mode: auto
+pilot:
+  pdb_count: 1
+  reference_pdb_count: 1
+  compare_auto_exhaustive: true
+runtime:
+  workers: 1
+  java_xmx: 6g
+output:
+  root: /root/autodl-tmp/benchmark_1.0/filter_04_crystal_packing_influence/step_01_lattice_neighbor_search
+policy:
+  regenerate_biological_assembly: false
+  biological_assembly_equivalence: false
+  packing_interpretation: false
+  pair_rejection: false
+  target_frame_rmsd_tolerance: 0.0001
+  transform_tolerance: 0.00001

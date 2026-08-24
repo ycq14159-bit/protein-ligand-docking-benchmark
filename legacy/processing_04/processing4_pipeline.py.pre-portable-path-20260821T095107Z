@@ -1,0 +1,739 @@
+#!/usr/bin/env python3
+"""Processing 4: frozen docking-ready case construction.
+
+This stage is deliberately a serializer/preparation stage. All case, receptor,
+ligand, and pocket identities come from frozen upstream tables.
+"""
+
+from __future__ import annotations
+
+import argparse
+import csv
+import gzip
+import hashlib
+import json
+import math
+import os
+import shutil
+import sqlite3
+import sys
+import time
+import traceback
+from concurrent.futures import ProcessPoolExecutor, as_completed
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Iterable
+
+import gemmi
+import numpy as np
+import pandas as pd
+import pyarrow as pa
+import pyarrow.dataset as ds
+import pyarrow.parquet as pq
+import rdkit
+from rdkit import Chem
+from rdkit.Chem import AllChem
+
+
+BENCHMARK = Path("/root/autodl-tmp/benchmark_1.0")
+P2_RUN = BENCHMARK / "processing_2_assembly_ready_structure_preparation/runs/20260810_full_01"
+P3_RUN = BENCHMARK / "processing_03_direct_contact_qualification/runs/20260811_full_01"
+F5_RUN = BENCHMARK / "filter_05_equivalent_redocking_case/step_05_strict_equivalent_grouping_and_representative_selection/runs/step05_full_v1"
+F5_RETAINED = F5_RUN / "output/02_filter5_retained_pairs.tsv.gz"
+DEFAULT_CONFIG = BENCHMARK / "processing_04_docking_ready_case_construction/config/processing4_v1.json"
+CHAIN_CODES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+READY_FILES = (
+    "receptor.cif", "receptor.pdb", "ligand_reference.sdf", "ligand.smi",
+    "ligand_start.sdf", "site.json", "metadata.json",
+)
+
+
+def utc() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def atomic_json(path: Path, payload: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    os.replace(tmp, path)
+
+
+def atomic_parquet(path: Path, frame: pd.DataFrame) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(path.name + ".tmp")
+    pq.write_table(pa.Table.from_pandas(frame, preserve_index=False), tmp, compression="zstd")
+    os.replace(tmp, path)
+
+
+def sha256_file(path: Path, block: int = 8 << 20) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as fh:
+        while chunk := fh.read(block):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def stable_bucket(pdb_id: str, count: int = 256) -> int:
+    return int(hashlib.sha256(pdb_id.lower().encode()).hexdigest()[:8], 16) % count
+
+
+def case_id(pair_id: str, pdb_id: str) -> str:
+    return f"P4_{pdb_id.lower()}_{hashlib.sha256(pair_id.encode()).hexdigest()[:20]}"
+
+
+def read_config(path: Path) -> dict[str, Any]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    required = {
+        "policy_version", "schema_version", "site_definition_version",
+        "etkdg_random_seed", "uff_max_iterations", "bucket_count",
+    }
+    missing = required - payload.keys()
+    if missing:
+        raise ValueError(f"config missing keys: {sorted(missing)}")
+    return payload
+
+
+def dataset_table(path: Path, columns: list[str] | None = None) -> pa.Table:
+    if not path.exists():
+        raise FileNotFoundError(path)
+    return ds.dataset(str(path), format="parquet").to_table(columns=columns)
+
+
+def prepare_run(args: argparse.Namespace) -> None:
+    run = Path(args.run_dir).resolve()
+    if (run / "_FROZEN.json").exists():
+        raise RuntimeError("refusing to modify frozen run")
+    config_path = Path(args.config).resolve()
+    config = read_config(config_path)
+    run.mkdir(parents=True, exist_ok=True)
+    (run / "input").mkdir(exist_ok=True)
+    (run / "output/cases").mkdir(parents=True, exist_ok=True)
+    (run / "work/buckets").mkdir(parents=True, exist_ok=True)
+    (run / "logs").mkdir(exist_ok=True)
+
+    retained = pd.read_csv(F5_RETAINED, sep="\t", compression="gzip", dtype=str).fillna("")
+    if len(retained) != 158226 or not retained["pair_id"].is_unique:
+        raise RuntimeError(f"unexpected Filter 5 retained inventory: {len(retained)}")
+    if args.mode == "smoke":
+        retained["_score"] = retained["pair_id"].map(
+            lambda x: hashlib.sha256(("processing4-smoke-v1|" + x).encode()).hexdigest()
+        )
+        retained = retained.sort_values("_score").head(args.limit).drop(columns="_score")
+    elif args.mode != "full":
+        raise ValueError(args.mode)
+
+    pairs = dataset_table(P3_RUN / "output/provisional_pairs").to_pandas()
+    pairs = pairs[pairs["pair_id"].isin(set(retained["pair_id"]))].copy()
+    merged = retained.merge(pairs, on="pair_id", how="left", validate="one_to_one")
+    missing = merged["ligand_assembly_placement_id"].isna()
+    if missing.any():
+        raise RuntimeError(f"{int(missing.sum())} retained pairs missing from frozen P3")
+    merged["bucket_id"] = merged["pdb_id"].map(lambda x: stable_bucket(str(x), config["bucket_count"]))
+    merged["case_id"] = [case_id(p, q) for p, q in zip(merged["pair_id"], merged["pdb_id"])]
+    if not merged["case_id"].is_unique:
+        raise RuntimeError("case_id collision")
+    merged = merged.sort_values(["bucket_id", "case_id"]).reset_index(drop=True)
+    atomic_parquet(run / "input/case_inventory.parquet", merged)
+    shutil.copy2(config_path, run / "input/config_snapshot.json")
+    provenance = {
+        "stage": "processing4_v1.0.0", "created_at": utc(), "mode": args.mode,
+        "expected_case_count": int(len(merged)), "filter5_retained_count": 158226,
+        "inputs": {
+            "filter5_retained": str(F5_RETAINED),
+            "filter5_retained_sha256": sha256_file(F5_RETAINED),
+            "filter5_frozen_marker": str(F5_RUN / "_FROZEN.json"),
+            "processing3_frozen_marker": str(P3_RUN / "_FROZEN.json"),
+            "processing2_frozen_marker": str(P2_RUN / "_FROZEN.json"),
+        },
+        "versions": {"python": sys.version, "rdkit": rdkit.__version__,
+                     "pyarrow": pa.__version__, "gemmi": gemmi.__version__},
+        "prohibited_reruns": ["PLIP", "Arpeggio", "pocket_detection", "crystal_packing", "Filter5_deduplication"],
+    }
+    atomic_json(run / "input/provenance.json", provenance)
+    atomic_json(run / "status.json", {"status": "PREPARED", "mode": args.mode,
+                                      "case_count": len(merged), "created_at": utc()})
+    print(json.dumps({"run_dir": str(run), "cases": len(merged),
+                      "buckets": int(merged["bucket_id"].nunique())}, indent=2))
+
+
+class CCDStore:
+    def __init__(self, path: Path):
+        self.conn = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
+        self.cache: dict[str, dict[str, Any]] = {}
+
+    def component(self, component_id: str) -> dict[str, Any]:
+        if component_id in self.cache:
+            return self.cache[component_id]
+        comp = self.conn.execute(
+            "select formal_charge,descriptor_smiles_canonical,descriptor_smiles,descriptor_inchikey "
+            "from components where component_id=?", (component_id,)
+        ).fetchone()
+        if comp is None:
+            raise ValueError(f"CCD component missing: {component_id}")
+        atoms = self.conn.execute(
+            "select atom_id,element,charge,aromatic_flag,stereo_config,ordinal from atoms "
+            "where component_id=? order by ordinal", (component_id,)
+        ).fetchall()
+        bonds = self.conn.execute(
+            "select atom_id_1,atom_id_2,bond_order,aromatic_flag,stereo_config,ordinal from bonds "
+            "where component_id=? order by ordinal", (component_id,)
+        ).fetchall()
+        out = {"formal_charge": int(comp[0]), "descriptor": clean_descriptor(comp[1] or comp[2]),
+               "inchikey": comp[3] or "", "atoms": atoms, "bonds": bonds}
+        self.cache[component_id] = out
+        return out
+
+
+def clean_descriptor(value: str) -> str:
+    value = (value or "").strip()
+    if len(value) >= 2 and value[0] == value[-1] == '"':
+        try:
+            return json.loads(value)
+        except Exception:
+            return value[1:-1]
+    return value
+
+
+def build_frozen_ligand(atom_rows: pd.DataFrame, bond_rows: pd.DataFrame,
+                        ccd: dict[str, Any]) -> tuple[Chem.Mol, dict[str, Any]]:
+    coord_by_name = {
+        str(r.label_atom_id): (str(r.type_symbol), float(r.Cartn_x), float(r.Cartn_y), float(r.Cartn_z))
+        for r in atom_rows.itertuples()
+    }
+    observed = set(coord_by_name)
+    observed_heavy = {name for name, values in coord_by_name.items() if values[0].upper() != "H"}
+    ccd_atoms = [r for r in ccd["atoms"] if r[0] in observed_heavy and str(r[1]).upper() != "H"]
+    rw = Chem.RWMol()
+    ccd_index: dict[str, int] = {}
+    aromatic_names: set[str] = set()
+    for name, element, charge, aromatic, _stereo, _ordinal in ccd_atoms:
+        atom = Chem.Atom(str(element).title())
+        atom.SetFormalCharge(int(charge))
+        atom.SetProp("_CCD_ATOM_ID", str(name))
+        if str(aromatic).upper() == "Y":
+            atom.SetIsAromatic(True)
+            aromatic_names.add(str(name))
+        ccd_index[str(name)] = rw.AddAtom(atom)
+    bond_types = {"SING": Chem.BondType.SINGLE, "DOUB": Chem.BondType.DOUBLE,
+                  "TRIP": Chem.BondType.TRIPLE, "AROM": Chem.BondType.AROMATIC}
+    for r in bond_rows.sort_values("bond_index").itertuples():
+        a, b = str(r.atom_id_1), str(r.atom_id_2)
+        if a not in ccd_index or b not in ccd_index:
+            continue
+        aromatic = str(r.aromatic_flag).upper() == "Y"
+        bt = Chem.BondType.AROMATIC if aromatic else bond_types.get(str(r.bond_order).upper())
+        if bt is None:
+            raise ValueError(f"unsupported bond order {r.bond_order}")
+        rw.AddBond(ccd_index[a], ccd_index[b], bt)
+        if aromatic:
+            rw.GetAtomWithIdx(ccd_index[a]).SetIsAromatic(True)
+            rw.GetAtomWithIdx(ccd_index[b]).SetIsAromatic(True)
+    mapped = rw.GetMol()
+    Chem.SanitizeMol(mapped)
+
+    descriptor = Chem.MolFromSmiles(ccd["descriptor"]) if ccd["descriptor"] else None
+    if descriptor is None:
+        raise ValueError("CCD canonical descriptor SMILES missing or unparseable")
+    descriptor = Chem.RemoveHs(descriptor)
+    match = mapped.GetSubstructMatch(descriptor, useChirality=False)
+    if not match or len(match) != descriptor.GetNumAtoms():
+        raise ValueError("CCD descriptor graph cannot be mapped to frozen observed graph")
+    mol = Chem.Mol(descriptor)
+    conf = Chem.Conformer(mol.GetNumAtoms())
+    atom_map: list[str] = []
+    for qidx, midx in enumerate(match):
+        name = mapped.GetAtomWithIdx(midx).GetProp("_CCD_ATOM_ID")
+        element, x, y, z = coord_by_name[name]
+        if mol.GetAtomWithIdx(qidx).GetSymbol().upper() != element.upper():
+            raise ValueError(f"element mismatch at {name}")
+        mol.GetAtomWithIdx(qidx).SetProp("_CCD_ATOM_ID", name)
+        conf.SetAtomPosition(qidx, (x, y, z))
+        atom_map.append(name)
+    mol.AddConformer(conf, assignId=True)
+    Chem.AssignStereochemistry(mol, cleanIt=True, force=True)
+    if Chem.GetFormalCharge(mol) != int(ccd["formal_charge"]):
+        raise ValueError("formal charge mismatch against CCD")
+    if len(atom_map) != len(observed_heavy):
+        raise ValueError("heavy atom mapping does not close")
+    return mol, {"ccd_atom_order": atom_map, "ccd_inchikey": ccd["inchikey"]}
+
+
+def graph_key(mol: Chem.Mol, stereo_source: Chem.Mol | None = None) -> str:
+    copy = Chem.RemoveHs(Chem.Mol(mol))
+    copy.RemoveAllConformers()
+    if stereo_source is not None:
+        source = Chem.RemoveHs(Chem.Mol(stereo_source))
+        source.RemoveAllConformers()
+        match = copy.GetSubstructMatch(source, useChirality=False)
+        if not match or len(match) != source.GetNumAtoms():
+            raise RuntimeError("candidate graph cannot be mapped to frozen stereo source")
+        for source_idx, candidate_idx in enumerate(match):
+            source_atom = source.GetAtomWithIdx(source_idx)
+            if source_atom.GetChiralTag() == Chem.ChiralType.CHI_UNSPECIFIED:
+                copy.GetAtomWithIdx(candidate_idx).SetChiralTag(Chem.ChiralType.CHI_UNSPECIFIED)
+        for source_bond in source.GetBonds():
+            a = match[source_bond.GetBeginAtomIdx()]
+            b = match[source_bond.GetEndAtomIdx()]
+            candidate_bond = copy.GetBondBetweenAtoms(a, b)
+            if source_bond.GetStereo() in (Chem.BondStereo.STEREONONE, Chem.BondStereo.STEREOANY):
+                candidate_bond.SetStereo(Chem.BondStereo.STEREONONE)
+    return Chem.MolToSmiles(copy, canonical=True, isomericSmiles=True)
+
+
+def write_sdf(path: Path, mol: Chem.Mol, case: str, role: str) -> None:
+    obj = Chem.Mol(mol)
+    obj.SetProp("_Name", case)
+    obj.SetProp("PROCESSING4_ROLE", role)
+    writer = Chem.SDWriter(str(path))
+    writer.write(obj)
+    writer.close()
+    if not path.exists() or path.stat().st_size == 0:
+        raise RuntimeError(f"empty SDF: {path}")
+
+
+def independent_start(graph_mol: Chem.Mol, config: dict[str, Any]) -> tuple[Chem.Mol, int]:
+    base = Chem.Mol(graph_mol)
+    base.RemoveAllConformers()
+    if base.GetNumConformers() != 0:
+        raise RuntimeError("coordinate removal failed")
+    with_h = Chem.AddHs(base)
+    params = AllChem.ETKDGv3()
+    params.randomSeed = int(config["etkdg_random_seed"])
+    params.enforceChirality = bool(config["etkdg_enforce_chirality"])
+    params.numThreads = 1
+    code = AllChem.EmbedMolecule(with_h, params)
+    if code != 0:
+        raise RuntimeError(f"ETKDGv3 returned {code}")
+    if not AllChem.UFFHasAllMoleculeParams(with_h):
+        raise RuntimeError("UFF parameters unavailable")
+    uff_code = AllChem.UFFOptimizeMolecule(with_h, maxIters=int(config["uff_max_iterations"]))
+    start = Chem.RemoveHs(with_h)
+    if start.GetNumAtoms() != base.GetNumAtoms():
+        raise RuntimeError("RemoveHs changed heavy atom count")
+    return start, int(uff_code)
+
+
+def parse_int(value: Any, fallback: int) -> int:
+    text = str(value).strip()
+    try:
+        return int(float(text))
+    except Exception:
+        return fallback
+
+
+def normalized_icode(value: Any) -> str:
+    text = str(value or "").strip()
+    if text in {"", ".", "?", "False", "None", "nan"}:
+        return " "
+    return text[0]
+
+
+def build_receptor_structure(rec_rows: pd.DataFrame, chain_ids: list[str]) -> tuple[gemmi.Structure, dict[str, str]]:
+    if len(chain_ids) > len(CHAIN_CODES):
+        raise ValueError("receptor has more than 62 chain instances; PDB compatibility unavailable")
+    structure = gemmi.Structure()
+    structure.name = "processing4_receptor"
+    model = gemmi.Model("1")
+    chain_map: dict[str, str] = {}
+    serial = 1
+    for chain_pos, chain_instance in enumerate(chain_ids):
+        rows = rec_rows[rec_rows["filter_1_chain_instance_id"].astype(str) == chain_instance].copy()
+        if rows.empty:
+            raise ValueError(f"missing receptor chain instance {chain_instance}")
+        out_chain = CHAIN_CODES[chain_pos]
+        chain_map[chain_instance] = out_chain
+        chain = gemmi.Chain(out_chain)
+        residue_cols = ["label_seq_id", "auth_seq_id", "insertion_code", "label_comp_id"]
+        for res_pos, (_key, group) in enumerate(rows.groupby(residue_cols, sort=False, dropna=False), start=1):
+            first = group.iloc[0]
+            residue = gemmi.Residue()
+            residue.name = str(first["label_comp_id"] or first["auth_comp_id"])
+            seqnum = parse_int(first["auth_seq_id"], parse_int(first["label_seq_id"], res_pos))
+            residue.seqid = gemmi.SeqId(seqnum, normalized_icode(first["insertion_code"]))
+            label_seq = parse_int(first["label_seq_id"], res_pos)
+            if label_seq > 0:
+                residue.label_seq = label_seq
+            for row in group.itertuples():
+                atom = gemmi.Atom()
+                atom.name = str(row.label_atom_id)
+                atom.element = gemmi.Element(str(row.type_symbol).title())
+                atom.pos = gemmi.Position(float(row.Cartn_x), float(row.Cartn_y), float(row.Cartn_z))
+                atom.occ = float(row.occupancy) if pd.notna(row.occupancy) else 1.0
+                atom.b_iso = float(row.B_iso_or_equiv) if pd.notna(row.B_iso_or_equiv) else 0.0
+                atom.serial = serial
+                serial += 1
+                residue.add_atom(atom)
+            chain.add_residue(residue)
+        model.add_chain(chain)
+    structure.add_model(model)
+    return structure, chain_map
+
+
+def structure_heavy_coordinates(path: Path) -> np.ndarray:
+    st = gemmi.read_structure(str(path))
+    coords = []
+    for model in st:
+        for chain in model:
+            for residue in chain:
+                for atom in residue:
+                    if atom.element.name.upper() != "H":
+                        coords.append((atom.pos.x, atom.pos.y, atom.pos.z))
+    return np.asarray(coords, dtype=float)
+
+
+def receptor_source_coordinates(rec_rows: pd.DataFrame, chain_ids: list[str]) -> np.ndarray:
+    coords = []
+    for cid in chain_ids:
+        rows = rec_rows[rec_rows["filter_1_chain_instance_id"].astype(str) == cid]
+        for r in rows.itertuples():
+            if str(r.type_symbol).upper() != "H":
+                coords.append((float(r.Cartn_x), float(r.Cartn_y), float(r.Cartn_z)))
+    return np.asarray(coords, dtype=float)
+
+
+def native_site(atom_rows: pd.DataFrame, config: dict[str, Any]) -> dict[str, Any]:
+    heavy = atom_rows[atom_rows["type_symbol"].astype(str).str.upper() != "H"]
+    xyz = heavy[["Cartn_x", "Cartn_y", "Cartn_z"]].astype(float).to_numpy()
+    if len(xyz) == 0 or not np.isfinite(xyz).all():
+        raise ValueError("native ligand heavy coordinates missing/non-finite")
+    lo, hi = xyz.min(axis=0), xyz.max(axis=0)
+    center = (lo + hi) / 2.0
+    extent = hi - lo
+    margin = float(config["site_margin_angstrom_per_side"])
+    minimum = float(config["site_minimum_dimension_angstrom"])
+    size = np.maximum(extent + 2.0 * margin, minimum)
+    if not np.all(size > 0) or np.any(lo < center - size / 2.0 - 1e-8) or np.any(hi > center + size / 2.0 + 1e-8):
+        raise RuntimeError("site box does not cover native ligand")
+    return {
+        "site_center": {"x": float(center[0]), "y": float(center[1]), "z": float(center[2])},
+        "search_box": {"size_x": float(size[0]), "size_y": float(size[1]), "size_z": float(size[2])},
+        "definition": "native_ligand_based",
+        "center_policy": config["site_center"],
+        "margin_angstrom_per_side": margin,
+        "minimum_dimension_angstrom": minimum,
+        "site_definition_version": config["site_definition_version"],
+    }
+
+
+def load_sdf_one(path: Path) -> Chem.Mol:
+    supplier = Chem.SDMolSupplier(str(path), removeHs=True, sanitize=True)
+    mols = [m for m in supplier if m is not None]
+    if len(mols) != 1:
+        raise RuntimeError(f"expected one parseable molecule in {path.name}")
+    return mols[0]
+
+
+def create_case(tmp: Path, case_row: pd.Series, rec_rows: pd.DataFrame,
+                lig_atoms: pd.DataFrame, lig_bonds: pd.DataFrame,
+                pocket: pd.DataFrame, binding: pd.DataFrame,
+                ccd_store: CCDStore, config: dict[str, Any]) -> dict[str, Any]:
+    pair_id = str(case_row["pair_id"])
+    cid = str(case_row["case_id"])
+    chain_ids = [x for x in str(case_row["receptor_chain_instance_ids"]).split(",") if x]
+    if len(chain_ids) != int(case_row["receptor_chain_count"]):
+        raise ValueError("receptor chain count does not close")
+    placement = str(case_row["ligand_assembly_placement_id"])
+    component = str(case_row["component_id"])
+    if lig_atoms.empty or lig_bonds.empty:
+        raise ValueError("frozen ligand atoms/bonds missing")
+    if set(lig_atoms["filter_2_ligand_assembly_placement_id"].astype(str)) != {placement}:
+        raise ValueError("ligand placement reconstruction mismatch")
+    present_chains = set(rec_rows["filter_1_chain_instance_id"].astype(str))
+    if present_chains != set(chain_ids):
+        raise ValueError("receptor chain instance reconstruction mismatch")
+
+    structure, chain_map = build_receptor_structure(rec_rows, chain_ids)
+    structure.make_mmcif_document().write_file(str(tmp / "receptor.cif"))
+    structure.write_pdb(str(tmp / "receptor.pdb"))
+    source_xyz = receptor_source_coordinates(rec_rows, chain_ids)
+    cif_xyz = structure_heavy_coordinates(tmp / "receptor.cif")
+    pdb_xyz = structure_heavy_coordinates(tmp / "receptor.pdb")
+    if source_xyz.shape != cif_xyz.shape or source_xyz.shape != pdb_xyz.shape:
+        raise RuntimeError("receptor parsed heavy atom count mismatch")
+    cif_delta = float(np.max(np.abs(source_xyz - cif_xyz))) if len(source_xyz) else 0.0
+    pdb_delta = float(np.max(np.abs(source_xyz - pdb_xyz))) if len(source_xyz) else 0.0
+    if cif_delta > float(config["coordinate_tolerance_cif_angstrom"]):
+        raise RuntimeError(f"CIF receptor coordinate delta {cif_delta}")
+    if pdb_delta > float(config["coordinate_tolerance_pdb_angstrom"]):
+        raise RuntimeError(f"PDB receptor coordinate delta {pdb_delta}")
+
+    mol_ref, ligand_info = build_frozen_ligand(lig_atoms, lig_bonds, ccd_store.component(component))
+    frozen_key = graph_key(mol_ref)
+    frozen_stereo_source = Chem.MolFromSmiles(frozen_key)
+    if frozen_stereo_source is None:
+        raise RuntimeError("frozen canonical isomeric SMILES cannot be parsed")
+    write_sdf(tmp / "ligand_reference.sdf", mol_ref, cid, "experimental_native_pose")
+    (tmp / "ligand.smi").write_text(f"{frozen_key}\t{cid}\n", encoding="utf-8")
+    graph_only = Chem.Mol(mol_ref)
+    graph_only.RemoveAllConformers()
+    try:
+        mol_start, uff_code = independent_start(graph_only, config)
+    except Exception as exc:
+        raise LigandStartFailure(str(exc)) from exc
+    write_sdf(tmp / "ligand_start.sdf", mol_start, cid, "independent_etkdgv3_uff_start")
+
+    ref_parsed = load_sdf_one(tmp / "ligand_reference.sdf")
+    start_parsed = load_sdf_one(tmp / "ligand_start.sdf")
+    smi_text = (tmp / "ligand.smi").read_text(encoding="utf-8").split("\t", 1)[0]
+    smi_parsed = Chem.MolFromSmiles(smi_text)
+    if smi_parsed is None:
+        raise RuntimeError("ligand.smi parse failed")
+    keys = {
+        graph_key(ref_parsed, frozen_stereo_source),
+        graph_key(start_parsed, frozen_stereo_source),
+        graph_key(smi_parsed, frozen_stereo_source),
+        frozen_key,
+    }
+    if len(keys) != 1:
+        raise RuntimeError(f"ligand graph identity mismatch: {sorted(keys)}")
+    input_native = np.asarray([
+        (float(r.Cartn_x), float(r.Cartn_y), float(r.Cartn_z))
+        for r in lig_atoms.set_index("label_atom_id").loc[ligand_info["ccd_atom_order"]].itertuples()
+    ])
+    ref_conf = ref_parsed.GetConformer()
+    parsed_native = np.asarray([tuple(ref_conf.GetAtomPosition(i)) for i in range(ref_parsed.GetNumAtoms())])
+    native_delta = float(np.max(np.abs(input_native - parsed_native)))
+    if native_delta > 0.00011:
+        raise RuntimeError(f"ligand reference coordinate delta {native_delta}")
+
+    site = native_site(lig_atoms, config)
+    site["case_id"] = cid
+    site["pair_id"] = pair_id
+    site["pocket_residue_ids"] = sorted(set(
+        str(r.chain_instance_id) + "|" + str(r.protein_residue_id) for r in pocket.itertuples()
+    ))
+    atomic_json(tmp / "site.json", site)
+    binding_ids = sorted(set(
+        str(r.chain_instance_id) + "|" + str(r.protein_residue_id) for r in binding.itertuples()
+    ))
+    metadata = {
+        "case_id": cid, "pair_id": pair_id, "pdb_id": str(case_row["pdb_id"]),
+        "assembly_id": str(case_row["assembly_id"]), "model_id": str(case_row["model_id"]),
+        "receptor_chain_instances": chain_ids, "receptor_chain_file_mapping": chain_map,
+        "receptor_heavy_atom_count": int(len(source_xyz)),
+        "receptor_coordinate_max_delta_cif_angstrom": cif_delta,
+        "receptor_coordinate_max_delta_pdb_angstrom": pdb_delta,
+        "ligand": {"placement_id": placement, "component_id": component,
+                   "formal_charge": int(Chem.GetFormalCharge(mol_ref)),
+                   "heavy_atom_count": mol_ref.GetNumHeavyAtoms(), "canonical_isomeric_smiles": frozen_key,
+                   "experimental_coordinate_max_delta_angstrom": native_delta, **ligand_info},
+        "binding_residue_ids": binding_ids,
+        "pocket_residue_ids": site["pocket_residue_ids"],
+        "receptor_format_version": config["receptor_format_version"],
+        "ligand_format_version": config["ligand_format_version"],
+        "rdkit_version": rdkit.__version__, "ETKDG_version": config["etkdg_version"],
+        "ETKDG_seed": config["etkdg_random_seed"], "ETKDG_enforce_chirality": config["etkdg_enforce_chirality"],
+        "UFF_parameters": {"max_iterations": config["uff_max_iterations"], "return_code": uff_code},
+        "site_definition_version": config["site_definition_version"],
+        "upstream_filter5_status": str(case_row["filter5_final_status"]),
+        "processing4_status": "P4_DOCKING_READY",
+        "native_pose_leakage_control": "start_function_received_coordinate_free_graph_only; no fallback",
+        "created_at": utc(),
+    }
+    atomic_json(tmp / "metadata.json", metadata)
+    for filename in READY_FILES:
+        if not (tmp / filename).is_file() or (tmp / filename).stat().st_size == 0:
+            raise RuntimeError(f"missing/empty required file {filename}")
+    sums = {f: sha256_file(tmp / f) for f in READY_FILES}
+    atomic_json(tmp / "_SUCCESS.json", {"status": "P4_DOCKING_READY", "sha256": sums, "created_at": utc()})
+    return {"case_id": cid, "pair_id": pair_id, "status": "P4_DOCKING_READY", "reason": "",
+            "receptor_atoms": int(len(source_xyz)), "ligand_heavy_atoms": int(mol_ref.GetNumHeavyAtoms())}
+
+
+class LigandStartFailure(RuntimeError):
+    pass
+
+
+def bucket_paths(run: Path, bid: int) -> tuple[Path, Path]:
+    return run / f"output/cases/bucket_{bid:03d}", run / f"work/buckets/bucket_{bid:03d}.parquet"
+
+
+def read_partition(root: Path, bid: int) -> pd.DataFrame:
+    path = root / f"bucket_id={bid:03d}"
+    if not path.exists():
+        return pd.DataFrame()
+    return dataset_table(path).to_pandas()
+
+
+def run_bucket(run_dir: str, bid: int, force: bool = False,
+               retry_nonready: bool = False) -> dict[str, Any]:
+    started = time.time()
+    run = Path(run_dir)
+    config = read_config(run / "input/config_snapshot.json")
+    inventory = pq.read_table(run / "input/case_inventory.parquet",
+                              filters=[("bucket_id", "=", bid)]).to_pandas()
+    if inventory.empty:
+        return {"bucket_id": bid, "cases": 0, "ready": 0, "review": 0, "seconds": 0.0}
+    case_root, status_path = bucket_paths(run, bid)
+    case_root.mkdir(parents=True, exist_ok=True)
+
+    p2out = P2_RUN / "output"
+    p3out = P3_RUN / "output"
+    lig_atoms = read_partition(p2out / "prepared_ligand_assembly_atoms", bid)
+    lig_bonds = read_partition(p2out / "prepared_ligand_assembly_bonds", bid)
+    rec_atoms = read_partition(p2out / "prepared_receptor_assembly_atoms", bid)
+    pocket = read_partition(p3out / "pair_pocket_residues", bid)
+    binding = read_partition(p3out / "binding_residues", bid)
+    ccd = CCDStore(P2_RUN / "input/ccd_active_snapshot.sqlite")
+    results: list[dict[str, Any]] = []
+    for _, row in inventory.iterrows():
+        cid = str(row["case_id"])
+        target = case_root / cid
+        if (target / "_SUCCESS.json").exists() and not force:
+            results.append({"case_id": cid, "pair_id": row["pair_id"], "status": "P4_DOCKING_READY",
+                            "reason": "RESUMED_EXISTING_SUCCESS", "receptor_atoms": None, "ligand_heavy_atoms": None})
+            continue
+        if target.exists() and not force and not retry_nonready:
+            results.append({"case_id": cid, "pair_id": row["pair_id"], "status": "P4_PREPARATION_REVIEW",
+                            "reason": "EXISTING_NON_SUCCESS_CASE_REQUIRES_FORCE", "receptor_atoms": None,
+                            "ligand_heavy_atoms": None})
+            continue
+        tmp = case_root / ("." + cid + f".tmp-{os.getpid()}")
+        if tmp.exists():
+            shutil.rmtree(tmp)
+        tmp.mkdir()
+        placement = str(row["ligand_assembly_placement_id"])
+        chains = [x for x in str(row["receptor_chain_instance_ids"]).split(",") if x]
+        try:
+            result = create_case(
+                tmp, row,
+                rec_atoms[rec_atoms["filter_1_chain_instance_id"].astype(str).isin(chains)],
+                lig_atoms[lig_atoms["filter_2_ligand_assembly_placement_id"].astype(str) == placement],
+                lig_bonds[lig_bonds["filter_2_ligand_assembly_placement_id"].astype(str) == placement],
+                pocket[pocket["pair_id"].astype(str) == str(row["pair_id"])] if not pocket.empty else pocket,
+                binding[binding["ligand_assembly_placement_id"].astype(str) == placement] if not binding.empty else binding,
+                ccd, config,
+            )
+        except Exception as exc:
+            status = "P4_LIGAND_START_GENERATION_FAILED" if isinstance(exc, LigandStartFailure) else "P4_PREPARATION_REVIEW"
+            error = f"{type(exc).__name__}: {exc}"[:4000]
+            atomic_json(tmp / "metadata.json", {"case_id": cid, "pair_id": str(row["pair_id"]),
+                                                "pdb_id": str(row["pdb_id"]), "processing4_status": status,
+                                                "error": error, "created_at": utc()})
+            atomic_json(tmp / "_REVIEW.json", {"status": status, "error": error,
+                                               "traceback": traceback.format_exc(limit=8), "created_at": utc()})
+            result = {"case_id": cid, "pair_id": row["pair_id"], "status": status, "reason": error,
+                      "receptor_atoms": None, "ligand_heavy_atoms": None}
+        if target.exists() and (force or retry_nonready):
+            backup_root = run / f"work/superseded_nonready/bucket_{bid:03d}"
+            backup_root.mkdir(parents=True, exist_ok=True)
+            backup = backup_root / (target.name + ".superseded-" + datetime.now().strftime("%Y%m%d%H%M%S"))
+            os.replace(target, backup)
+        os.replace(tmp, target)
+        results.append(result)
+    atomic_parquet(status_path, pd.DataFrame(results))
+    ready = sum(r["status"] == "P4_DOCKING_READY" for r in results)
+    return {"bucket_id": bid, "cases": len(results), "ready": ready,
+            "review": len(results) - ready, "seconds": time.time() - started}
+
+
+def run_command(args: argparse.Namespace) -> None:
+    run = Path(args.run_dir).resolve()
+    if (run / "_FROZEN.json").exists():
+        raise RuntimeError("refusing to execute frozen run")
+    inv = pq.read_table(run / "input/case_inventory.parquet", columns=["bucket_id"]).to_pandas()
+    buckets = sorted(set(int(x) for x in inv["bucket_id"]))
+    if args.bucket is not None:
+        buckets = [int(args.bucket)]
+    summaries = []
+    if args.workers == 1 or len(buckets) == 1:
+        for bid in buckets:
+            summary = run_bucket(str(run), bid, args.force, args.retry_nonready)
+            summaries.append(summary)
+            print(json.dumps(summary), flush=True)
+    else:
+        with ProcessPoolExecutor(max_workers=args.workers) as pool:
+            futures = {pool.submit(run_bucket, str(run), bid, args.force, args.retry_nonready): bid for bid in buckets}
+            for future in as_completed(futures):
+                summary = future.result()
+                summaries.append(summary)
+                print(json.dumps(summary), flush=True)
+    atomic_json(run / "run_summary.json", {"status": "EXECUTED", "finished_at": utc(),
+                                           "buckets": sorted(summaries, key=lambda x: x["bucket_id"])})
+
+
+def validate_command(args: argparse.Namespace) -> None:
+    run = Path(args.run_dir).resolve()
+    inventory = pq.read_table(run / "input/case_inventory.parquet").to_pandas()
+    status_files = sorted((run / "work/buckets").glob("bucket_*.parquet"))
+    statuses = pd.concat([pq.read_table(p).to_pandas() for p in status_files], ignore_index=True) if status_files else pd.DataFrame()
+    duplicated = int(statuses["case_id"].duplicated().sum()) if not statuses.empty else 0
+    missing = sorted(set(inventory["case_id"]) - set(statuses.get("case_id", [])))
+    extras = sorted(set(statuses.get("case_id", [])) - set(inventory["case_id"]))
+    counts = statuses["status"].value_counts().to_dict() if not statuses.empty else {}
+    ready_file_errors = []
+    case_to_bucket = dict(zip(inventory["case_id"].astype(str), inventory["bucket_id"].astype(int)))
+    for row in statuses[statuses["status"] == "P4_DOCKING_READY"].itertuples() if not statuses.empty else []:
+        bid = case_to_bucket[str(row.case_id)]
+        root = run / f"output/cases/bucket_{bid:03d}" / row.case_id
+        absent = [f for f in READY_FILES if not (root / f).is_file()]
+        if absent or not (root / "_SUCCESS.json").is_file():
+            ready_file_errors.append({"case_id": row.case_id, "missing": absent})
+    report = {
+        "status": "PASS" if not missing and not extras and duplicated == 0 and not ready_file_errors else "FAIL",
+        "expected_cases": len(inventory), "status_rows": len(statuses), "status_counts": counts,
+        "missing_case_count": len(missing), "extra_case_count": len(extras), "duplicate_case_count": duplicated,
+        "ready_file_error_count": len(ready_file_errors), "missing_examples": missing[:20],
+        "ready_file_error_examples": ready_file_errors[:20], "validated_at": utc(),
+    }
+    atomic_json(run / "validation/validation.json", report)
+    if len(statuses):
+        atomic_parquet(run / "output/processing4_case_inventory.parquet", statuses.sort_values("case_id"))
+    print(json.dumps(report, indent=2))
+    if report["status"] != "PASS":
+        raise SystemExit(2)
+
+
+def freeze_command(args: argparse.Namespace) -> None:
+    run = Path(args.run_dir).resolve()
+    validation = json.loads((run / "validation/validation.json").read_text())
+    if validation["status"] != "PASS":
+        raise RuntimeError("validation is not PASS")
+    config = read_config(run / "input/config_snapshot.json")
+    if str(config["policy_version"]).endswith("-pilot") and not args.allow_pilot:
+        raise RuntimeError("pilot policy cannot be formally frozen without --allow-pilot")
+    manifest = []
+    for path in sorted((run / "output").rglob("*")):
+        if path.is_file():
+            manifest.append({"relative_path": str(path.relative_to(run)), "size_bytes": path.stat().st_size,
+                             "sha256": sha256_file(path)})
+    atomic_parquet(run / "output_manifest.parquet", pd.DataFrame(manifest))
+    marker = {"status": "FROZEN", "stage": "processing4_v1.0.0", "frozen_at": utc(),
+              "validation_sha256": sha256_file(run / "validation/validation.json"),
+              "output_manifest_sha256": sha256_file(run / "output_manifest.parquet")}
+    atomic_json(run / "_FROZEN.json", marker)
+    print(json.dumps(marker, indent=2))
+
+
+def parser() -> argparse.ArgumentParser:
+    p = argparse.ArgumentParser()
+    sub = p.add_subparsers(dest="command", required=True)
+    q = sub.add_parser("prepare-run")
+    q.add_argument("--run-dir", required=True)
+    q.add_argument("--config", default=str(DEFAULT_CONFIG))
+    q.add_argument("--mode", choices=["smoke", "full"], required=True)
+    q.add_argument("--limit", type=int, default=100)
+    q.set_defaults(func=prepare_run)
+    q = sub.add_parser("run")
+    q.add_argument("--run-dir", required=True)
+    q.add_argument("--workers", type=int, default=1,
+                   help="Concurrent bucket readers; keep at 1-2 on the shared data volume")
+    q.add_argument("--bucket", type=int)
+    q.add_argument("--force", action="store_true")
+    q.add_argument("--retry-nonready", action="store_true",
+                   help="Keep successful cases and atomically rebuild existing review/failure cases")
+    q.set_defaults(func=run_command)
+    q = sub.add_parser("validate")
+    q.add_argument("--run-dir", required=True)
+    q.set_defaults(func=validate_command)
+    q = sub.add_parser("freeze")
+    q.add_argument("--run-dir", required=True)
+    q.add_argument("--allow-pilot", action="store_true")
+    q.set_defaults(func=freeze_command)
+    return p
+
+
+if __name__ == "__main__":
+    ns = parser().parse_args()
+    ns.func(ns)

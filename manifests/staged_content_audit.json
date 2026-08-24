@@ -1,0 +1,90 @@
+{
+  "staged_file_count": 192,
+  "staged_total_size_bytes": 2492335,
+  "over_20mb": 0,
+  "over_50mb": 0,
+  "over_100mb": 0,
+  "secret_hits": [],
+  "largest_20": [
+    {
+      "path": "pipeline/filter_02/legacy_v2/scripts/filter2_v2_pipeline.py",
+      "size_bytes": 73231
+    },
+    {
+      "path": "scripts/figures/benchmark_figure_scout/build_benchmark_figure_scout.py",
+      "size_bytes": 71414
+    },
+    {
+      "path": "pipeline/filter_02/legacy_v1/scripts/filter2_pipeline.py",
+      "size_bytes": 56461
+    },
+    {
+      "path": "pipeline/filter_04/step_04/scripts/filter4_step4_pipeline.py",
+      "size_bytes": 55204
+    },
+    {
+      "path": "legacy/filter_04/step_04/step04_pilot_v2/executed_runner.py",
+      "size_bytes": 55204
+    },
+    {
+      "path": "legacy/filter_04/step_04/step04_full_v2/executed_runner.py",
+      "size_bytes": 55204
+    },
+    {
+      "path": "legacy/filter_04/step_04/step04_pilot_v1/executed_runner.py",
+      "size_bytes": 52552
+    },
+    {
+      "path": "legacy/filter_04/step_04/step04_full_v1/executed_runner.py",
+      "size_bytes": 52552
+    },
+    {
+      "path": "legacy/filter_04/step_04/step04_smoke_v1/executed_runner.py",
+      "size_bytes": 51703
+    },
+    {
+      "path": "scripts/data_engineering/entry_work_packages/build_entry_work_packages.py",
+      "size_bytes": 51219
+    },
+    {
+      "path": "pipeline/processing_02/scripts/processing2_pipeline.py",
+      "size_bytes": 50602
+    },
+    {
+      "path": "pipeline/filter_02/v3/scripts/filter2_v3_pipeline.py",
+      "size_bytes": 48987
+    },
+    {
+      "path": "pipeline/filter_01/scripts/filter1_pipeline.py",
+      "size_bytes": 48756
+    },
+    {
+      "path": "pipeline/filter_04/step_02/scripts/filter4_step2_pipeline.py",
+      "size_bytes": 40874
+    },
+    {
+      "path": "legacy/filter_04/step_02/step02_pilot_v3/executed_runner.py",
+      "size_bytes": 40874
+    },
+    {
+      "path": "legacy/filter_04/step_02/step02_full_v3/executed_runner.py",
+      "size_bytes": 40874
+    },
+    {
+      "path": "pipeline/filter_04/step_03/scripts/filter4_step3_pipeline.py",
+      "size_bytes": 40761
+    },
+    {
+      "path": "legacy/filter_04/step_03/step03_pilot_v2/executed_runner.py",
+      "size_bytes": 40761
+    },
+    {
+      "path": "legacy/filter_04/step_03/step03_full_v2/executed_runner.py",
+      "size_bytes": 40761
+    },
+    {
+      "path": "pipeline/processing_03/scripts/processing3_pipeline.py",
+      "size_bytes": 40539
+    }
+  ]
+}

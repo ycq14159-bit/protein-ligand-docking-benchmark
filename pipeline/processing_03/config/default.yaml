@@ -1,0 +1,44 @@
+stage:
+  name: processing_03_direct_contact_qualification
+  version: 1.0.0
+  schema_version: processing_3_schema_v1.0.0
+
+input:
+  processing_1_index: /root/autodl-tmp/benchmark_1.0/processing_1_pdb_source_audit/release/processing_1_mmcif_index.tsv.gz
+  processing_2_run: /root/autodl-tmp/benchmark_1.0/processing_2_assembly_ready_structure_preparation/runs/20260810_full_01
+  auxiliary_build: /root/autodl-tmp/benchmark_1.0/auxiliary_entry_work_packages/builds/20260805_full_01/output
+  expected_strict_ligand_placements: 995804
+  expected_active_receptor_chain_instances: 834548
+  expected_ready_receptor_chain_instances: 834222
+
+contact:
+  heavy_elements_excluded: [H, D]
+  spatial_prescreen_angstrom: 6.0
+  severe_clash_upper_exclusive_angstrom: 2.0
+  contact_lower_inclusive_angstrom: 2.0
+  vdw_margin_angstrom: 0.5
+  minimum_atomic_contacts_per_binding_residue: 2
+  minimum_binding_residues_per_supported_chain: 2
+  vdw_source_cpp: /root/autodl-tmp/reproduction/03_reference_data/biolip2_figshare/extracted/mmCIF2BioLiP-master/script/cif2pdb.cpp
+  vdw_source_function: make_vdw
+  vdw_source_version: biolip2_figshare_frozen_source
+
+connection_audit:
+  source: raw_mmcif_struct_conn_read_only
+  covalent_conn_type: covale
+  metal_conn_type: metalc
+  require_same_assembly_model: true
+  require_operator_compatibility: true
+
+runtime:
+  workers: 8
+  resume: true
+  task_granularity: processing_2_partition
+  parquet_compression: zstd
+
+policy:
+  plip_affects_membership: false
+  arpeggio_executed: false
+  prolif_executed: false
+  docking_executed: false
+

@@ -1,0 +1,28 @@
+schema_version: 1
+stage: "filter_05_equivalent_redocking_case"
+run_id: "step05_full_v1"
+status: "FROZEN"
+frozen: true
+data_relative_path: "filter_05_equivalent_redocking_case/step_05_strict_equivalent_grouping_and_representative_selection/runs/step05_full_v1"
+input: "241,545 Filter 4 PASS pairs"
+counts:
+  input_pairs: 241545
+  retain_unique: 92580
+  retain_representative: 32188
+  review_retain: 33458
+  redundant: 83319
+  retained: 158226
+  equivalence_groups: 32188
+validation: "PASS"
+anchors:
+  -
+    relative_path: "filter_05_equivalent_redocking_case/step_05_strict_equivalent_grouping_and_representative_selection/runs/step05_full_v1/_FROZEN.json"
+    exists: true
+    size_bytes: 122
+    sha256: "002212a3dcaec484a93293bcb4d7f3ab44610e83651099a5f75bf16d6fb54e36"
+  -
+    relative_path: "filter_05_equivalent_redocking_case/step_05_strict_equivalent_grouping_and_representative_selection/runs/step05_full_v1/validation/validation.json"
+    exists: true
+    size_bytes: 935
+    sha256: "fa4e43765a63046c049107a2c3f9f7e772e292d312fd4d2a65af4131a823adf5"
+notes: "Scientific outputs pass checksums. A known checksum mismatch is limited to logs/run.log written after freeze packaging."

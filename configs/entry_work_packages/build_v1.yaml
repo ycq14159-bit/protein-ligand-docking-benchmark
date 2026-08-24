@@ -1,0 +1,26 @@
+build_id: 20260805_full_01
+schema_version: entry_work_packages_v1.0.0
+bucket_count: 256
+bucket_hash: sha256_first_8_hex_modulo
+compression: zstd
+compression_level: 6
+rows_per_task: 20
+workers: 16
+max_tasks_per_worker: 4
+large_mmcif_bytes: 16777216
+parquet_data_page_version: "2.0"
+parquet_version: "2.6"
+numeric_tolerance:
+  absolute: 1.0e-9
+  relative: 1.0e-9
+operator_conventions:
+  path_order: left_to_right_as_deposited_cartesian_product
+  matrix_composition: total_equals_total_composed_with_next
+  coordinate_convention: x_prime_equals_R_times_x_plus_t
+  translation_composition: t_equals_R_left_times_t_right_plus_t_left
+  identity_operator: 3x3_identity_plus_zero_translation
+  composite_operator_id: operator_ids_joined_by_asterisk
+inputs:
+  filter_2_v3_run: /root/autodl-tmp/benchmark_1.0/filter_2_ligand_qualification_v3/runs/20260804_full_01
+  filter_1_root: /root/autodl-tmp/benchmark_1.0/filter_1_protein_receptor_qualification
+  processing_1_index: /root/autodl-tmp/benchmark_1.0/processing_1_pdb_source_audit/release/processing_1_mmcif_index.tsv.gz

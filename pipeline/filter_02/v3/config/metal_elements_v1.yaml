@@ -1,0 +1,12 @@
+policy_version: metal_elements_v1
+description: >-
+  Explicit metal-element policy for Filter 2 v3. Metalloids B, SI, GE,
+  AS, SB, and TE are intentionally excluded.
+groups:
+  alkali_metals: [LI, NA, K, RB, CS, FR]
+  alkaline_earth_metals: [BE, MG, CA, SR, BA, RA]
+  transition_metals: [SC, TI, V, CR, MN, FE, CO, NI, CU, ZN, Y, ZR, NB, MO, TC, RU, RH, PD, AG, CD, HF, TA, W, RE, OS, IR, PT, AU, HG, RF, DB, SG, BH, HS, MT, DS, RG, CN]
+  post_transition_metals: [AL, GA, IN, TL, SN, PB, BI, PO, NH, FL, MC, LV]
+  lanthanides: [LA, CE, PR, ND, PM, SM, EU, GD, TB, DY, HO, ER, TM, YB, LU]
+  actinides: [AC, TH, PA, U, NP, PU, AM, CM, BK, CF, ES, FM, MD, "NO", LR]
+excluded_metalloids: [B, SI, GE, AS, SB, TE]

@@ -1,0 +1,27 @@
+schema_version: 1
+stage: "filter_04_crystal_packing_influence"
+run_id: "step05_full_v1"
+status: "FROZEN"
+frozen: true
+data_relative_path: "filter_04_crystal_packing_influence/step_05_final_crystal_packing_decision/runs/step05_full_v1"
+input: "336,412 Filter 3 HIGH+GOOD pairs"
+counts:
+  input_pairs: 336412
+  pass: 241545
+  reject: 94865
+  review: 2
+  direct_contact_reject: 57580
+  mediated_contact_reject: 37285
+validation: "PASS"
+anchors:
+  -
+    relative_path: "filter_04_crystal_packing_influence/step_05_final_crystal_packing_decision/runs/step05_full_v1/_FROZEN.json"
+    exists: true
+    size_bytes: 392
+    sha256: "a02e8c620e6d50c5783953af5da719f86b7427734b8165e7803fae36f0511bd5"
+  -
+    relative_path: "filter_04_crystal_packing_influence/step_05_final_crystal_packing_decision/runs/step05_full_v1/validation.json"
+    exists: true
+    size_bytes: 2923
+    sha256: "daf38bec8dd9c181b0605ef199c1e5adfbbfa97822585d77c685aadbd1a3d20b"
+notes: "Step 5 pins exact Step 1-4 source versions. Step 1 full_v3 is validated legacy without its own current frozen marker."

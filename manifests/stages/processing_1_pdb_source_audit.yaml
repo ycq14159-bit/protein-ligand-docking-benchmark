@@ -1,0 +1,22 @@
+schema_version: 1
+stage: "processing_1_pdb_source_audit"
+run_id: "formal_release"
+status: "formal"
+frozen: false
+data_relative_path: "processing_1_pdb_source_audit"
+input: "public PDB archive records"
+counts:
+  mmcif_entries: 256158
+validation: "PASS"
+anchors:
+  -
+    relative_path: "processing_1_pdb_source_audit/release/processing_1_release_summary.json"
+    exists: true
+    size_bytes: 989
+    sha256: "2c294baa660715d4bb49a7f2858d52682e94410c9f3cd5d174f90de2eb47f92b"
+  -
+    relative_path: "processing_1_pdb_source_audit/validation/processing_1_validation.json"
+    exists: true
+    size_bytes: 860
+    sha256: "8983c6e31c6b16338085802d7368cc5e79c6dd6a8662bc4e6ece1b6e5c74e525"
+notes: "Formal release is checksum-backed but has no unified _FROZEN.json marker."
