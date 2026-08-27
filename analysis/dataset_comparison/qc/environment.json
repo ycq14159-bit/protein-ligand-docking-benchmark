@@ -1,0 +1,8 @@
+{
+  "analysis_timestamp": "2026-08-27T14:30:00+08:00",
+  "pandas": "2.3.3",
+  "platform": "Linux-5.4.0-150-generic-x86_64-with-glibc2.35",
+  "pyarrow": "22.0.0",
+  "python": "3.10.20 | packaged by conda-forge | (main, Jun 11 2026, 03:31:56) [GCC 14.3.0]",
+  "rdkit": "2025.09.5"
+}

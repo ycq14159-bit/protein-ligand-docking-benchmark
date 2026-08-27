@@ -1,0 +1,28 @@
+Authoritative input report
+==========================
+analysis_timestamp: 2026-08-27T14:30:00+08:00
+analysis_git_commit_before_changes: c88afc81ee9e3b5f39013becbbcd1a9cd3ff9015
+data_root: /home/linx/data/youcq/autodl-tmp/benchmark_1.0
+release_version: 20260826_filter3_118255_strict_posebusters_01
+database_role: FINAL_DATABASE_CONSTRUCTION_STAGE
+formal_entry_definition: one unique pair_id in frozen Filter 4 PASS inventory
+formal_input_path: filter_04_crystal_packing_influence/database_runs/20260826_filter3_118255_strict_posebusters_01/output/02_filter4_pass_pairs.tsv.gz
+formal_input_sha256: 244193b15987b4e69d1bbf6e5bc08923ae2ab1623d1fd7cb307130cb0d2e7fa3
+formal_rows: 91860
+unique_pair_id: 91860
+selection_status: PASS
+
+Authority rationale
+-------------------
+The selected run has an explicit frozen marker whose database_role is
+FINAL_DATABASE_CONSTRUCTION_STAGE, its README defines Filter 4 as the final
+database-construction stage, and the PASS inventory validates at 91,860 unique
+pair records.  Later Filter 5 and Processing 4 products are benchmark
+deduplication/docking-ready derivatives and are not database membership.
+
+Known repository discrepancy
+----------------------------
+The repository-level manifests/frozen_runs.yaml still describes the older
+158,226-case benchmark chain adopted on 2026-08-24.  It is not used as the
+authority for this current database-member analysis.  No frozen file was
+modified to resolve that documentation lag.

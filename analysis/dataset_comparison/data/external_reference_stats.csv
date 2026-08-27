@@ -1,0 +1,86 @@
+dataset,section,property,value,status,source,retrieval_date,notes
+PDBbind,Dataset scope,Total entries,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PDBbind,Dataset scope,Unique PDB-CCD pairs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PDBbind,Dataset scope,Unique PDB IDs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PDBbind,Dataset scope,Unique UniProt IDs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PDBbind,Dataset scope,Unique CATH IDs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PDBbind,Dataset scope,Unique species,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PDBbind,Dataset scope,Affinity annotations,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PDBbind,Ligand diversity,Unique CCD IDs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PDBbind,Ligand diversity,Unique Murcko scaffolds,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PDBbind,Ligand diversity,Ion ligands,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PDBbind,Ligand diversity,Covalent ligands,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PDBbind,Ligand diversity,Artifact ligands,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PDBbind,Structure issues,Missing bonds,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PDBbind,Structure issues,Steric overlaps,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PDBbind,Structure issues,Unresolved ligand atoms,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PDBbind,Structure issues,Unresolved pocket atoms,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PDBbind,Structure issues,Non-standard pocket residues,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+HiQBind,Dataset scope,Total entries,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+HiQBind,Dataset scope,Unique PDB-CCD pairs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+HiQBind,Dataset scope,Unique PDB IDs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+HiQBind,Dataset scope,Unique UniProt IDs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+HiQBind,Dataset scope,Unique CATH IDs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+HiQBind,Dataset scope,Unique species,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+HiQBind,Dataset scope,Affinity annotations,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+HiQBind,Ligand diversity,Unique CCD IDs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+HiQBind,Ligand diversity,Unique Murcko scaffolds,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+HiQBind,Ligand diversity,Ion ligands,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+HiQBind,Ligand diversity,Covalent ligands,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+HiQBind,Ligand diversity,Artifact ligands,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+HiQBind,Structure issues,Missing bonds,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+HiQBind,Structure issues,Steric overlaps,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+HiQBind,Structure issues,Unresolved ligand atoms,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+HiQBind,Structure issues,Unresolved pocket atoms,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+HiQBind,Structure issues,Non-standard pocket residues,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+BioLiP2,Dataset scope,Total entries,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+BioLiP2,Dataset scope,Unique PDB-CCD pairs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+BioLiP2,Dataset scope,Unique PDB IDs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+BioLiP2,Dataset scope,Unique UniProt IDs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+BioLiP2,Dataset scope,Unique CATH IDs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+BioLiP2,Dataset scope,Unique species,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+BioLiP2,Dataset scope,Affinity annotations,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+BioLiP2,Ligand diversity,Unique CCD IDs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+BioLiP2,Ligand diversity,Unique Murcko scaffolds,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+BioLiP2,Ligand diversity,Ion ligands,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+BioLiP2,Ligand diversity,Covalent ligands,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+BioLiP2,Ligand diversity,Artifact ligands,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+BioLiP2,Structure issues,Missing bonds,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+BioLiP2,Structure issues,Steric overlaps,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+BioLiP2,Structure issues,Unresolved ligand atoms,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+BioLiP2,Structure issues,Unresolved pocket atoms,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+BioLiP2,Structure issues,Non-standard pocket residues,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PLINDER,Dataset scope,Total entries,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PLINDER,Dataset scope,Unique PDB-CCD pairs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PLINDER,Dataset scope,Unique PDB IDs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PLINDER,Dataset scope,Unique UniProt IDs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PLINDER,Dataset scope,Unique CATH IDs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PLINDER,Dataset scope,Unique species,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PLINDER,Dataset scope,Affinity annotations,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PLINDER,Ligand diversity,Unique CCD IDs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PLINDER,Ligand diversity,Unique Murcko scaffolds,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PLINDER,Ligand diversity,Ion ligands,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PLINDER,Ligand diversity,Covalent ligands,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PLINDER,Ligand diversity,Artifact ligands,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PLINDER,Structure issues,Missing bonds,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PLINDER,Structure issues,Steric overlaps,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PLINDER,Structure issues,Unresolved ligand atoms,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PLINDER,Structure issues,Unresolved pocket atoms,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+PLINDER,Structure issues,Non-standard pocket residues,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+CROWN,Dataset scope,Total entries,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+CROWN,Dataset scope,Unique PDB-CCD pairs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+CROWN,Dataset scope,Unique PDB IDs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+CROWN,Dataset scope,Unique UniProt IDs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+CROWN,Dataset scope,Unique CATH IDs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+CROWN,Dataset scope,Unique species,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+CROWN,Dataset scope,Affinity annotations,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+CROWN,Ligand diversity,Unique CCD IDs,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+CROWN,Ligand diversity,Unique Murcko scaffolds,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+CROWN,Ligand diversity,Ion ligands,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+CROWN,Ligand diversity,Covalent ligands,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+CROWN,Ligand diversity,Artifact ligands,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+CROWN,Structure issues,Missing bonds,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+CROWN,Structure issues,Steric overlaps,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+CROWN,Structure issues,Unresolved ligand atoms,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+CROWN,Structure issues,Unresolved pocket atoms,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.
+CROWN,Structure issues,Non-standard pocket residues,,NOT_AVAILABLE,Not available in the current repository,2026-08-27,Left NA rather than inferred from incomparable or unverified public counts.

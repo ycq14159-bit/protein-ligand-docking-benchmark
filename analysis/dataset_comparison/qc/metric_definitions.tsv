@@ -1,0 +1,18 @@
+property	definition	source	denominator	notes	status
+Total entries	Unique Filter 4 PASS pair_id records in the explicit final database-construction release.	Filter 4 frozen PASS inventory	91,860 formal entries		CALCULATED
+Unique PDB-CCD pairs	Distinct (PDB ID, resolved CCD ID) combinations.	Filter 4 + Filter 5 identity projection	91,860 formal entries		CALCULATED
+Unique PDB IDs	Distinct lowercase PDB identifiers.	Filter 4 frozen PASS inventory	91,860 formal entries		CALCULATED
+Unique UniProt IDs	Distinct UniProt accessions mapped to any participating receptor source chain.	Frozen protein provenance annotation	Participating receptor chains; partial mappings retained		CALCULATED
+Unique CATH IDs	Distinct CATH_ID values mapped to any participating receptor source chain.	Frozen SIFTS CATH annotations	Participating receptor chains with CATH annotations		CALCULATED
+Unique species	Distinct taxonomy IDs; UniProt organism taxon preferred, source-chain taxonomy used as fallback.	Frozen UniProt metadata + source-chain provenance	Participating receptor chains with a taxonomy ID		CALCULATED
+Affinity annotations	Whether a formal integrated Kd/Ki/IC50/EC50 field exists in this frozen database release.	Frozen release schema inventory	Formal release	No formal affinity field is integrated.	CALCULATED
+Unique CCD IDs	Distinct resolved CCD component identifiers.	Filter 5 frozen identity projection	91,860 formal entries		CALCULATED
+Unique Murcko scaffolds	Distinct non-empty canonical isomeric Bemis-Murcko scaffold SMILES; acyclic empty scaffolds excluded.	RDKit 2025.09.5; normalized frozen CCD isomeric SMILES	Entries with successfully parsed non-empty scaffolds		CALCULATED
+Ion ligands	Formal entries whose mapped Filter 2 source ligand has exactly one observed heavy atom.	Filter 2 frozen source classification	91,860 formal entries		CALCULATED
+Covalent ligands	Formal entries not labeled FINAL_ORDINARY_NONCOVALENT_PAIR by frozen pair construction.	Filter 3 v2 frozen pair status	91,860 formal entries		CALCULATED
+Artifact ligands	Formal entries whose frozen pre-v4 Filter 2 route/reason explicitly contains artifact, additive, solvent, or simple_inorganic.	Filter 2 frozen provenance fields	91,860 formal entries	No ad hoc CCD blacklist was introduced.	CALCULATED
+Missing bonds	Entry-level missing-bond predicate equivalent to the comparison-table definition.	No formal frozen entry-level missing-bond field	Not available	Topology status is retained in the per-entry table but is not recast as missing bonds.	NOT_AVAILABLE
+Steric overlaps	Entries failing the frozen PoseBusters internal_steric_clash check (False means overlap failure).	Filter 3 strict PoseBusters evidence	Formal entries with PoseBusters evidence		CALCULATED
+Unresolved ligand atoms	Entries with Processing 2 missing_heavy_atom_count > 0.	Processing 2 frozen formal-ready placements	91,860 formal entries		CALCULATED
+Unresolved pocket atoms	Entries with any frozen Filter 3 v2 missing backbone or side-chain heavy atom in the 6 A pocket.	Filter 3 v2 frozen quality evidence	91,860 formal entries		CALCULATED
+Non-standard pocket residues	Entries containing a 6 A pocket residue outside the frozen protein template set (20 canonical residues plus MSE and SEC).	Frozen pair-pocket residue inventory	91,860 formal entries		CALCULATED
