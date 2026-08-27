@@ -1,0 +1,7 @@
+check	observed	expected	pass
+artifact_proxy_entries	3526	3526	True
+artifact_proxy_all_dual_source_pass	3526	3526	True
+one_heavy_atom_entries	28	28	True
+unresolved_pocket_entries	317	317	True
+unresolved_direct_binding_entries	0	0	True
+unresolved_backbone_entries	0	0	True

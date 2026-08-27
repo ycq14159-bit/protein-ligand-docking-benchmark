@@ -284,10 +284,11 @@ def main() -> None:
     entry["species_names"] = entry["pair_id"].map(pair_species_name).map(lambda x: ";".join(x) if isinstance(x, list) else "")
     entry["cath_ids"] = entry["pair_id"].map(pair_cath).map(lambda x: ";".join(x) if isinstance(x, list) else "")
     entry["nonstandard_pocket_residue_ids"] = entry["pair_id"].map(pair_nonstd).map(lambda x: ";".join(x) if isinstance(x, list) else "")
-    entry["ion_ligand"] = pd.to_numeric(entry["observed_heavy_atom_count"], errors="coerce").eq(1)
+    entry["one_heavy_atom_proxy"] = pd.to_numeric(entry["observed_heavy_atom_count"], errors="coerce").eq(1)
     artifact_pattern = r"artifact|additive|solvent|simple_inorganic"
-    entry["artifact_ligand"] = (entry["previous_terminal_route"].fillna("").str.contains(artifact_pattern, case=False, regex=True) |
-                                entry["previous_reason_code"].fillna("").str.contains(artifact_pattern, case=False, regex=True))
+    entry["historical_artifact_provenance_proxy"] = (
+        entry["previous_terminal_route"].fillna("").str.contains(artifact_pattern, case=False, regex=True) |
+        entry["previous_reason_code"].fillna("").str.contains(artifact_pattern, case=False, regex=True))
     entry["covalent_ligand"] = ~entry["pair_status"].eq("FINAL_ORDINARY_NONCOVALENT_PAIR")
     entry["steric_overlap"] = entry["internal_steric_clash"].eq(False)
     entry["unresolved_ligand_atom_count"] = pd.to_numeric(entry["missing_heavy_atom_count"], errors="coerce")
@@ -316,22 +317,37 @@ def main() -> None:
         metric_row("Dataset scope", "Unique PDB-CCD pairs", entry[["pdb_id", "resolved_ccd_id"]].drop_duplicates().shape[0], "CALCULATED", "Distinct (PDB ID, resolved CCD ID) combinations.", "Filter 4 + Filter 5 identity projection", "91,860 formal entries"),
         metric_row("Dataset scope", "Unique PDB IDs", entry["pdb_id"].nunique(), "CALCULATED", "Distinct lowercase PDB identifiers.", "Filter 4 frozen PASS inventory", "91,860 formal entries"),
         metric_row("Dataset scope", "Unique UniProt IDs", len(unique_uniprot), "CALCULATED", "Distinct UniProt accessions mapped to any participating receptor source chain.", "Frozen protein provenance annotation", "Participating receptor chains; partial mappings retained"),
-        metric_row("Dataset scope", "Unique CATH IDs", len(unique_cath), "CALCULATED", "Distinct CATH_ID values mapped to any participating receptor source chain.", "Frozen SIFTS CATH annotations", "Participating receptor chains with CATH annotations"),
+        metric_row("Dataset scope", "Unique CATH IDs", None, "NOT_COMPARABLE", "CATH classification identifiers comparable to the external table definition.", "Frozen SIFTS bridge supplies domain-instance CATH_ID strings only", "Not available", f"The internal diagnostic is {len(unique_cath):,} distinct CATH domain annotation IDs, not classification IDs."),
         metric_row("Dataset scope", "Unique species", len(unique_tax), "CALCULATED", "Distinct taxonomy IDs; UniProt organism taxon preferred, source-chain taxonomy used as fallback.", "Frozen UniProt metadata + source-chain provenance", "Participating receptor chains with a taxonomy ID"),
         metric_row("Dataset scope", "Affinity annotations", False, "CALCULATED", "Whether a formal integrated Kd/Ki/IC50/EC50 field exists in this frozen database release.", "Frozen release schema inventory", "Formal release", "No formal affinity field is integrated."),
         metric_row("Ligand diversity", "Unique CCD IDs", entry["resolved_ccd_id"].nunique(), "CALCULATED", "Distinct resolved CCD component identifiers.", "Filter 5 frozen identity projection", "91,860 formal entries"),
         metric_row("Ligand diversity", "Unique Murcko scaffolds", entry["murcko_scaffold"].dropna().nunique(), "CALCULATED", "Distinct non-empty canonical isomeric Bemis-Murcko scaffold SMILES; acyclic empty scaffolds excluded.", f"RDKit {rdBase.rdkitVersion}; normalized frozen CCD isomeric SMILES", "Entries with successfully parsed non-empty scaffolds"),
-        metric_row("Ligand diversity", "Ion ligands", int(entry["ion_ligand"].sum()), "CALCULATED", "Formal entries whose mapped Filter 2 source ligand has exactly one observed heavy atom.", "Filter 2 frozen source classification", "91,860 formal entries"),
+        metric_row("Ligand diversity", "Ion ligands", None, "NOT_COMPARABLE", "Ligands satisfying the external comparison's ion-ligand definition.", "No frozen external-equivalent ion classification", "Not available", f"The prior value {int(entry['one_heavy_atom_proxy'].sum()):,} was only a one-heavy-atom proxy and includes neutral NH3, H2S, and a methyl radical."),
         metric_row("Ligand diversity", "Covalent ligands", int(entry["covalent_ligand"].sum()), "CALCULATED", "Formal entries not labeled FINAL_ORDINARY_NONCOVALENT_PAIR by frozen pair construction.", "Filter 3 v2 frozen pair status", "91,860 formal entries"),
-        metric_row("Ligand diversity", "Artifact ligands", int(entry["artifact_ligand"].sum()), "CALCULATED", "Formal entries whose frozen pre-v4 Filter 2 route/reason explicitly contains artifact, additive, solvent, or simple_inorganic.", "Filter 2 frozen provenance fields", "91,860 formal entries", "No ad hoc CCD blacklist was introduced."),
+        metric_row("Ligand diversity", "Artifact ligands", None, "NOT_COMPARABLE", "Ligands satisfying the external comparison's formal artifact definition.", "No frozen external-equivalent artifact classification", "Not available", f"The prior value {int(entry['historical_artifact_provenance_proxy'].sum()):,} denotes historical simple-inorganic flags; all were retained under the current Filter 2 rule and are not formal artifact calls."),
         metric_row("Structure issues", "Missing bonds", None, "NOT_AVAILABLE", "Entry-level missing-bond predicate equivalent to the comparison-table definition.", "No formal frozen entry-level missing-bond field", "Not available", "Topology status is retained in the per-entry table but is not recast as missing bonds."),
         metric_row("Structure issues", "Steric overlaps", int(entry["steric_overlap"].sum()), "CALCULATED", "Entries failing the frozen PoseBusters internal_steric_clash check (False means overlap failure).", "Filter 3 strict PoseBusters evidence", "Formal entries with PoseBusters evidence"),
         metric_row("Structure issues", "Unresolved ligand atoms", int(entry["unresolved_ligand_atoms"].sum()), "CALCULATED", "Entries with Processing 2 missing_heavy_atom_count > 0.", "Processing 2 frozen formal-ready placements", "91,860 formal entries"),
-        metric_row("Structure issues", "Unresolved pocket atoms", int(entry["unresolved_pocket_atoms"].sum()), "CALCULATED", "Entries with any frozen Filter 3 v2 missing backbone or side-chain heavy atom in the 6 A pocket.", "Filter 3 v2 frozen quality evidence", "91,860 formal entries"),
+        metric_row("Structure issues", "Unresolved pocket atoms", int(entry["unresolved_pocket_atoms"].sum()), "CALCULATED", "Entries with any frozen Filter 3 v2 missing backbone or side-chain heavy atom in the 6 A pocket.", "Filter 3 v2 frozen quality evidence", "91,860 formal entries", "All 317 retained entries contain only missing side-chain atoms in non-binding peripheral pocket residues (324 atoms total); direct-binding side chains and pocket backbone have zero missing atoms."),
         metric_row("Structure issues", "Non-standard pocket residues", int(entry["nonstandard_pocket_residues"].sum()), "CALCULATED", "Entries containing a 6 A pocket residue outside the frozen protein template set (20 canonical residues plus MSE and SEC).", "Frozen pair-pocket residue inventory", "91,860 formal entries"),
     ]
     ours = pd.DataFrame(metrics)
     ours.to_csv(out / "data" / "ours_summary_stats.csv", index=False, lineterminator="\n")
+
+    pd.DataFrame([
+        {"diagnostic": "Distinct CATH domain annotation IDs", "value": len(unique_cath),
+         "comparison_property": "Unique CATH IDs", "comparison_status": "NOT_COMPARABLE",
+         "interpretation": "SIFTS CATH_ID is a domain-instance identifier, not a C/A/T/H classification code."},
+        {"diagnostic": "One-heavy-atom ligand entries", "value": int(entry["one_heavy_atom_proxy"].sum()),
+         "comparison_property": "Ion ligands", "comparison_status": "NOT_COMPARABLE",
+         "interpretation": "Includes neutral NH3, H2S, and a methyl radical; it is not an ion definition."},
+        {"diagnostic": "Historical simple-inorganic provenance entries", "value": int(entry["historical_artifact_provenance_proxy"].sum()),
+         "comparison_property": "Artifact ligands", "comparison_status": "NOT_COMPARABLE",
+         "interpretation": "All are current Filter 2 retained entries, not formal artifact classifications."},
+        {"diagnostic": "Retained entries with peripheral nonbinding side-chain atoms missing", "value": int(entry["unresolved_pocket_atoms"].sum()),
+         "comparison_property": "Unresolved pocket atoms", "comparison_status": "CALCULATED",
+         "interpretation": "Allowed warning route; no direct-binding side-chain or pocket-backbone atom is missing."},
+    ]).to_csv(out / "data" / "internal_proxy_stats.csv", index=False, lineterminator="\n")
 
     external_rows = []
     for dataset in ["PDBbind", "HiQBind", "BioLiP2", "PLINDER", "CROWN"]:
@@ -460,7 +476,11 @@ benchmark/docking-ready derivatives, not database membership.
 Run `scripts/build_dataset_comparison.py`, then
 `scripts/build_latex_table.py`.  Both accept explicit paths; no project path is
 hard-coded.  External datasets are left `NA` because no confirmed reference
-statistics were present in the repository.  See `qc/metric_definitions.tsv`,
+statistics were present in the repository.  CATH IDs, artifact ligands, and
+ion ligands in Ours are also `NA` after focused construct-validity review: the
+available fields are documented internal proxies, not definition-equivalent
+measures.  Their values remain in `data/internal_proxy_stats.csv`.  See
+`qc/metric_definitions.tsv`,
 `qc/source_provenance.tsv`, and `qc/authoritative_input_report.txt` before using
 the table.
 

@@ -1,0 +1,3 @@
+previous_terminal_route	previous_reason_code	is_suspicious	overlap_class	q_match_level	q_relevance_class	dual_source_status	dual_source_pass	entries	unique_sources	unique_ccd
+excluded_simple_inorganic	conservative_ccd_simple_inorganic_rule	False				NOT_SUSPICIOUS_BYPASS	True	2143	1272	26
+excluded_simple_inorganic	conservative_ccd_simple_inorganic_rule	True	EXACT	EXACT_ASSEMBLY_CCD_CHAIN	RELEVANT	LIGAND_RELEVANCE_CONFIRMED	True	1383	1239	6

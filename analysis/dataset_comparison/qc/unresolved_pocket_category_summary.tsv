@@ -1,0 +1,4 @@
+missing_atom_category	affected_entries	missing_atoms
+pocket_missing_backbone_heavy_atom_count	0	0
+direct_binding_missing_sidechain_heavy_atom_count	0	0
+nonbinding_pocket_missing_sidechain_heavy_atom_count	317	324

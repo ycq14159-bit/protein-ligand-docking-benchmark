@@ -1,0 +1,33 @@
+resolved_ccd_id	ccd_name	entries	unique_pdb	unique_sources
+OXY	"""OXYGEN MOLECULE"""	833	226	468
+PO4	"""PHOSPHATE ION"""	786	330	726
+SO4	"""SULFATE ION"""	522	191	450
+NO2	"""NITRITE ION"""	439	105	190
+AZI	"""AZIDE ION"""	225	83	174
+NO	"""NITRIC OXIDE"""	218	75	143
+SO3	"""SULFITE ION"""	174	54	101
+2HP	"""DIHYDROGENPHOSPHATE ION"""	88	19	87
+N2O	"""NITROUS OXIDE"""	54	15	20
+NO3	"""NITRATE ION"""	38	29	34
+HOA	HYDROXYAMINE	28	16	28
+PEO	"""HYDROGEN PEROXIDE"""	23	8	15
+PO3	"""PHOSPHITE ION"""	19	7	15
+PHS	"""PHOSPHONIC ACID"""	16	8	9
+THJ	THIOSULFATE	11	5	11
+TS6	Monothiophosphate	8	3	6
+DTN	DITHIONITE	7	2	5
+HDZ	"""NITROGEN MOLECULE"""	5	2	4
+78T	oxidanylphosphinate	4	2	4
+FUS	"""sulfuric diamide"""	4	1	1
+BSY	"""BISELENITE ION"""	3	1	1
+HP4	phosphinate	3	2	3
+PER	"""PEROXIDE ION"""	3	3	3
+2PO	PHOSPHONATE	2	2	2
+8TR	"""hypochlorous acid"""	2	1	1
+I2I	"""molecular iodine"""	2	1	2
+OO9	"""oxidanyl dihydrogen phosphate"""	2	1	1
+PO2	HYPOPHOSPHITE	2	2	2
+SFO	"""SULFONIC ACID"""	2	1	2
+202	"""BROMIC ACID"""	1	1	1
+4J3	"""amino(aminooxy)sulfane dioxide"""	1	1	1
+PS5	PENTASULFIDE-SULFUR	1	1	1

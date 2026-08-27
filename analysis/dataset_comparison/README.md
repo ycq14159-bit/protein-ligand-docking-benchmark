@@ -13,7 +13,11 @@ benchmark/docking-ready derivatives, not database membership.
 Run `scripts/build_dataset_comparison.py`, then
 `scripts/build_latex_table.py`.  Both accept explicit paths; no project path is
 hard-coded.  External datasets are left `NA` because no confirmed reference
-statistics were present in the repository.  See `qc/metric_definitions.tsv`,
+statistics were present in the repository.  CATH IDs, artifact ligands, and
+ion ligands in Ours are also `NA` after focused construct-validity review: the
+available fields are documented internal proxies, not definition-equivalent
+measures.  Their values remain in `data/internal_proxy_stats.csv`.  See
+`qc/metric_definitions.tsv`,
 `qc/source_provenance.tsv`, and `qc/authoritative_input_report.txt` before using
 the table.
 

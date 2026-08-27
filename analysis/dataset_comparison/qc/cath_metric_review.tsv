@@ -1,0 +1,5 @@
+metric	value	interpretation
+reported_unique_CATH_ID	58346	Distinct SIFTS CATH_ID strings among participating receptor chains
+SIFTS_file_comment	# 2026/08/25 - 08:05 | PDB: 34.26 | UniProt: 2026.03	Frozen reference version line
+SIFTS_columns	PDB	CHAIN	SP_PRIMARY	CATH_ID	Only a CATH domain identifier is supplied; no C/A/T/H classification code
+CROWN_comparable_classification_count	NA	Cannot derive classification IDs from the frozen SIFTS bridge alone

@@ -1,0 +1,5 @@
+diagnostic,value,comparison_property,comparison_status,interpretation
+Distinct CATH domain annotation IDs,58346,Unique CATH IDs,NOT_COMPARABLE,"SIFTS CATH_ID is a domain-instance identifier, not a C/A/T/H classification code."
+One-heavy-atom ligand entries,28,Ion ligands,NOT_COMPARABLE,"Includes neutral NH3, H2S, and a methyl radical; it is not an ion definition."
+Historical simple-inorganic provenance entries,3526,Artifact ligands,NOT_COMPARABLE,"All are current Filter 2 retained entries, not formal artifact classifications."
+Retained entries with peripheral nonbinding side-chain atoms missing,317,Unresolved pocket atoms,CALCULATED,Allowed warning route; no direct-binding side-chain or pocket-backbone atom is missing.

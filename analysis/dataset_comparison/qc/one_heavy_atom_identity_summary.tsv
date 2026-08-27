@@ -1,0 +1,5 @@
+resolved_ccd_id	ccd_name	formula	formal_charge	ccd_type	entries	unique_pdb	unique_sources
+NH3	AMMONIA	"""H3 N"""	0	NON-POLYMER	24	3	20
+H2S	"""HYDROSULFURIC ACID"""	"""H2 S"""	0	NON-POLYMER	2	1	2
+74C	"""methyl radical"""	"""C H3"""	0	NON-POLYMER	1	1	1
+OH	"""HYDROXIDE ION"""	"""H O"""	-1	NON-POLYMER	1	1	1
