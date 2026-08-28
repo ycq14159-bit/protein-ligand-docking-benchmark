@@ -1,0 +1,13 @@
+# External raw data and caches are intentionally outside Git; these patterns
+# also prevent accidental copies from being staged here.
+external_data/raw/
+external_data/cache/
+external_data/pdbbind*/
+external_data/wwpdb_validation/
+prepared/pdbbind_properties.parquet
+prepared/*_row_level.parquet
+prepared/*.parquet
+validation_normalized/
+logs/
+*.partial
+*.parts/

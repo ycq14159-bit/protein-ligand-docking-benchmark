@@ -1,0 +1,63 @@
+{
+  "figure": "figure_harmonized_comparison",
+  "mode": "B_harmonized_fixed_version",
+  "datasets": {
+    "PDBbind": 19443,
+    "HiQBind": 31572,
+    "BioLiP2": 548615,
+    "PLINDER": 616723,
+    "CROWN": 141261,
+    "Ours": 91860
+  },
+  "rdkit_version": "2025.09.5",
+  "descriptor_definitions": [
+    "GetNumHeavyAtoms",
+    "CalcNumRotatableBonds",
+    "CalcNumHBA",
+    "QED.qed"
+  ],
+  "kde": {
+    "implementation": "scipy.stats.gaussian_kde",
+    "base_bandwidth": "Scott",
+    "bw_adjust": 0.85
+  },
+  "axis_limits": {
+    "heavy_atoms": [
+      0,
+      80
+    ],
+    "rotatable_bonds": [
+      0,
+      25
+    ],
+    "hba": [
+      0,
+      20
+    ],
+    "qed": [
+      0,
+      1
+    ],
+    "resolution": [
+      0.5,
+      4.0
+    ],
+    "rsr": [
+      0,
+      0.5
+    ],
+    "rscc": [
+      0.5,
+      1.0
+    ]
+  },
+  "validation_sources": {
+    "PDBbind": "wwPDB XML after unique deposited-coordinate mapping",
+    "HiQBind": "wwPDB XML exact PDB+CCD+chain+residue mapping",
+    "BioLiP2": "wwPDB XML unique PDB+CCD+chain mapping",
+    "PLINDER": "released exact-instance wwPDB validation arrays",
+    "CROWN": "released wwPDB-derived ligand validation metrics",
+    "Ours": "frozen exact-instance wwPDB validation provenance"
+  },
+  "git_commit_before_figure_commit": "ec2342ce620c82c41bf0c091ef1fd58ced7e0b16"
+}

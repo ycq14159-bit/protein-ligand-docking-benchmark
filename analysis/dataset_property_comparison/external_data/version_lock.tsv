@@ -1,0 +1,12 @@
+mode	dataset	version	release_or_snapshot_date	locked_population	population_unit	status	notes
+Mode_A_Historical	PDBbind	CROWN historical	UNRESOLVED	19449	CROWN-reported total entries	HOLD	Historical reconciliation only; does not block Mode B.
+Mode_A_Historical	HiQBind	CROWN historical	UNRESOLVED	31573	CROWN-reported total entries	HOLD	Historical reconciliation only; does not block Mode B.
+Mode_A_Historical	BioLiP2	CROWN historical	UNRESOLVED	86458	CROWN-reported total entries	HOLD	Historical reconciliation only; does not block Mode B.
+Mode_A_Historical	PLINDER	CROWN historical	UNRESOLVED	649915	CROWN-reported PLI systems	HOLD	Historical reconciliation only; does not block Mode B.
+Mode_A_Historical	CROWN	Zenodo 19334311	2026-03-30	153005	CROWN entry	HOLD	Historical replication is not the paper-primary comparison.
+Mode_B_Harmonized	PDBbind	v2020	2020	19443	general-set protein-ligand complex	READY	Official index + 14127 other_PL + 5316 refined; downloaded only through licensed user session; remote SHA256 verified.
+Mode_B_Harmonized	HiQBind	Figshare v3 small-molecule	2025-02-22	31572	small-molecule complex metadata row	GO_ACQUIRED	Git revision 2922a2a95cbb0dd4144a3dab572be90b77ef08c2.
+Mode_B_Harmonized	BioLiP2/Q-BioLiP	base plus weekly through 2026-06-26	2026-06-26	548615	formal redundant protein-small-molecule interaction row	READY	521146 base rows plus 27469 Relevant=yes weekly rows; requires ligand-dictionary membership and excludes nucleic acid, k-mer, metal, and single-atom-ion labels. Raw ledger remains 710466 rows.
+Mode_B_Harmonized	PLINDER	2024-06/v2	2024-06	616723	proper-ligand annotation row	READY	Full annotation_table has 1357906 rows and 990260 system IDs; formal Mode B population is ligand_is_proper=true, not split.parquet.
+Mode_B_Harmonized	CROWN	Zenodo 20825315 / 2026-06	2026-06-24	141261	CROWN metadata row	GO_ACQUIRED	Metadata Parquet only; full structure archive excluded.
+Mode_B_Harmonized	Ours	20260826 frozen Filter 4 PASS	2026-08-26	91860	frozen protein-ligand pair	GO_READY	HIGH 7674 + GOOD 84186; one pair equals one observation.

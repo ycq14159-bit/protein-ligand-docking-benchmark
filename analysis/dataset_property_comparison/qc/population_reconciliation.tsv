@@ -1,0 +1,12 @@
+mode	dataset	historical_or_raw_N	formal_mode_b_N	status	explanation
+Mode_A	PDBbind	19449	NA	HOLD	Historical CROWN population differs from official v2020 and is not used for the paper-primary figure.
+Mode_A	HiQBind	31573	NA	HOLD	Historical CROWN population differs by one from current v3 small-molecule metadata.
+Mode_A	BioLiP2	86458	NA	HOLD	Historical CROWN snapshot definition remains unresolved.
+Mode_A	PLINDER	649915	NA	HOLD	Historical CROWN system definition remains separate from the fixed proper-ligand row comparison.
+Mode_A	CROWN	153005	NA	HOLD	Historical replication is a separate workstream.
+Mode_B	PDBbind	19443	19443	PASS	Official index and structure archives close exactly.
+Mode_B	HiQBind	31572	31572	PASS	One unique released small-molecule metadata row per source entry.
+Mode_B	BioLiP2	710466	548615	PASS	Explicit eligible base plus Relevant=yes weekly protein-small-molecule membership.
+Mode_B	PLINDER	1357906	616723	PASS	Explicit ligand_is_proper row population from full annotation_table.
+Mode_B	CROWN	141261	141261	PASS	Current maintenance metadata release.
+Mode_B	Ours	91860	91860	PASS	Frozen Filter 4 PASS population: HIGH 7674 plus GOOD 84186.

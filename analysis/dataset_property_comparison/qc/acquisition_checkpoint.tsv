@@ -1,0 +1,7 @@
+dataset	status	locked_or_raw_N	comparison_candidate_N	metadata_bytes	sha256	integrity	remaining_action
+PDBbind	ADAPTER_READY	19443	19443	2576994316	index=64efe7994fba1ad4a47de223dd3c0d01e0c5f09a722a7f138000ea4f74fe342e;refined=403bd2612a7f40f67aa3b5c8c99285995320c67dc5f55507ff536f4832107e7e;other=00f12ea202d59f3753368ea56314e6c9460e353ff4616781f94f7bbf3ec782cf	PASS: hashes; population; descriptor; coordinate mapping; validation mapping	None.
+HiQBind	ADAPTER_READY	31572	31572	16714217	small-molecule=9becf3b83457a00474ff788c681a7cea39ddb56839503aaa635598b30ebb75bf	PASS: 31572 unique rows; descriptor and validation mapping complete	None.
+BioLiP2/Q-BioLiP	ADAPTER_READY	base=560724;weekly_raw=149742	548615	129834748	see download manifest	PASS: 521146 eligible base + 27469 Relevant=yes eligible weekly; unique source IDs	Preserve raw ledger; quality missingness explicitly reported.
+PLINDER	ADAPTER_READY	1357906	616723 proper-ligand rows	1018256581	d7ff7a087b3d336859afd5e57775fa1a4e9a23c90a7bb4ccbb6a278540ae31e9	PASS: 616723 unique ligand IDs; descriptors and released exact-instance validation mapped	None.
+CROWN	ADAPTER_READY	141261	141261	21476726	1c3cfe09241c9bd9f98c1507e655fc0b0739c66a30071c570d8c3ab4b6cadf90	PASS: 141261 unique rows; RDKit descriptors recomputed; quality fields complete	None.
+Ours	READY	91860	91860	3089573	1fa9717d46181d60baa5e07ee4c616d7af0364a447ad55cce927df32e25e43a7	PASS: frozen baseline	Reproducibility check only.

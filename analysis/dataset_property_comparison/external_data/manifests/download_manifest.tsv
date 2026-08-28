@@ -1,0 +1,9 @@
+dataset	version	filename_or_bundle	source_url	download_date	file_size_bytes	sha256	formal_use
+PDBbind	v2020	PDBbind_v2020_plain_text_index.tar.gz	https://www.pdbbind-plus.org.cn/download	2026-08-27	3231607	64efe7994fba1ad4a47de223dd3c0d01e0c5f09a722a7f138000ea4f74fe342e	YES_PRIVATE_RAW
+PDBbind	v2020	PDBbind_v2020_refined.tar.gz	https://www.pdbbind-plus.org.cn/download	2026-08-27	690895072	403bd2612a7f40f67aa3b5c8c99285995320c67dc5f55507ff536f4832107e7e	YES_PRIVATE_RAW
+PDBbind	v2020	PDBbind_v2020_other_PL.tar.gz	https://www.pdbbind-plus.org.cn/download	2026-08-27	1882867637	00f12ea202d59f3753368ea56314e6c9460e353ff4616781f94f7bbf3ec782cf	YES_PRIVATE_RAW
+HiQBind	Figshare-v3-small-molecule	hiqbind_sm_metadata.csv	https://github.com/THGLab/HiQBind/raw/2922a2a95cbb0dd4144a3dab572be90b77ef08c2/figshare/hiqbind_sm_metadata.csv	2026-08-25	8309849	9becf3b83457a00474ff788c681a7cea39ddb56839503aaa635598b30ebb75bf	YES
+BioLiP2/Q-BioLiP	snapshot-through-2026-06-26	base+ligand-dictionary+25-weekly-files	https://yanglab.qd.sdu.edu.cn/BioLiP2/Download/	2026-08-27	129834748	SEE_local_file_inventory.csv	YES
+PLINDER	2024-06/v2	annotation_table.parquet	https://storage.googleapis.com/plinder/2024-06/v2/index/annotation_table.parquet	2026-08-27	1018256581	d7ff7a087b3d336859afd5e57775fa1a4e9a23c90a7bb4ccbb6a278540ae31e9	YES
+CROWN	2026-06	CROWN_metadata.parquet	https://zenodo.org/records/20825315	2026-08-27	21476726	1c3cfe09241c9bd9f98c1507e655fc0b0739c66a30071c570d8c3ab4b6cadf90	YES
+wwPDB-validation	2026-08-28-cache	143129-PDB-ID-union	https://files.rcsb.org/pub/pdb/validation_reports/	2026-08-28	NA	PER_FILE_GZIP_INTEGRITY	YES

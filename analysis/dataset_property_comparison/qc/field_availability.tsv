@@ -1,0 +1,7 @@
+dataset	formal_N	descriptor_N	resolution_N	rsr_N	rscc_N	mapping_basis
+PDBbind	19443	19417	19140	15226	15226	Official SDF/MOL2; unique deposited heavy-atom coordinate match; exact wwPDB residue
+HiQBind	31572	31571	31111	28042	28042	Released PDB+CCD+author-chain+author-residue; exact wwPDB residue
+BioLiP2	548615	508993	547144	3427	3427	Released PDB+CCD+ligand-chain; only unique wwPDB chain-level match accepted
+PLINDER	616723	616711	436873	344693	344693	Proper-ligand row; released exact-instance validation arrays
+CROWN	141261	141261	141261	141261	141261	Released wwPDB-derived ligand validation metrics
+Ours	91860	91831	91860	91860	91860	Frozen exact-instance wwPDB validation provenance

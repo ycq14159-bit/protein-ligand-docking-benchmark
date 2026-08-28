@@ -1,0 +1,9 @@
+blocker_id	dataset	workstream	status	description
+B01	PDBbind	Mode_B	RESOLVED	Official licensed v2020 index/refined/general-minus-refined archives acquired and SHA256-verified.
+B02	PDBbind	Mode_A	HOLD	Historical CROWN 19,449 remains distinct from official v2020 19,443; does not block Mode B.
+B03	HiQBind	Mode_A	HOLD	Historical CROWN 31,573 remains distinct from current v3 small-molecule 31,572; does not block Mode B.
+B04	BioLiP2	Mode_A	HOLD	Historical CROWN 86,458 snapshot definition is unresolved; fixed 2026-06-26 Mode B population is explicit.
+B05	PLINDER	Mode_B	RESOLVED	Full annotation_table acquired; formal population is 616,723 ligand_is_proper rows.
+B06	CROWN	Mode_B	RESOLVED	2026-06 metadata acquired and SHA256-verified.
+B07	All external	Mode_B	RESOLVED	Each adapter has an explicit entry unit and unique source_entry_id.
+B08	All external	Mode_B	RESOLVED_WITH_MISSINGNESS	Validation mapping is complete and auditable; unavailable/ambiguous rows remain NA and are plotted as No data.
