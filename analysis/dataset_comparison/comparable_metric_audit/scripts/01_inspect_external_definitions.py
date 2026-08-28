@@ -6,7 +6,11 @@ import sys
 
 import pandas as pd
 import pyarrow
-import rdkit
+try:
+    import rdkit
+    RDKIT_VERSION = rdkit.__version__
+except ImportError:
+    RDKIT_VERSION = "NOT_INSTALLED_NOT_REQUIRED_FOR_EXTERNAL_CALIBRATION"
 
 from audit_common import EXT, QC, sha256, write_tsv
 
@@ -28,11 +32,10 @@ def main() -> None:
     write_tsv(QC / "external_file_inventory.tsv", rows)
     env = {
         "python": sys.version.split()[0], "platform": platform.platform(),
-        "pandas": pd.__version__, "pyarrow": pyarrow.__version__, "rdkit": rdkit.__version__,
+        "pandas": pd.__version__, "pyarrow": pyarrow.__version__, "rdkit": RDKIT_VERSION,
     }
     (QC / "environment.json").write_text(json.dumps(env, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":
     main()
-
