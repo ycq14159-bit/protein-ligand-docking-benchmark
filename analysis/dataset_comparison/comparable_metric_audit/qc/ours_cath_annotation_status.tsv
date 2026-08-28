@@ -1,0 +1,2 @@
+status	reason	output_created	note
+NOT_RUN_BLOCKED	BLOCKED_CATH_DEFINITION_MISMATCH	False	External calibration reconstructed 2040 valid H-level IDs, not the reported 2041; Ours annotation is prohibited by the task STOP rule.

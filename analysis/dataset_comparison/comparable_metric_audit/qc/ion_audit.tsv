@@ -1,0 +1,5 @@
+metric	release	counting_unit	reported	reproduced	difference	status
+Ion	2024-06/v2	ligand annotation rows	22728	645208	622480	BLOCKED_PLINDER_CLASSIFICATION_MISMATCH
+Ion	2024-06/v2	unique systems with system_ligand_has_ion	22728	566285	543557	BLOCKED_PLINDER_CLASSIFICATION_MISMATCH
+Ion	2024-04/v1	ligand annotation rows	22728	431165	408437	BLOCKED_PLINDER_CLASSIFICATION_MISMATCH
+Ion	2024-04/v1	unique systems containing ion	22728	377847	355119	BLOCKED_PLINDER_CLASSIFICATION_MISMATCH

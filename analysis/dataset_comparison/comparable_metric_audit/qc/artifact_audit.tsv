@@ -1,0 +1,5 @@
+metric	release	counting_unit	reported	reproduced	difference	status
+Artifact	2024-06/v2	ligand annotation rows	18626	95975	77349	BLOCKED_PLINDER_CLASSIFICATION_MISMATCH
+Artifact	2024-06/v2	unique systems with system_ligand_has_artifact	18626	58880	40254	BLOCKED_PLINDER_CLASSIFICATION_MISMATCH
+Artifact	2024-04/v1	ligand annotation rows	18626	722736	704110	BLOCKED_PLINDER_CLASSIFICATION_MISMATCH
+Artifact	2024-04/v1	unique systems containing artifact	18626	631140	612514	BLOCKED_PLINDER_CLASSIFICATION_MISMATCH

@@ -1,0 +1,4 @@
+metric	status	reason
+Unique CATH IDs	BLOCKED_CATH_DEFINITION_MISMATCH	External reported value could not be reproduced exactly from the frozen official source object; formal Ours value remains NA.
+Ion ligands	BLOCKED_PLINDER_CLASSIFICATION_MISMATCH	External reported value could not be reproduced exactly from the frozen official source object; formal Ours value remains NA.
+Artifact ligands	BLOCKED_PLINDER_CLASSIFICATION_MISMATCH	External reported value could not be reproduced exactly from the frozen official source object; formal Ours value remains NA.

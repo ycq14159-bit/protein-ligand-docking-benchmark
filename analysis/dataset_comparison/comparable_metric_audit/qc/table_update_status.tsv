@@ -1,0 +1,5 @@
+metric	action	reason
+Unique CATH IDs	UNCHANGED_NA	CATH calibration failed
+Ion ligands	UNCHANGED_NA	PLINDER calibration failed
+Artifact ligands	UNCHANGED_NA	PLINDER calibration failed
+LaTeX/Overleaf	NOT_REGENERATED	No metric passed calibration

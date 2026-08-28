@@ -1,0 +1,7 @@
+{
+  "pandas": "3.0.1",
+  "platform": "Windows-11-10.0.22631-SP0",
+  "pyarrow": "25.0.1",
+  "python": "3.12.13",
+  "rdkit": "2026.03.5"
+}

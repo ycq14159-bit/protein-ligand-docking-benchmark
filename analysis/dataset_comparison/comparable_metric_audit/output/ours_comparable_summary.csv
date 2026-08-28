@@ -1,0 +1,4 @@
+metric,value,status,definition,calibration_status
+Unique CATH IDs,NA,BLOCKED_CATH_DEFINITION_MISMATCH,unique four-level C.A.T.H H-level classifications over formal receptor chains,FAIL
+Ion ligands,NA,BLOCKED_PLINDER_CLASSIFICATION_MISMATCH,PLINDER-compatible ion classification,FAIL
+Artifact ligands,NA,BLOCKED_PLINDER_CLASSIFICATION_MISMATCH,actual PLINDER artifact classifier/annotation,FAIL

@@ -1,0 +1,8 @@
+source	release_or_snapshot	population	field_or_definition	counting_unit	access_date	url
+CROWN	maintenance metadata 2026-06	141261	cath_ids	metadata row and unique array value	2026-08-28	https://zenodo.org/api/records/20825315/files/CROWN_metadata.parquet/content
+CROWN comparison table	current maintenance site	PLINDER 649915; CROWN 141261	Unique CATH IDs; Ion ligands; Artifact ligands	dataset table entry	2026-08-28	https://crown.lbmd.be/
+CATH	CATH-Plus v4.4.0	all domains	domain_id to C.A.T.H	unique domain instance	2026-08-28	https://download.cathdb.info/cath/releases/all-releases/v4_4_0/cath-classification-data/cath-domain-list-v4_4_0.txt
+PLINDER	2024-06/v2	1357906 ligand annotation rows	release annotation flags	ligand row/system diagnostics	2026-08-28	https://storage.googleapis.com/plinder/2024-06/v2/index/annotation_table.parquet
+PLINDER	2024-04/v1 diagnostic	1726144 ligand annotation rows	release annotation flags	ligand row/system diagnostics	2026-08-28	https://storage.googleapis.com/plinder/2024-04/v1/index/annotation_table.parquet
+PLINDER source	v0.2.0 commit 79a27ce20c308716affa00d3a6396c7931df1b9b	code	ligand ion/artifact/proper implementation	molecule	2026-08-28	https://github.com/plinder-org/plinder/tree/v0.2.0
+

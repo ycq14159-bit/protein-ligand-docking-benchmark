@@ -1,0 +1,7 @@
+external/**/*.parquet
+external/**/*.txt
+external/**/*.csv
+!external/plinder/artifacts_badlist.csv
+output/*.parquet
+logs/
+__pycache__/

@@ -1,0 +1,4 @@
+file	release	url	download_date	size_bytes	sha256	purpose
+annotation_table_2024-06_v2.parquet	2024-06/v2	https://storage.googleapis.com/plinder/2024-06/v2/index/annotation_table.parquet	2026-08-28	1018256581	d7ff7a087b3d336859afd5e57775fa1a4e9a23c90a7bb4ccbb6a278540ae31e9	primary calibration
+annotation_table_2024-04_v1.parquet	2024-04/v1	https://storage.googleapis.com/plinder/2024-04/v1/index/annotation_table.parquet	2026-08-28	992879429	23854bcb9bb86b0c3ac75cb5724dd7a1fd600990a37c784edbab1f54cbfa0a36	release-mismatch diagnostic
+

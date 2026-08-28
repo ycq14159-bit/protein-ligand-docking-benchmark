@@ -1,0 +1,3 @@
+source	release	commit	path	sha256	note
+PLINDER GitHub	v0.2.0	79a27ce20c308716affa00d3a6396c7931df1b9b	src/plinder/data/utils/annotations/ligand_utils.py	7b4854fc6ef0c2de62324cdce466afb9542ff2a85eab49ac1ee089037f94d623	Classifier implementation; 54109 bytes
+PLINDER GitHub	v0.2.0	79a27ce20c308716affa00d3a6396c7931df1b9b	src/plinder/data/utils/annotations/static_files/artifacts_badlist.csv	50f2b7c1395e1e9638cad51e9b859617e64806d5fb88cf57dc9d294f4f86c4af	Curated CCD list; 1721 bytes; runtime synonym expansion also depends on PLINDER CCD synonym data
