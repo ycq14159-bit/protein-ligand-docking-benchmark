@@ -1,7 +1,7 @@
 {
-  "pandas": "3.0.1",
-  "platform": "Windows-11-10.0.22631-SP0",
-  "pyarrow": "25.0.1",
-  "python": "3.12.13",
-  "rdkit": "2026.03.5"
+  "pandas": "2.2.2",
+  "platform": "Linux-5.4.0-150-generic-x86_64-with-glibc2.35",
+  "pyarrow": "14.0.2",
+  "python": "3.11.5",
+  "rdkit": "NOT_INSTALLED_NOT_REQUIRED_FOR_EXTERNAL_CALIBRATION"
 }
