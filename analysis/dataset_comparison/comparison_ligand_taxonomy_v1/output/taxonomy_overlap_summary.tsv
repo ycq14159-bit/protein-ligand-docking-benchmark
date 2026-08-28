@@ -1,0 +1,17 @@
+dataset	monoatomic_ion_flag	simple_inorganic_flag	shared_artifact_list_flag	entries
+PDBbind	False	False	False	19244
+PDBbind	False	False	True	190
+PDBbind	False	True	False	9
+HiQBind	False	False	False	31213
+HiQBind	False	False	True	341
+HiQBind	False	True	False	18
+BioLiP2	False	False	False	502440
+BioLiP2	False	False	True	15494
+BioLiP2	False	True	False	29423
+BioLiP2	True	False	False	1258
+PLINDER	False	False	False	616723
+CROWN	False	False	False	141083
+CROWN	False	False	True	178
+Ours	False	False	False	86432
+Ours	False	False	True	1400
+Ours	False	True	False	4028

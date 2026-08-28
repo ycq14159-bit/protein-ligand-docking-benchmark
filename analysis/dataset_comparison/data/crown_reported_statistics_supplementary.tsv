@@ -1,0 +1,4 @@
+reporting_source	dataset	metric	value	status	harmonized_value	note
+CROWN website	CROWN	Unique CATH IDs	2041	CROWN_REPORTED_ONLY	2040	Website value retained for provenance; null/unannotated is excluded from harmonized IDs.
+CROWN website	PLINDER	Ion ligands	22728	CROWN_REPORTED_ONLY	NA	Not reproduced by trial filters; replaced in formal comparison by monoatomic_ion_entries.
+CROWN website	PLINDER	Artifact ligands	18626	CROWN_REPORTED_ONLY	NA	Not reproduced by trial filters; replaced by explicit harmonized taxonomy metrics.

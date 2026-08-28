@@ -3,7 +3,7 @@ Dataset scope,Total entries,91860,,,,,
 Dataset scope,Unique PDB-CCD pairs,40315,,,,,
 Dataset scope,Unique PDB IDs,35226,,,,,
 Dataset scope,Unique UniProt IDs,9906,,,,,
-Dataset scope,Unique CATH IDs,,,,,,
+Dataset scope,Unique CATH IDs,1585,1105.0,804.0,2749.0,1671.0,2040.0
 Dataset scope,Unique species,2639,,,,,
 Dataset scope,Affinity annotations,False,,,,,
 Ligand diversity,Unique CCD IDs,16182,,,,,
@@ -16,3 +16,6 @@ Structure issues,Steric overlaps,0,,,,,
 Structure issues,Unresolved ligand atoms,0,,,,,
 Structure issues,Unresolved pocket atoms,317,,,,,
 Structure issues,Non-standard pocket residues,0,,,,,
+Ligand taxonomy v1,Monoatomic ion entries (harmonized v1),0,0.0,0.0,1258.0,0.0,0.0
+Ligand taxonomy v1,Simple inorganic entries (harmonized v1),4028,9.0,18.0,29423.0,0.0,0.0
+Ligand taxonomy v1,Shared artifact-list entries (harmonized v1),1400,190.0,341.0,15494.0,0.0,178.0

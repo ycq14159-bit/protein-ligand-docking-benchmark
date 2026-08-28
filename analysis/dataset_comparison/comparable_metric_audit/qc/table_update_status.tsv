@@ -1,5 +1,4 @@
 metric	action	reason
-Unique CATH IDs	UNCHANGED_NA	CATH calibration failed
-Ion ligands	UNCHANGED_NA	PLINDER calibration failed
-Artifact ligands	UNCHANGED_NA	PLINDER calibration failed
-LaTeX/Overleaf	NOT_REGENERATED	No metric passed calibration
+Unique CATH IDs	UPDATED	Harmonized calibration PASS at CROWN=2040; Ours=1585
+Ion ligands	CROWN_REPORTED_ONLY	Replaced by monoatomic_ion_entries harmonized v1
+Artifact ligands	CROWN_REPORTED_ONLY	Replaced by explicit simple_inorganic and shared_artifact_list metrics

@@ -1,6 +1,5 @@
-metric	reported	reproduced	difference	counting_unit	status
-CROWN population rows	141261	141261	0	CROWN metadata rows	PASS
-Unique CATH IDs	2041	2040	-1	unique valid four-level cath_h_id	BLOCKED_CATH_DEFINITION_MISMATCH
-Diagnostic including missing category	2041	2041	0	unique cath_h_id plus one synthetic missing category	DIAGNOSTIC_ONLY
-CATH assignments		151959		array elements	INFORMATIONAL
-Rows without CATH		44892		CROWN metadata rows	INFORMATIONAL
+metric	expected_or_reported	reproduced	difference	counting_unit	status
+CROWN population rows	141261	141261	0	metadata rows	PASS
+CROWN website Unique CATH IDs	2041	NA	NA	website reported	CROWN_REPORTED_ONLY
+Harmonized unique valid four-level CATH H	2040	2040	0	unique valid cath_h_id; null excluded	CALIBRATION_PASS
+Rows without valid CATH H	NA	44892	NA	metadata rows	INFORMATIONAL

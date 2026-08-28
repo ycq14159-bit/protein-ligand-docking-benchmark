@@ -1,4 +1,7 @@
 metric,value,status,definition,calibration_status
-Unique CATH IDs,NA,BLOCKED_CATH_DEFINITION_MISMATCH,unique four-level C.A.T.H H-level classifications over formal receptor chains,FAIL
-Ion ligands,NA,BLOCKED_PLINDER_CLASSIFICATION_MISMATCH,PLINDER-compatible ion classification,FAIL
-Artifact ligands,NA,BLOCKED_PLINDER_CLASSIFICATION_MISMATCH,actual PLINDER artifact classifier/annotation,FAIL
+Unique CATH IDs,1585,CALCULATED,unique valid four-level CATH H-level classifications; null excluded,PASS_CROWN_2040
+Ion ligands,NA,CROWN_REPORTED_ONLY,historical CROWN/PLINDER statistic,NOT_APPLICABLE
+Artifact ligands,NA,CROWN_REPORTED_ONLY,historical CROWN/PLINDER statistic,NOT_APPLICABLE
+monoatomic_ion_entries,0,CALCULATED,comparison_ligand_taxonomy_v1,HARMONIZED
+simple_inorganic_entries,4028,CALCULATED,comparison_ligand_taxonomy_v1,HARMONIZED
+shared_artifact_list_entries,1400,CALCULATED,comparison_ligand_taxonomy_v1,HARMONIZED
