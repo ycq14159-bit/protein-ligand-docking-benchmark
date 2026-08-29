@@ -1,0 +1,31 @@
+{
+  "policy_version": "benchmark_filter5_v3_exact_only",
+  "formal_input_pairs": 91860,
+  "exact_ligand_identity": {
+    "canonical_isomeric_smiles": true,
+    "preserve_stereochemistry": true,
+    "preserve_formal_charge": true,
+    "preserve_bond_order": true,
+    "tautomer_canonicalization": false,
+    "neutralization": false,
+    "reionization": false
+  },
+  "strict_equivalence": {
+    "ligand_exact_identity_required": true,
+    "receptor_identity_source": "SIFTS/UniProt",
+    "binding_residue_position_and_name_match_required": true
+  },
+  "representative_rank": [
+    "resolution ASC",
+    "R_free ASC",
+    "abs_Rfree_Rwork ASC",
+    "R_work ASC",
+    "pair_id ASC"
+  ],
+  "removed_rules": [
+    "receptor similarity clustering",
+    "ligand Tanimoto similarity clustering",
+    "6A pocket-environment similarity clustering"
+  ]
+}
+

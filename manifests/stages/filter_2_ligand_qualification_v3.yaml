@@ -1,30 +1,35 @@
 schema_version: 1
-stage: "filter_2_ligand_qualification_v3"
-run_id: "20260804_full_01"
+stage: "filter_2_ligand_qualification_v4_dual_source_strict"
+run_id: "20260825_dual_source_strict_01"
 status: "FROZEN"
 frozen: true
-data_relative_path: "filter_2_ligand_qualification_v3/runs/20260804_full_01"
-input: "Filter 1 qualified structures"
+data_relative_path: "filter_2_ligand_qualification_v4/runs/20260825_dual_source_strict_01"
+input: "142,049 receptor-qualified PDB entries"
 counts:
-  source_instances: 852968
-  mapped_sources: 851966
-  no_mapping: 1002
-  assembly_placements: 1151324
+  pre_rule_source_ligands: 533610
+  pre_rule_assembly_placements: 718007
+  suspicious_sources: 354325
+  suspicious_strict_confirmed: 4624
+  non_suspicious_bypass: 179285
+  formal_source_ligands: 183904
+  additional_assembly_placements: 52479
+  formal_ligand_records: 236383
+  assembly_mapping_review_sources: 5
 validation: "PASS"
 anchors:
   -
-    relative_path: "filter_2_ligand_qualification_v3/CURRENT_RUN.json"
+    relative_path: "filter_2_ligand_qualification_v4/runs/20260825_dual_source_strict_01/_FROZEN.json"
     exists: true
-    size_bytes: 250
-    sha256: "bf652f9fb252d77ce05b9c198d194deac2d40877481605a113d09c1865f2ac49"
+    size_bytes: 1201
+    sha256: "de35bd4b9b5edcd046fbaaeb8623b79b32f595088953e40ff0b650c559486f0f"
   -
-    relative_path: "filter_2_ligand_qualification_v3/runs/20260804_full_01/_FROZEN.json"
+    relative_path: "filter_2_ligand_qualification_v4/runs/20260825_dual_source_strict_01/release_summary.json"
     exists: true
-    size_bytes: 336
-    sha256: "5ab5324c16b4aa026da88af7423c3cb7818bc74713f9ef04d2116ee075e828d3"
+    size_bytes: 2292
+    sha256: "024b9581e3ea1c6e47eb7fbb83074cf3247250ca7d4e89d6d17d97b314b90824"
   -
-    relative_path: "filter_2_ligand_qualification_v3/runs/20260804_full_01/release/release_summary.json"
+    relative_path: "filter_2_ligand_qualification_v4/runs/20260825_dual_source_strict_01/validation.json"
     exists: true
-    size_bytes: 1481
-    sha256: "55d8c979f8a61b0f7a9380a8d6612a802b9d539357cc655e41119e699100db99"
-notes: "The formal mapped-source denominator is 851,966; 1,002 no-map sources do not enter Processing 2."
+    size_bytes: 881
+    sha256: "b2656ef5cd5a60a28ab43348b94ec2935db301482a7afb180c53f06840094d24"
+notes: "Only suspicious ligands require BioLiP EXACT_RETAINED plus Q-BioLiP exact assembly/CCD/chain Relevant=yes. Stopped rows remain in the provenance ledger."

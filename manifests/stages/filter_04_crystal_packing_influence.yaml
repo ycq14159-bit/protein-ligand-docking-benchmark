@@ -1,27 +1,32 @@
 schema_version: 1
 stage: "filter_04_crystal_packing_influence"
-run_id: "step05_full_v1"
+run_id: "20260826_filter3_118255_strict_posebusters_01"
 status: "FROZEN"
 frozen: true
-data_relative_path: "filter_04_crystal_packing_influence/step_05_final_crystal_packing_decision/runs/step05_full_v1"
-input: "336,412 Filter 3 HIGH+GOOD pairs"
+data_relative_path: "filter_04_crystal_packing_influence/database_runs/20260826_filter3_118255_strict_posebusters_01"
+input: "10,188 HIGH + 108,067 GOOD = 118,255 Filter 3 pairs"
 counts:
-  input_pairs: 336412
-  pass: 241545
-  reject: 94865
-  review: 2
-  direct_contact_reject: 57580
-  mediated_contact_reject: 37285
+  input_pairs: 118255
+  pass_high: 7674
+  pass_good: 84186
+  pass: 91860
+  reject: 26395
+  review: 0
 validation: "PASS"
 anchors:
   -
-    relative_path: "filter_04_crystal_packing_influence/step_05_final_crystal_packing_decision/runs/step05_full_v1/_FROZEN.json"
+    relative_path: "filter_04_crystal_packing_influence/database_runs/20260826_filter3_118255_strict_posebusters_01/_FROZEN.json"
     exists: true
-    size_bytes: 392
-    sha256: "a02e8c620e6d50c5783953af5da719f86b7427734b8165e7803fae36f0511bd5"
+    size_bytes: 628
+    sha256: "63926e1b287eee9ab430a45a2e270b40cc247b4139e2e53ba717fad2269c0318"
   -
-    relative_path: "filter_04_crystal_packing_influence/step_05_final_crystal_packing_decision/runs/step05_full_v1/validation.json"
+    relative_path: "filter_04_crystal_packing_influence/database_runs/20260826_filter3_118255_strict_posebusters_01/output/release_summary.json"
     exists: true
-    size_bytes: 2923
-    sha256: "daf38bec8dd9c181b0605ef199c1e5adfbbfa97822585d77c685aadbd1a3d20b"
-notes: "Step 5 pins exact Step 1-4 source versions. Step 1 full_v3 is validated legacy without its own current frozen marker."
+    size_bytes: 1556
+    sha256: "6cb86ff3a7095133a7e3d359f4b318a71d0437ba1d18bfd944bad552840398b3"
+  -
+    relative_path: "filter_04_crystal_packing_influence/database_runs/20260826_filter3_118255_strict_posebusters_01/validation/final_validation.json"
+    exists: true
+    size_bytes: 559
+    sha256: "32bba6378d098d50984dc67381ceeec18a8c32fdfbeeb2e56de9f26f5ace4734"
+notes: "Exact pair_id restriction of validated Filter 4 evidence from the 176,900-pair strict superset; scientific crystal-packing rules were unchanged."

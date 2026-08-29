@@ -1,251 +1,277 @@
 schema_version: 1
 git_adoption_date: "2026-08-24"
-authoritative_frozen_chain: "filter3 336,412 -> filter4 241,545 -> filter5 158,226 -> processing4 158,017 ready"
-counterfactual_warning: "156,621 is an approved target population without a formal frozen rerun and is not authoritative."
+authoritative_frozen_chain: "processing1 144,408 eligible entries -> filter1 142,049 receptor-qualified entries -> filter2 236,383 ligand records -> processing2 206,218 ligand placements -> processing3 176,900 pairs -> filter3 118,255 -> filter4 91,860 -> filter5 65,162 -> processing4 64,100 ready"
+current_branch_note: "Filter 3 uses strict PoseBusters rejection; Filter 5 v3 is exact-only; Processing 4 has only the ligand-heavy-atom-count >3 scope gate."
 runs:
   -
-    stage: "processing_1_pdb_source_audit"
-    run_id: "formal_release"
-    status: "formal"
-    frozen: false
-    data_relative_path: "processing_1_pdb_source_audit"
-    input: "public PDB archive records"
+    stage: "processing_01_source_and_entry_quality_v2"
+    run_id: "20260820_full_01"
+    status: "FROZEN"
+    frozen: true
+    data_relative_path: "processing_01_source_and_entry_quality_v2/runs/20260820_full_01"
+    input: "full PDB acquisition inventory"
     counts:
-      mmcif_entries: 256158
+      audited_entries: 256158
+      xray_eligible: 144408
+      quality_reject: 54808
+      validation_unavailable: 6172
+      non_xray_protocol_pending: 50770
     validation: "PASS"
     anchors:
       -
-        relative_path: "processing_1_pdb_source_audit/release/processing_1_release_summary.json"
+        relative_path: "processing_01_source_and_entry_quality_v2/runs/20260820_full_01/_FROZEN.json"
         exists: true
-        size_bytes: 989
-        sha256: "2c294baa660715d4bb49a7f2858d52682e94410c9f3cd5d174f90de2eb47f92b"
+        size_bytes: 269
+        sha256: "0a744c266f6c20e09107ac13e76c82195760ddf8cb0f60f8620694e46d742c43"
       -
-        relative_path: "processing_1_pdb_source_audit/validation/processing_1_validation.json"
+        relative_path: "processing_01_source_and_entry_quality_v2/runs/20260820_full_01/release/validation_accounting.json"
         exists: true
-        size_bytes: 860
-        sha256: "8983c6e31c6b16338085802d7368cc5e79c6dd6a8662bc4e6ece1b6e5c74e525"
-    notes: "Formal release is checksum-backed but has no unified _FROZEN.json marker."
+        size_bytes: 691
+        sha256: "d954f500cdddbb0ff6fda45df8fc71811ea1ae843c2e1df32fde48acfc47a31d"
+    notes: "Entry-level X-ray quality gate with explicit terminal accounting for all 256,158 entries."
   -
-    stage: "filter_1_protein_receptor_qualification"
-    run_id: "formal_release"
-    status: "formal"
+    stage: "filter_1_protein_receptor_qualification_projection"
+    run_id: "processing1_144408_exact_projection"
+    status: "FORMAL_PROJECTION"
     frozen: false
     data_relative_path: "filter_1_protein_receptor_qualification"
-    input: "processing_1 formal mmCIF interface"
+    input: "144,408 Processing 1 eligible entries"
     counts:
-      input_entries: 256158
-      qualified_entries: 248037
-      qualified_assemblies: 360611
-      source_polypeptide_chains: 1073451
-      receptor_assembly_chain_instances: 2145537
+      input_entries: 144408
+      entries_with_any_polypeptide: 142689
+      receptor_qualified_entries: 142049
+      qualified_assemblies: 212870
+      receptor_chain_instances: 480241
+      excluded_no_polypeptide: 1719
+      excluded_only_short_peptides: 640
     validation: "PASS"
     anchors:
       -
-        relative_path: "filter_1_protein_receptor_qualification/release/filter_1_release_summary.json"
+        relative_path: "filter_1_protein_receptor_qualification/reports/filter_1_processing1_144408_projection.json"
         exists: true
-        size_bytes: 2277
-        sha256: "e77f8661283cd0f17b27295eef8dff180959433a4d32419c648bd948f3a841ac"
-    notes: "1,073,451 is a source-chain count, not an assembly-chain-instance count."
+        size_bytes: 601
+        sha256: "2b3532139b16b1806fa17d3995a5724e980d1431e4ab05ce2552984d4e7cd013"
+    notes: "Exact read-only projection of frozen Filter 1 evidence; all Processing 1 eligible keys were found and parsed."
   -
-    stage: "filter_2_ligand_qualification_v3"
-    run_id: "20260804_full_01"
+    stage: "filter_2_ligand_qualification_v4_dual_source_strict"
+    run_id: "20260825_dual_source_strict_01"
     status: "FROZEN"
     frozen: true
-    data_relative_path: "filter_2_ligand_qualification_v3/runs/20260804_full_01"
-    input: "Filter 1 qualified structures"
+    data_relative_path: "filter_2_ligand_qualification_v4/runs/20260825_dual_source_strict_01"
+    input: "142,049 receptor-qualified PDB entries"
     counts:
-      source_instances: 852968
-      mapped_sources: 851966
-      no_mapping: 1002
-      assembly_placements: 1151324
+      pre_rule_source_ligands: 533610
+      pre_rule_assembly_placements: 718007
+      suspicious_sources: 354325
+      suspicious_strict_confirmed: 4624
+      non_suspicious_bypass: 179285
+      formal_source_ligands: 183904
+      additional_assembly_placements: 52479
+      formal_ligand_records: 236383
+      assembly_mapping_review_sources: 5
     validation: "PASS"
     anchors:
       -
-        relative_path: "filter_2_ligand_qualification_v3/CURRENT_RUN.json"
+        relative_path: "filter_2_ligand_qualification_v4/runs/20260825_dual_source_strict_01/_FROZEN.json"
         exists: true
-        size_bytes: 250
-        sha256: "bf652f9fb252d77ce05b9c198d194deac2d40877481605a113d09c1865f2ac49"
+        size_bytes: 1201
+        sha256: "de35bd4b9b5edcd046fbaaeb8623b79b32f595088953e40ff0b650c559486f0f"
       -
-        relative_path: "filter_2_ligand_qualification_v3/runs/20260804_full_01/_FROZEN.json"
+        relative_path: "filter_2_ligand_qualification_v4/runs/20260825_dual_source_strict_01/release_summary.json"
         exists: true
-        size_bytes: 336
-        sha256: "5ab5324c16b4aa026da88af7423c3cb7818bc74713f9ef04d2116ee075e828d3"
+        size_bytes: 2292
+        sha256: "024b9581e3ea1c6e47eb7fbb83074cf3247250ca7d4e89d6d17d97b314b90824"
       -
-        relative_path: "filter_2_ligand_qualification_v3/runs/20260804_full_01/release/release_summary.json"
+        relative_path: "filter_2_ligand_qualification_v4/runs/20260825_dual_source_strict_01/validation.json"
         exists: true
-        size_bytes: 1481
-        sha256: "55d8c979f8a61b0f7a9380a8d6612a802b9d539357cc655e41119e699100db99"
-    notes: "The formal mapped-source denominator is 851,966; 1,002 no-map sources do not enter Processing 2."
+        size_bytes: 881
+        sha256: "b2656ef5cd5a60a28ab43348b94ec2935db301482a7afb180c53f06840094d24"
+    notes: "Only suspicious ligands require BioLiP EXACT_RETAINED plus Q-BioLiP exact assembly/CCD/chain Relevant=yes; all stopped rows remain auditable."
   -
-    stage: "processing_2_assembly_ready_structure_preparation"
-    run_id: "20260810_full_01"
+    stage: "processing_2_database_validation_provenance_required"
+    run_id: "20260826_validation_provenance_required_01"
     status: "FROZEN"
     frozen: true
-    data_relative_path: "processing_2_assembly_ready_structure_preparation/runs/20260810_full_01"
-    input: "Filter 2 v3 mapped sources and active assembly scope"
+    data_relative_path: "processing_2_assembly_ready_structure_preparation/runs/20260826_validation_provenance_required_01"
+    input: "236,383 ligand records + 480,241 receptor chain instances"
     counts:
-      manifest_rows: 2837838
-      source_complete: 746509
-      source_atom_incomplete: 100354
-      source_mapping_review: 5103
-      receptor_ready: 834222
-      receptor_operator_review: 326
-      placement_assembly_ready: 996192
-      processing3_ready_placements: 995804
+      ready_source_ligands: 162104
+      ready_additional_assembly_ligands: 44114
+      ready_ligand_placements: 206218
+      ready_receptor_chain_instances: 197178
+      validation_unavailable_excluded: 8448
+      altloc_validation_mapping_review_excluded: 10
     validation: "PASS"
     anchors:
       -
-        relative_path: "processing_2_assembly_ready_structure_preparation/CURRENT_RUN.json"
+        relative_path: "processing_2_assembly_ready_structure_preparation/runs/20260826_validation_provenance_required_01/_FROZEN.json"
         exists: true
-        size_bytes: 250
-        sha256: "49d6e45c52c6040b02945618e74ad02588b2e80bc3a59c26a126a16e14f345ec"
+        size_bytes: 409
+        sha256: "76289ecffe7f90a51d5971464b32ce650c98840920e1e29de687ee3429168401"
       -
-        relative_path: "processing_2_assembly_ready_structure_preparation/runs/20260810_full_01/_FROZEN.json"
+        relative_path: "processing_2_assembly_ready_structure_preparation/runs/20260826_validation_provenance_required_01/release_summary.json"
         exists: true
-        size_bytes: 431
-        sha256: "472aba7d39cb6ce8b94494f9a70453d4bc2db54aa30e94822f05550c26fb4cfa"
-      -
-        relative_path: "processing_2_assembly_ready_structure_preparation/runs/20260810_full_01/output/release_summary.json"
-        exists: true
-        size_bytes: 1546
-        sha256: "8388fe3339d9004595ddd96191837d61a04c5a07d5d3eea1b90a85f461066b16"
-    notes: "996,192 frozen ASSEMBLY_READY placements and 995,804 strict Processing 3-ready placements are different denominators."
+        size_bytes: 2233
+        sha256: "149e0aed13117fb8c7218c981b6135436ad58db85f41b0a921f34b10b0514716"
+    notes: "RSCC/RSR are annotation-only, while complete, unique, traceable wwPDB ligand-validation provenance remains a membership requirement."
   -
-    stage: "processing_03_direct_contact_qualification"
-    run_id: "20260811_full_01"
+    stage: "processing_3_p2_validation_provenance_projection"
+    run_id: "20260826_p2_validation_provenance_01"
     status: "FROZEN"
     frozen: true
-    data_relative_path: "processing_03_direct_contact_qualification/runs/20260811_full_01"
-    input: "995,804 Processing 3-ready ligand placements"
+    data_relative_path: "processing_03_direct_contact_qualification/runs/20260826_p2_validation_provenance_01"
+    input: "206,218 ligand placements + 197,178 receptor chain instances"
     counts:
-      terminal_placements: 995804
-      ordinary_noncovalent_pairs: 744580
-      binding_residue_rows: 5060388
-      pocket_residue_rows: 12253890
-      qualifying_atomic_contacts: 24776920
+      ligand_placements: 206218
+      receptor_chain_instances: 197178
+      ordinary_noncovalent_pairs: 176900
+      plip_interaction_recognized: 174979
+      plip_not_recognized_or_timeout: 1921
     validation: "PASS"
     anchors:
       -
-        relative_path: "processing_03_direct_contact_qualification/CURRENT_RUN.json"
+        relative_path: "processing_03_direct_contact_qualification/runs/20260826_p2_validation_provenance_01/_FROZEN.json"
         exists: true
-        size_bytes: 250
-        sha256: "e35690c90f444ebb9ad82edff746169829e10cb219ce24e6b6dadb2219530818"
+        size_bytes: 355
+        sha256: "96bac936576835905f7e758eab4a5d0a52739332c9726ed6596b813073f08b79"
       -
-        relative_path: "processing_03_direct_contact_qualification/runs/20260811_full_01/_FROZEN.json"
+        relative_path: "processing_03_direct_contact_qualification/runs/20260826_p2_validation_provenance_01/release_summary.json"
+        exists: true
+        size_bytes: 1891
+        sha256: "378c5679ee3b370af71ca933c02f6bfe4e66b234f03ae0571f1a27e88c949549"
+    notes: "Exact-set projection from the frozen full geometry result; scientific contact logic is unchanged and PLIP remains validation-only."
+  -
+    stage: "filter_03_ground_truth_structure_quality_database"
+    run_id: "20260826_processing3_176900_strict_posebusters_02"
+    status: "FROZEN"
+    frozen: true
+    data_relative_path: "filter_03_ground_truth_structure_quality_database/runs/20260826_processing3_176900_strict_posebusters_02"
+    input: "176,900 Processing 3 ordinary non-covalent pairs"
+    counts:
+      input_pairs: 176900
+      high: 10188
+      good: 108067
+      retained: 118255
+      reject: 39870
+      validation_unavailable: 18775
+      strict_posebusters_rejections: 2748
+    validation: "PASS"
+    anchors:
+      -
+        relative_path: "filter_03_ground_truth_structure_quality_database/runs/20260826_processing3_176900_strict_posebusters_02/_FROZEN.json"
         exists: true
         size_bytes: 700
-        sha256: "ef83573cf10a10f10c5059808a3dedc26210a4b4ea745a7e5973f9905ec33896"
+        sha256: "4e59821970bb8339e0c780f4fd9e5ecf9f7544e8bdb54ac5a9460de8cd49b5a1"
       -
-        relative_path: "processing_03_direct_contact_qualification/runs/20260811_full_01/output/release_summary.json"
+        relative_path: "filter_03_ground_truth_structure_quality_database/runs/20260826_processing3_176900_strict_posebusters_02/output/release_summary.json"
         exists: true
-        size_bytes: 832
-        sha256: "3bedcfb64ba361426ae96c53600c1ac4dcd59fe93b55c6c6a0f4221664dc24ea"
-    notes: "PLIP is validation-only and not an exclusion criterion in this frozen run."
-  -
-    stage: "filter_03_ground_truth_structure_quality_v2"
-    run_id: "20260814_full_01"
-    status: "FROZEN"
-    frozen: true
-    data_relative_path: "filter_03_ground_truth_structure_quality_v2/runs/20260814_full_01"
-    input: "744,580 Processing 3 candidate pairs"
-    counts:
-      input_pairs: 744580
-      high: 120297
-      good: 216115
-      retained: 336412
-      reject: 217872
-      non_xray_pending: 92766
-      validation_unavailable: 97530
-    validation: "PASS"
-    anchors:
+        size_bytes: 2728
+        sha256: "3a80a41f907da0472a9e33fc0929babff48b5f32258b8236ea857af030c8ed49"
       -
-        relative_path: "filter_03_ground_truth_structure_quality_v2/CURRENT_RUN.json"
+        relative_path: "filter_03_ground_truth_structure_quality_database/runs/20260826_processing3_176900_strict_posebusters_02/validation/final_validation.json"
         exists: true
-        size_bytes: 250
-        sha256: "af03e61dc1c6eb05d8a2a49dede3a2e9da9f603289f47089e4df17114e13b3bd"
-      -
-        relative_path: "filter_03_ground_truth_structure_quality_v2/runs/20260814_full_01/_FROZEN.json"
-        exists: true
-        size_bytes: 387
-        sha256: "226dca76152b8a37c668d5b0d109d809445395747d4760c0f8e1b66b8003ea4a"
-    notes: "The later PoseBusters fail-direct-reject policy is approved for a future versioned rerun but is not implemented by this frozen run."
+        size_bytes: 720
+        sha256: "d665b0b1751b776adcbb80eec176baf906fbd599ad62796850b099142275fa65"
+    notes: "Any failed evaluated PoseBusters check causes FILTER3_REJECT."
   -
     stage: "filter_04_crystal_packing_influence"
-    run_id: "step05_full_v1"
+    run_id: "20260826_filter3_118255_strict_posebusters_01"
     status: "FROZEN"
     frozen: true
-    data_relative_path: "filter_04_crystal_packing_influence/step_05_final_crystal_packing_decision/runs/step05_full_v1"
-    input: "336,412 Filter 3 HIGH+GOOD pairs"
+    data_relative_path: "filter_04_crystal_packing_influence/database_runs/20260826_filter3_118255_strict_posebusters_01"
+    input: "10,188 HIGH + 108,067 GOOD = 118,255 Filter 3 pairs"
     counts:
-      input_pairs: 336412
-      pass: 241545
-      reject: 94865
-      review: 2
-      direct_contact_reject: 57580
-      mediated_contact_reject: 37285
+      input_pairs: 118255
+      pass_high: 7674
+      pass_good: 84186
+      pass: 91860
+      reject: 26395
+      review: 0
     validation: "PASS"
     anchors:
       -
-        relative_path: "filter_04_crystal_packing_influence/step_05_final_crystal_packing_decision/runs/step05_full_v1/_FROZEN.json"
+        relative_path: "filter_04_crystal_packing_influence/database_runs/20260826_filter3_118255_strict_posebusters_01/_FROZEN.json"
         exists: true
-        size_bytes: 392
-        sha256: "a02e8c620e6d50c5783953af5da719f86b7427734b8165e7803fae36f0511bd5"
+        size_bytes: 628
+        sha256: "63926e1b287eee9ab430a45a2e270b40cc247b4139e2e53ba717fad2269c0318"
       -
-        relative_path: "filter_04_crystal_packing_influence/step_05_final_crystal_packing_decision/runs/step05_full_v1/validation.json"
+        relative_path: "filter_04_crystal_packing_influence/database_runs/20260826_filter3_118255_strict_posebusters_01/output/release_summary.json"
         exists: true
-        size_bytes: 2923
-        sha256: "daf38bec8dd9c181b0605ef199c1e5adfbbfa97822585d77c685aadbd1a3d20b"
-    notes: "Step 5 pins exact Step 1-4 source versions. Step 1 full_v3 is validated legacy without its own current frozen marker."
+        size_bytes: 1556
+        sha256: "6cb86ff3a7095133a7e3d359f4b318a71d0437ba1d18bfd944bad552840398b3"
+      -
+        relative_path: "filter_04_crystal_packing_influence/database_runs/20260826_filter3_118255_strict_posebusters_01/validation/final_validation.json"
+        exists: true
+        size_bytes: 559
+        sha256: "32bba6378d098d50984dc67381ceeec18a8c32fdfbeeb2e56de9f26f5ace4734"
+    notes: "Validated Filter 4 evidence was restricted exactly by pair_id from the 176,900-pair strict superset; scientific rules were unchanged."
   -
-    stage: "filter_05_equivalent_redocking_case"
-    run_id: "step05_full_v1"
+    stage: "filter_05_benchmark_redundancy_reduction"
+    run_id: "20260828_exact_only_v3_01"
     status: "FROZEN"
     frozen: true
-    data_relative_path: "filter_05_equivalent_redocking_case/step_05_strict_equivalent_grouping_and_representative_selection/runs/step05_full_v1"
-    input: "241,545 Filter 4 PASS pairs"
+    data_relative_path: "filter_05_benchmark_redundancy_reduction/runs/20260828_exact_only_v3_01"
+    input: "7,674 HIGH + 84,186 GOOD = 91,860 Filter 4 PASS pairs"
     counts:
-      input_pairs: 241545
-      retain_unique: 92580
-      retain_representative: 32188
-      review_retain: 33458
-      redundant: 83319
-      retained: 158226
-      equivalence_groups: 32188
+      input_pairs: 91860
+      exact_representatives: 12417
+      exact_unique_retain: 34911
+      review_retain: 17834
+      exact_redundant: 26698
+      retained_high: 4751
+      retained_good: 60411
+      retained: 65162
     validation: "PASS"
     anchors:
       -
-        relative_path: "filter_05_equivalent_redocking_case/step_05_strict_equivalent_grouping_and_representative_selection/runs/step05_full_v1/_FROZEN.json"
+        relative_path: "filter_05_benchmark_redundancy_reduction/runs/20260828_exact_only_v3_01/_FROZEN.json"
         exists: true
-        size_bytes: 122
-        sha256: "002212a3dcaec484a93293bcb4d7f3ab44610e83651099a5f75bf16d6fb54e36"
+        size_bytes: 766
+        sha256: "d22537bc342d940876f44fad24e8893e0dce288f0dc20e5eacf66ca6f99f8b21"
       -
-        relative_path: "filter_05_equivalent_redocking_case/step_05_strict_equivalent_grouping_and_representative_selection/runs/step05_full_v1/validation/validation.json"
+        relative_path: "filter_05_benchmark_redundancy_reduction/runs/20260828_exact_only_v3_01/final/summary.json"
         exists: true
-        size_bytes: 935
-        sha256: "fa4e43765a63046c049107a2c3f9f7e772e292d312fd4d2a65af4131a823adf5"
-    notes: "Scientific outputs pass checksums. A known checksum mismatch is limited to logs/run.log written after freeze packaging."
+        size_bytes: 1101
+        sha256: "5adaa298bd6abb18a53fd52c6e7d2a1275be3ae6707dfedcec84423a223c2b69"
+      -
+        relative_path: "filter_05_benchmark_redundancy_reduction/runs/20260828_exact_only_v3_01/validation/validation.json"
+        exists: true
+        size_bytes: 850
+        sha256: "08f50c86fd801242f58f93a6ece56a294b7c7dbd6401005f98d1b7fed14c96cd"
+    notes: "Exact-only v3; the former receptor/ligand/pocket near-similarity step is not a membership rule."
   -
     stage: "processing_04_docking_ready_case_construction"
-    run_id: "p4_full_v1_0_1"
+    run_id: "p4_benchmark_f5v3_65162_gt3_v3_1_0_01"
     status: "FROZEN"
     frozen: true
-    data_relative_path: "processing_04_docking_ready_case_construction/runs/p4_full_v1_0_1"
-    input: "158,226 Filter 5 retained pairs"
+    data_relative_path: "processing_04_docking_ready_case_construction/runs/p4_benchmark_f5v3_65162_gt3_v3_1_0_01"
+    input: "4,751 HIGH + 60,411 GOOD = 65,162 Filter 5 retained pairs"
     counts:
-      input_cases: 158226
-      docking_ready: 158017
-      preparation_review: 172
-      ligand_start_generation_failed: 37
+      input_cases: 65162
+      docking_ready_high: 4313
+      docking_ready_good: 59787
+      docking_ready: 64100
+      out_of_scope_heavy_atoms_le_3: 1062
+      preparation_review: 0
+      ligand_start_generation_failed: 0
+      ligand_start_ccd_ideal: 63949
+      ligand_start_etkdg_uff: 149
+      ligand_start_etkdg_no_uff: 2
     validation: "PASS"
     anchors:
       -
-        relative_path: "processing_04_docking_ready_case_construction/runs/p4_full_v1_0_1/_FROZEN.json"
+        relative_path: "processing_04_docking_ready_case_construction/runs/p4_benchmark_f5v3_65162_gt3_v3_1_0_01/_FROZEN.json"
         exists: true
-        size_bytes: 470
-        sha256: "dec3318659e48598372712b19d8a495168e98960fdd6274947b27113b054976a"
+        size_bytes: 605
+        sha256: "2b2e05244e9d2fe3c5ef9de07db1c9e7c9127ca4ff6f2c57105641279758e2f7"
       -
-        relative_path: "processing_04_docking_ready_case_construction/runs/p4_full_v1_0_1/validation/validation.json"
+        relative_path: "processing_04_docking_ready_case_construction/runs/p4_benchmark_f5v3_65162_gt3_v3_1_0_01/output/release_summary.json"
         exists: true
-        size_bytes: 517
-        sha256: "fecdada8aa6f9eefaabd535d332f83fda35dbd28c60e3d66052244afcc6a60e4"
-    notes: "No method-specific docking predictions are included. Frozen run is v1.0.1 rescue over the v1 baseline."
+        size_bytes: 965
+        sha256: "ca67aabc20cd10712440e54a904f5fafd490867936c2365199465145952c2e4f"
+      -
+        relative_path: "processing_04_docking_ready_case_construction/runs/p4_benchmark_f5v3_65162_gt3_v3_1_0_01/validation/validation.json"
+        exists: true
+        size_bytes: 1046
+        sha256: "21c8b349f64588c4bde1ab04813fe05228695698014c6f34ed545535083583b4"
+    notes: "Processing-only release with one scope gate: ligand heavy-atom count >3; native ligand coordinates are never a start fallback."

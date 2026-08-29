@@ -1,21 +1,23 @@
 schema_version: 1
-stage: "filter_1_protein_receptor_qualification"
-run_id: "formal_release"
-status: "formal"
+stage: "filter_1_protein_receptor_qualification_projection"
+run_id: "processing1_144408_exact_projection"
+status: "FORMAL_PROJECTION"
 frozen: false
 data_relative_path: "filter_1_protein_receptor_qualification"
-input: "processing_1 formal mmCIF interface"
+input: "144,408 Processing 1 eligible entries"
 counts:
-  input_entries: 256158
-  qualified_entries: 248037
-  qualified_assemblies: 360611
-  source_polypeptide_chains: 1073451
-  receptor_assembly_chain_instances: 2145537
+  input_entries: 144408
+  entries_with_any_polypeptide: 142689
+  receptor_qualified_entries: 142049
+  qualified_assemblies: 212870
+  receptor_chain_instances: 480241
+  excluded_no_polypeptide: 1719
+  excluded_only_short_peptides: 640
 validation: "PASS"
 anchors:
   -
-    relative_path: "filter_1_protein_receptor_qualification/release/filter_1_release_summary.json"
+    relative_path: "filter_1_protein_receptor_qualification/reports/filter_1_processing1_144408_projection.json"
     exists: true
-    size_bytes: 2277
-    sha256: "e77f8661283cd0f17b27295eef8dff180959433a4d32419c648bd948f3a841ac"
-notes: "1,073,451 is a source-chain count, not an assembly-chain-instance count."
+    size_bytes: 601
+    sha256: "2b3532139b16b1806fa17d3995a5724e980d1431e4ab05ce2552984d4e7cd013"
+notes: "Exact read-only projection of the frozen Filter 1 evidence onto the Processing 1 eligible set; all input keys were found and parsed."

@@ -1,28 +1,34 @@
 schema_version: 1
-stage: "filter_05_equivalent_redocking_case"
-run_id: "step05_full_v1"
+stage: "filter_05_benchmark_redundancy_reduction"
+run_id: "20260828_exact_only_v3_01"
 status: "FROZEN"
 frozen: true
-data_relative_path: "filter_05_equivalent_redocking_case/step_05_strict_equivalent_grouping_and_representative_selection/runs/step05_full_v1"
-input: "241,545 Filter 4 PASS pairs"
+data_relative_path: "filter_05_benchmark_redundancy_reduction/runs/20260828_exact_only_v3_01"
+input: "7,674 HIGH + 84,186 GOOD = 91,860 Filter 4 PASS pairs"
 counts:
-  input_pairs: 241545
-  retain_unique: 92580
-  retain_representative: 32188
-  review_retain: 33458
-  redundant: 83319
-  retained: 158226
-  equivalence_groups: 32188
+  input_pairs: 91860
+  exact_representatives: 12417
+  exact_unique_retain: 34911
+  review_retain: 17834
+  exact_redundant: 26698
+  retained_high: 4751
+  retained_good: 60411
+  retained: 65162
 validation: "PASS"
 anchors:
   -
-    relative_path: "filter_05_equivalent_redocking_case/step_05_strict_equivalent_grouping_and_representative_selection/runs/step05_full_v1/_FROZEN.json"
+    relative_path: "filter_05_benchmark_redundancy_reduction/runs/20260828_exact_only_v3_01/_FROZEN.json"
     exists: true
-    size_bytes: 122
-    sha256: "002212a3dcaec484a93293bcb4d7f3ab44610e83651099a5f75bf16d6fb54e36"
+    size_bytes: 766
+    sha256: "d22537bc342d940876f44fad24e8893e0dce288f0dc20e5eacf66ca6f99f8b21"
   -
-    relative_path: "filter_05_equivalent_redocking_case/step_05_strict_equivalent_grouping_and_representative_selection/runs/step05_full_v1/validation/validation.json"
+    relative_path: "filter_05_benchmark_redundancy_reduction/runs/20260828_exact_only_v3_01/final/summary.json"
     exists: true
-    size_bytes: 935
-    sha256: "fa4e43765a63046c049107a2c3f9f7e772e292d312fd4d2a65af4131a823adf5"
-notes: "Scientific outputs pass checksums. A known checksum mismatch is limited to logs/run.log written after freeze packaging."
+    size_bytes: 1101
+    sha256: "5adaa298bd6abb18a53fd52c6e7d2a1275be3ae6707dfedcec84423a223c2b69"
+  -
+    relative_path: "filter_05_benchmark_redundancy_reduction/runs/20260828_exact_only_v3_01/validation/validation.json"
+    exists: true
+    size_bytes: 850
+    sha256: "08f50c86fd801242f58f93a6ece56a294b7c7dbd6401005f98d1b7fed14c96cd"
+notes: "Exact-only v3. The former receptor/ligand/pocket near-similarity step is not part of membership. Review-retained cases are not asserted to be unique."

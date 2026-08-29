@@ -1,28 +1,33 @@
 schema_version: 1
-stage: "filter_03_ground_truth_structure_quality_v2"
-run_id: "20260814_full_01"
+stage: "filter_03_ground_truth_structure_quality_database"
+run_id: "20260826_processing3_176900_strict_posebusters_02"
 status: "FROZEN"
 frozen: true
-data_relative_path: "filter_03_ground_truth_structure_quality_v2/runs/20260814_full_01"
-input: "744,580 Processing 3 candidate pairs"
+data_relative_path: "filter_03_ground_truth_structure_quality_database/runs/20260826_processing3_176900_strict_posebusters_02"
+input: "176,900 Processing 3 ordinary non-covalent pairs"
 counts:
-  input_pairs: 744580
-  high: 120297
-  good: 216115
-  retained: 336412
-  reject: 217872
-  non_xray_pending: 92766
-  validation_unavailable: 97530
+  input_pairs: 176900
+  high: 10188
+  good: 108067
+  retained: 118255
+  reject: 39870
+  validation_unavailable: 18775
+  strict_posebusters_rejections: 2748
 validation: "PASS"
 anchors:
   -
-    relative_path: "filter_03_ground_truth_structure_quality_v2/CURRENT_RUN.json"
+    relative_path: "filter_03_ground_truth_structure_quality_database/runs/20260826_processing3_176900_strict_posebusters_02/_FROZEN.json"
     exists: true
-    size_bytes: 250
-    sha256: "af03e61dc1c6eb05d8a2a49dede3a2e9da9f603289f47089e4df17114e13b3bd"
+    size_bytes: 700
+    sha256: "4e59821970bb8339e0c780f4fd9e5ecf9f7544e8bdb54ac5a9460de8cd49b5a1"
   -
-    relative_path: "filter_03_ground_truth_structure_quality_v2/runs/20260814_full_01/_FROZEN.json"
+    relative_path: "filter_03_ground_truth_structure_quality_database/runs/20260826_processing3_176900_strict_posebusters_02/output/release_summary.json"
     exists: true
-    size_bytes: 387
-    sha256: "226dca76152b8a37c668d5b0d109d809445395747d4760c0f8e1b66b8003ea4a"
-notes: "The later PoseBusters fail-direct-reject policy is approved for a future versioned rerun but is not implemented by this frozen run."
+    size_bytes: 2728
+    sha256: "3a80a41f907da0472a9e33fc0929babff48b5f32258b8236ea857af030c8ed49"
+  -
+    relative_path: "filter_03_ground_truth_structure_quality_database/runs/20260826_processing3_176900_strict_posebusters_02/validation/final_validation.json"
+    exists: true
+    size_bytes: 720
+    sha256: "d665b0b1751b776adcbb80eec176baf906fbd599ad62796850b099142275fa65"
+notes: "Any failed evaluated PoseBusters check causes FILTER3_REJECT in this frozen release."

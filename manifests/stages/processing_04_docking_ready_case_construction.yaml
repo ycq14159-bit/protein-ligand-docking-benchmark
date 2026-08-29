@@ -1,25 +1,36 @@
 schema_version: 1
 stage: "processing_04_docking_ready_case_construction"
-run_id: "p4_full_v1_0_1"
+run_id: "p4_benchmark_f5v3_65162_gt3_v3_1_0_01"
 status: "FROZEN"
 frozen: true
-data_relative_path: "processing_04_docking_ready_case_construction/runs/p4_full_v1_0_1"
-input: "158,226 Filter 5 retained pairs"
+data_relative_path: "processing_04_docking_ready_case_construction/runs/p4_benchmark_f5v3_65162_gt3_v3_1_0_01"
+input: "4,751 HIGH + 60,411 GOOD = 65,162 Filter 5 retained pairs"
 counts:
-  input_cases: 158226
-  docking_ready: 158017
-  preparation_review: 172
-  ligand_start_generation_failed: 37
+  input_cases: 65162
+  docking_ready_high: 4313
+  docking_ready_good: 59787
+  docking_ready: 64100
+  out_of_scope_heavy_atoms_le_3: 1062
+  preparation_review: 0
+  ligand_start_generation_failed: 0
+  ligand_start_ccd_ideal: 63949
+  ligand_start_etkdg_uff: 149
+  ligand_start_etkdg_no_uff: 2
 validation: "PASS"
 anchors:
   -
-    relative_path: "processing_04_docking_ready_case_construction/runs/p4_full_v1_0_1/_FROZEN.json"
+    relative_path: "processing_04_docking_ready_case_construction/runs/p4_benchmark_f5v3_65162_gt3_v3_1_0_01/_FROZEN.json"
     exists: true
-    size_bytes: 470
-    sha256: "dec3318659e48598372712b19d8a495168e98960fdd6274947b27113b054976a"
+    size_bytes: 605
+    sha256: "2b2e05244e9d2fe3c5ef9de07db1c9e7c9127ca4ff6f2c57105641279758e2f7"
   -
-    relative_path: "processing_04_docking_ready_case_construction/runs/p4_full_v1_0_1/validation/validation.json"
+    relative_path: "processing_04_docking_ready_case_construction/runs/p4_benchmark_f5v3_65162_gt3_v3_1_0_01/output/release_summary.json"
     exists: true
-    size_bytes: 517
-    sha256: "fecdada8aa6f9eefaabd535d332f83fda35dbd28c60e3d66052244afcc6a60e4"
-notes: "No method-specific docking predictions are included. Frozen run is v1.0.1 rescue over the v1 baseline."
+    size_bytes: 965
+    sha256: "ca67aabc20cd10712440e54a904f5fafd490867936c2365199465145952c2e4f"
+  -
+    relative_path: "processing_04_docking_ready_case_construction/runs/p4_benchmark_f5v3_65162_gt3_v3_1_0_01/validation/validation.json"
+    exists: true
+    size_bytes: 1046
+    sha256: "21c8b349f64588c4bde1ab04813fe05228695698014c6f34ed545535083583b4"
+notes: "Processing-only release with one explicit scope gate: ligand heavy-atom count >3. Native coordinates are never used for ligand_start.sdf."
